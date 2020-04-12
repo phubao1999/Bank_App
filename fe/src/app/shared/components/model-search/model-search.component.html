@@ -1,0 +1,9 @@
+<div class="{{enableFilter ? 'enable-filter' : 'wrapper'}}">
+    <div class="search input-icon right">
+        <i class="icon-magnifier"></i>
+        <input #otherSource3 type="search" (keydown)="handleKeyDown(otherSource3.value,$event)" (keyup)="searchName(otherSource3.value, 'otherSource')" type="text" class="form-control" placeholder="{{holder}}">
+    </div>
+    <button *ngIf="enableFilter" [ngClass]="{'isActived' : isActived}" class="filter" (click)="click_filter()">
+        <i class="fa fa-filter"></i>
+    </button>
+</div>

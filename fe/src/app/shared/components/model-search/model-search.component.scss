@@ -1,0 +1,39 @@
+.wrapper {
+    margin-bottom: 10px;
+}
+
+.enable-filter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    .search {
+        width: calc(100% - 43px);
+        background-color: white;
+        margin-right: 3px;
+    }
+    .filter {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #e5e5e5;
+        display: flex;
+        border-radius: 3px;
+        background: #fff;
+        outline: none;
+        i {
+            color: #ccc;
+            font-size: 20px;
+            align-self: center;
+            margin: 0 auto;
+        }
+    }
+    .filter.isActived {
+        background: #cccccc52;
+    }
+    .form-control {
+        height: 40px;
+    }
+    .input-icon>i {
+        margin: 14px 4px 4px 10px;
+        font-size: 20px;
+    }
+}

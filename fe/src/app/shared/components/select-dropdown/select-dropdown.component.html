@@ -1,0 +1,16 @@
+<ul class="nav" role="navigation">
+    <li class="dropdown dropdown-search"> <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">{{textShow}}<b class="caret"></b></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+            <li class="search-input" role="presentation" *ngIf="isSearch">
+                <a role="menuitem" tabindex="-1"> <input #otherSource4 type="search" (keyup)="searchName(otherSource4.value)" type="text" class="form-control search-fill-in" placeholder="{{ 'UTILS.HOLDER_SEARCH' | translate }}" /></a>
+            </li>
+            <li>
+                <ul class="scrollable-menu">
+                    <li class="item-value" role="presentation" *ngFor="let option of optionShows,let i = index" (click)="handleSelectOption(option.value)">
+                        <a class="value-search" role="menuitem" tabindex="-1">{{option.text}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>

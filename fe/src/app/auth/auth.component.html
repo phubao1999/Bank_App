@@ -1,0 +1,96 @@
+<div class="auth-background"></div>
+<div class="all">
+    <div class="box">
+        <div class="in">
+            <p [ngClass]="{'text-black': isLogin}" (click)="changeField()">Login</p>
+            <p [ngClass]="{'text-black': !isLogin}" (click)="changeField()">Register</p>
+        </div>
+        <ng-container *ngIf="isLogin">
+            <div class="form-box" [formGroup]="formLogin">
+                <div class="form-input">
+                    <div class="icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <label for="id">Id User</label>
+                    <input type="text" id="id" placeholder="Your Id" formControlName="idUser">
+                    <p class="form_err" *ngIf="formErr.idUser && formLogin.controls.idUser.touched">{{ formErr.idUser }}
+                    </p>
+                </div>
+                <div class="form-input">
+                    <div class="icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Your Password" formControlName="password">
+                    <p class="form_err" *ngIf="formErr.password && formLogin.controls.password.touched">
+                        {{ formErr.password }}</p>
+                </div>
+                <button class="button-auth" [disabled]="formLogin.invalid" (click)="login()">Login</button>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!isLogin">
+            <div class="form-box" [formGroup]="formRegister">
+                <div class="form-input">
+                    <div class="icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" placeholder="Your Name" formControlName="name">
+                    <p class="form_err" *ngIf="formResErr.name && formRegister.controls.name.touched">
+                        {{ formResErr.name }}</p>
+                </div>
+                <div class="form-input">
+                    <div class="icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <label for="name">Your Password</label>
+                    <input type="password" id="password" placeholder="Your Password" formControlName="password">
+                    <p class="form_err" *ngIf="formResErr.password && formRegister.controls.password.touched">
+                        {{ formResErr.password }}</p>
+                </div>
+                <div class="form-input">
+                    <div class="icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <label for="name">Your Phone Number</label>
+                    <input type="text" id="number" placeholder="Your Number" formControlName="phoneNumber">
+                    <p class="form_err" *ngIf="formResErr.phoneNumber && formRegister.controls.phoneNumber.touched">
+                        {{ formResErr.phoneNumber }}</p>
+                </div>
+                <div class="form-input my-3">
+                    <label for="dob">Your Day Of Birth</label>
+                    <input class="my-2" type="date" id="dob" placeholder="Your Number" formControlName="dayOfBirth">
+                    <p class="form_err" *ngIf="formResErr.dayOfBirth && formRegister.controls.dayOfBirth.touched">
+                        {{ formResErr.dayOfBirth }}</p>
+                </div>
+                <div class="form-input">
+                    <label for="dob">Choose Your Bank</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="idBank" id="exampleRadios1"
+                            formControlName="idBank" value="1" checked>
+                        <label class="form-check-label" for="exampleRadios1">
+                            Techcombank
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="idBank" id="exampleRadios2"
+                            formControlName="idBank" value="2">
+                        <label class="form-check-label" for="exampleRadios2">
+                            TPBank
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="idBank" id="exampleRadios3"
+                            formControlName="idBank" value="3">
+                        <label class="form-check-label" for="exampleRadios3">
+                            Vietcombank
+                        </label>
+                    </div>
+                    <p class="form_err" *ngIf="formResErr.idBank && formRegister.controls.idBank.touched">
+                        {{ formResErr.idBank }}</p>
+                </div>
+                <button class="button-auth" [disabled]="formRegister.invalid" (click)="register()">Register</button>
+            </div>
+        </ng-container>
+    </div>
+</div>

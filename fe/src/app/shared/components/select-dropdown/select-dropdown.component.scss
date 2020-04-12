@@ -1,0 +1,150 @@
+.nav {
+    margin-left: 0;
+    margin-bottom: 20px;
+    list-style: none;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+ul,
+ol {
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.dropdown-search {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    height: 32px;
+}
+
+.item-value {
+    padding: 3px 12px;
+}
+
+.item-value:hover {
+    background: lightgray;
+    cursor: pointer;
+}
+
+.dropup,
+.dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.caret {
+    float: right;
+    margin-top: 5px;
+}
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-top: 4px solid\9;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+.dropdown-toggle::after  {
+    display: none;
+}
+
+.show>.dropdown-menu {
+    display: block;
+    width: 100%;
+}
+
+.nav>li>a {
+    display: block;
+    padding: 7px 12px!important;
+}
+
+.search-input,
+.search-input :hover {
+    background: #fbfbfb;
+    border-radius: 5px 5px 0 0;
+    input {
+        background: white;
+    }
+}
+
+.search-fill-in {
+    border-radius: 0px!important;
+}
+
+.title-dropdown {
+    background-color: #f7f6f6;
+    font-size: 16px;
+}
+
+a,
+a:focus,
+a:hover {
+    color: black!important;
+    border-radius: 5px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 0px;
+    margin: 2px 0 0;
+    list-style: none;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+}
+
+.dropdown-menu .divider {
+    height: 1px;
+    margin: 9px 1px;
+    overflow: hidden;
+    background-color: #e5e5e5;
+    border-bottom: 1px solid #ffffff;
+}
+
+.dropdown-menu>li>.value-search {
+    word-wrap: break-word;
+    /* IE 5.5-7 */
+    white-space: -moz-pre-wrap;
+    /* Firefox 1.0-2.0 */
+    white-space: pre-wrap;
+}
+
+.dropdown-menu>li>a {
+    display: block;
+    padding: 3px 12px;
+    clear: both;
+    font-weight: normal;
+    line-height: 20px;
+    color: #333333;
+    white-space: nowrap;
+    /* current browsers */
+}
+
+#drop2 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,105 @@
+<div>
+    <app-model-search *ngIf="showSearch" [enableFilter]="checkSearchFilter" (textSearch)="textSearch($event.text,1)"
+        (filter)="filter()" [holder]="holder"></app-model-search>
+    <div class="portlet light bordered">
+
+        <div class="portlet-body" style="overflow-x:auto;">
+            <table class="table table-striped table-bordered table-hover" id="sample_2">
+                <thead>
+                    <tr>
+                        <th class="table-checkbox center-position"
+                            *ngIf="isCheckItem&&!checkSearchFilter||isCheckItem&&checkSearchFilter&&checkDelete">
+                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                <input *ngIf="!isCheckItemRadio" type="checkbox" value="check_all"
+                                    (change)="onChange($event,'all')" [checked]="isCheckAll" />
+                                <span *ngIf="!isCheckItemRadio"></span>
+                            </label>
+                        </th>
+                        <th *ngFor="let header of headers,let i=index"
+                            [ngClass]="{'search-th':listActiveFilter[i] && listActiveFilter[i].active}">
+                            <div *ngIf="listActiveFilter[i] && !listActiveFilter[i].active" class="search-format">
+                                <label>{{header}}</label>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr class="tr-filter" *ngIf="checkSearchFilter">
+                        <th class="table-checkbox center-position" *ngIf="isCheckItem && checkDelete">
+
+                        </th>
+                        <th *ngFor="let header of headers,let i=index">
+                            <input type="text" *ngIf="header != 'Action'" #srchTerm
+                                (keyup)="searchFilter(srchTerm.value,i)" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="odd gradeX" *ngFor="let item of pagedItems,let i=index">
+                        <td class="center-position"
+                            *ngIf="isCheckItem&&!checkSearchFilter||isCheckItem&&checkSearchFilter&&checkDelete">
+                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                <input type="{{isCheckItemRadio?'radio':'checkbox'}}" name="check_table"
+                                    [ngClass]="{'checkboxes':!isCheckItemRadio}" value="i" (change)="onChange($event,i)"
+                                    [checked]="item.check" />
+                                <span></span>
+                            </label>
+                        </td>
+                        <td *ngFor="let content of item.content,let j=index"
+                            [ngClass]="{'status':content.status,'normal':!content.status}" class="break-line">
+                            <span *ngIf="!content.status&&!content.type&&!content.dropType&&!content.defect"
+                                [ngClass]="{'label-link':content.link==true}"
+                                (click)="clickContentStatus(item,content.link,j)">{{content.title}}</span>
+                            <span *ngIf="!content.status&&!content.type&&!content.dropType&&content.defect"
+                                class="label-defect">{{content.title}}</span>
+                            <span *ngIf="content.status&&!content.link" class="badge label-sm"
+                                [ngClass]="{'badge-warning':content.status==1||content.status==4,'badge-info':content.status==2,'badge-danger':content.status==3,'badge-primary':content.status==5}"
+                                (click)="clickContentStatus(item,content.clickAble,j)"> {{content.title}} </span>
+                            <input #inputType (keyup)="inputValue(inputType.value,item,i,j)" *ngIf="content.type"
+                                type="{{content.type}}" value="{{content.title}}">
+                            <app-select-dropdown *ngIf="content.dropType" [nameSelect]="content.titleSelect"
+                                [title]="content.title" [options]="content.items"
+                                (selectedOption)="dropDownSelect($event,item,i)"></app-select-dropdown>
+                        </td>
+                        <td *ngIf="item.actions&&item.actions.length>0" class="action">
+                            <div class="btn-group">
+                                <button class="btn btn-info green dropdown-toggle" type="button" data-toggle="dropdown"
+                                    aria-expanded="false"> Actions
+                                    <!-- <i class="fa fa-angle-down"></i> -->
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li *ngFor="let action of item.actions" (click)="clickAction(action, item,i)">
+                                        <a>
+                                            <i></i> {{action}} </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no-data" *ngIf="!pagedItems||pagedItems.length==0">No Data Available</div>
+        </div>
+        <ul *ngIf="pager  && pager['pages'] && pager['pages'].length &&showPage" class="pagination">
+            <li [ngClass]="{disabled:pager['currentPage'] === 1}">
+                <a (click)="choosepage(1)"><i class="fa fa-angle-double-left"></i></a>
+            </li>
+            <li [ngClass]="{disabled:pager['currentPage'] === 1}">
+                <a (click)="choosepage(pager.currentPage - 1)"><i class="fa fa-angle-left"></i></a>
+            </li>
+            <li *ngFor="let page of pager['pages']" [ngClass]="{active:pager['currentPage'] === page}">
+                <a (click)="choosepage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager['currentPage'] === pager['totalPages']}">
+                <a (click)="choosepage(pager['currentPage'] + 1)"><i class="fa fa-angle-right"></i></a>
+            </li>
+            <li [ngClass]="{disabled:pager['currentPage'] === pager['totalPages']}">
+                <a (click)="choosepage(pager['totalPages'])"><i class="fa fa-angle-double-right"></i></a>
+            </li>
+        </ul>
+        <ul *ngIf="showBtn" class="pagination">
+            <a>
+                <span>着金詳細を確認する</span>
+                <i class="fa fa-angle-double-right"></i>
+            </a>
+        </ul>
+    </div>
+</div>
