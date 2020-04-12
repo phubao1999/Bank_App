@@ -32,15 +32,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserEntity loginById(int id, String password) throws CustomException {
-		UserEntity user = userDao.getUserById(id);
-		if (user == null) {
-			throw new CustomException("Id User Is Not Found");
+	public UserEntity loginById(String json) throws CustomException {
+		JSONObject userJson = new JSONObject(json);
+		if (userJson.isEmpty()) {
+			throw new CustomException("Please Enter All Field");
 		} else {
-			if (!user.getPassword().equals(password)) {
-				throw new CustomException("Password Is Not Right");
+			UserEntity user = userDao.getUserById(userJson.getInt("id"));
+			if (user == null) {
+				throw new CustomException("Id User Is Not Found");
 			} else {
-				return user;
+				if (!user.getPassword().equals(userJson.getString("password"))) {
+					throw new CustomException("Password Is Not Right");
+				} else {
+					return user;
+				}
 			}
 		}
 	}

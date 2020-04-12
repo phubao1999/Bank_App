@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +28,7 @@ import com.BaoPT.api.utils.CustomStatus;
  *
  */
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/api")
 @RestController
 public class UserController {
@@ -55,10 +57,10 @@ public class UserController {
 	 * @return Login
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody ResponseEntity<UserEntity> login(@RequestBody UserEntity user) {
+	public @ResponseBody ResponseEntity<UserEntity> login(@RequestBody String json) {
 		UserEntity userEntity = null;
 		try {
-			userEntity = userService.loginById(user.getIdUser(), user.getPassword());
+			userEntity = userService.loginById(json);
 			return ResponseEntity.ok(userEntity);
 		} catch (Exception e) {
 			e.printStackTrace();

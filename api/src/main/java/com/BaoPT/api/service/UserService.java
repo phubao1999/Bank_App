@@ -16,7 +16,7 @@ public interface UserService {
 	
 	public List<UserEntity> getAll();
 	
-	public UserEntity loginById(int id, String password) throws CustomException;
+	public UserEntity loginById(String json) throws CustomException;
 	
 	public UserEntity register(String json) throws CustomException;
 	
