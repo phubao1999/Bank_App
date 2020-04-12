@@ -1,0 +1,22 @@
+/**
+ * 
+ */
+package com.BaoPT.api.dao;
+
+import java.util.List;
+
+import com.BaoPT.api.bean.UserEntity;
+
+/**
+ * @author BaoPT
+ *
+ */
+public interface UserDao {
+
+	public List<UserEntity> getAll();
+	
+	public UserEntity getUserById(int id);
+	
+	public void register(UserEntity userEntity);
+	
+}
