@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.BaoPT.api.bean.UserEntity;
 import com.BaoPT.api.dao.UserDao;
 import com.BaoPT.api.service.UserService;
-import com.BaoPT.api.utils.CustomException;
+import com.BaoPT.api.utils.ApiValidateExeption;
 
 /**
  * @author BaoPT
@@ -32,17 +32,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserEntity loginById(String json) throws CustomException {
+	public UserEntity loginById(String json) throws ApiValidateExeption {
 		JSONObject userJson = new JSONObject(json);
 		if (userJson.isEmpty()) {
-			throw new CustomException("Please Enter All Field");
+			throw new ApiValidateExeption("400", "Please Enter All Field");
 		} else {
 			UserEntity user = userDao.getUserById(userJson.getInt("id"));
 			if (user == null) {
-				throw new CustomException("Id User Is Not Found");
+				throw new ApiValidateExeption("400", "Id User Is Not Found");
 			} else {
 				if (!user.getPassword().equals(userJson.getString("password"))) {
-					throw new CustomException("Password Is Not Right");
+					throw new ApiValidateExeption("400", "Password Is Not Right");
 				} else {
 					return user;
 				}
@@ -51,11 +51,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public UserEntity register(String json) throws CustomException {
+	public UserEntity register(String json) throws ApiValidateExeption {
 		// Check If User Exist => throw Exception
 		JSONObject userJson = new JSONObject(json);
 		if (userJson.isEmpty()) {
-			throw new CustomException("Please Enter All Field");
+			throw new ApiValidateExeption("400", "Please Enter All Field");
 		} else {
 			UserEntity userEntity = new UserEntity();
 			userEntity.setName(userJson.getString("name"));
@@ -65,7 +65,25 @@ public class UserServiceImpl implements UserService {
 			userEntity.setIdBank(userJson.getInt("id_bank"));
 			userEntity.setMonney(userJson.getInt("monney"));
 			userDao.register(userEntity);
-			return userEntity;			
+			return userEntity;	
+		}
+	}
+
+	@Override
+	public UserEntity update(String json, int id) throws ApiValidateExeption {
+		JSONObject userJson = new JSONObject(json);
+		if (userJson.isEmpty()) {
+			throw new ApiValidateExeption("400", "Please Enter All Field");
+		} else {
+			UserEntity userUpdate = userDao.getUserById(id);
+			userUpdate.setName(userJson.getString("name"));
+			userUpdate.setSdt(userJson.getString("sdt"));
+			userUpdate.setDayOfBirth(userJson.getString("day_of_birth"));
+			userUpdate.setPassword(userJson.getString("password"));
+			userUpdate.setIdBank(userJson.getInt("id_bank"));
+			userUpdate.setMonney(userJson.getInt("monney"));
+			userDao.update(userUpdate);
+			return userUpdate;
 		}
 	}
 

@@ -1,21 +1,13 @@
-/**
- * 
- */
 package com.BaoPT.api.utils;
 
-/**
- * @author BaoPT
- *
- */
-public class CustomException extends Exception {
-
+public class CustomExeption extends Exception {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private String message;
-	
-	public CustomException(String message) {
+
+	public CustomExeption(String message) {
 		super();
 		this.message = message;
 	}
@@ -27,5 +19,4 @@ public class CustomException extends Exception {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
 }

@@ -41,4 +41,15 @@ public class UserDaoImpl implements UserDao {
 		entityManager.persist(userEntity);
 	}
 
+	@Override
+	public void update(UserEntity userEntity) {
+		entityManager.merge(userEntity);
+	}
+
+	@Override
+	public void getInforUser(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -19,4 +19,8 @@ public interface UserDao {
 	
 	public void register(UserEntity userEntity);
 	
+	public void update(UserEntity userEntity);
+	
+	public void getInforUser(int id);
+	
 }

@@ -74,7 +74,6 @@ export class AuthComponent implements OnInit, OnDestroy {
       password: ['', [Validators.required]]
     });
     this.formLogin.valueChanges.subscribe(() => {
-      console.log(this.formResErr);
       this.validateService.getValidate(
         this.formLogin, this.formErr, this.validateMess
       );
@@ -106,6 +105,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       id: this.formLogin.value.idUser,
       password: this.formLogin.value.password
     };
+    console.log(body);
     this.authService.login(body).subscribe(res => {
       console.log(res);
     }, err => {
