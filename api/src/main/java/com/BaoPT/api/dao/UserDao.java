@@ -6,6 +6,7 @@ package com.BaoPT.api.dao;
 import java.util.List;
 
 import com.BaoPT.api.bean.UserEntity;
+import com.BaoPT.api.model.UserInfo;
 
 /**
  * @author BaoPT
@@ -21,6 +22,6 @@ public interface UserDao {
 	
 	public void update(UserEntity userEntity);
 	
-	public void getInforUser(int id);
+	public UserInfo getInforUser(int id);
 	
 }

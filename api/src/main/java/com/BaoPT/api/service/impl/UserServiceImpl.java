@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.BaoPT.api.bean.UserEntity;
 import com.BaoPT.api.dao.UserDao;
+import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
@@ -85,6 +86,15 @@ public class UserServiceImpl implements UserService {
 			userDao.update(userUpdate);
 			return userUpdate;
 		}
+	}
+
+	@Override
+	public UserInfo getInfoUser(int id) throws ApiValidateExeption {
+		UserInfo userInfo = userDao.getInforUser(id);
+		if (userInfo == null) {
+			throw new ApiValidateExeption("400", "User Is Not Exist");
+		}
+		return userInfo;
 	}
 
 }

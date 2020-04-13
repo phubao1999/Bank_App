@@ -6,6 +6,7 @@ package com.BaoPT.api.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.BaoPT.api.bean.UserEntity;
 import com.BaoPT.api.dao.UserDao;
+import com.BaoPT.api.model.UserInfo;
 
 /**
  * @author BaoPT
@@ -47,9 +49,28 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void getInforUser(int id) {
+	public UserInfo getInforUser(int id) {
 		// TODO Auto-generated method stub
-		
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT new com.BaoPT.api.model.UserInfo ( ");
+		sql.append("  u.idUser, u.name, u.sdt, u.password, u.idBank, u.monney, b.bankName) ");
+		sql.append(" FROM ");
+		sql.append("    UserEntity u ");
+		sql.append(" JOIN ");
+		sql.append("    BankEntity b ");
+		sql.append(" ON ");
+		sql.append(" u.idBank = b.idBank ");
+		sql.append(" WHERE ");
+		sql.append(" u.idUser = :id ");
+		Query query = this.entityManager.createQuery(sql.toString());
+		query.setParameter("id", id);
+		UserInfo entity = null;
+		try {
+			entity = (UserInfo) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return entity;
 	}
 
 }

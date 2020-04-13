@@ -6,11 +6,8 @@ package com.BaoPT.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.BaoPT.api.bean.ResultBean;
 import com.BaoPT.api.bean.UserEntity;
+import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
@@ -108,6 +106,25 @@ public class UserController {
 			e.printStackTrace();
 		}
 		resultBean = new ResultBean(userUpdate, "200", "Update Successfully");
+		return resultBean;
+	}
+	
+	/**
+	 * @return Get Info Of User
+	 */
+	
+	@RequestMapping(value = "/info", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody ResultBean getUserInfo(@RequestParam Integer id) {
+		UserInfo userInfo = null;
+		ResultBean resultBean = null;
+		try {
+			userInfo = userService.getInfoUser(id);
+		} catch (ApiValidateExeption e) {
+			resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		resultBean = new ResultBean(userInfo, "200", "Done");
 		return resultBean;
 	}
 }
