@@ -73,14 +73,6 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public Integer getIdBank() {
-		return idBank;
-	}
-
-	public void setIdBank(Integer idBank) {
-		this.idBank = idBank;
-	}
-
 	public Integer getMonney() {
 		return monney;
 	}
@@ -91,9 +83,6 @@ public class UserEntity {
 
 	@Column(name = "password")
 	private String password;
-	
-	@Column(name = "id_bank")
-	private Integer idBank;
 	
 	@Column(name = "monney")
 	private Integer monney;
