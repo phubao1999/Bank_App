@@ -27,11 +27,22 @@ public class UserEntity {
 	@Column(name = "name")
 	private String name;
 	
+	public Integer getIdBank() {
+		return idBank;
+	}
+
+	public void setIdBank(Integer idBank) {
+		this.idBank = idBank;
+	}
+
 	@Column(name = "sdt")
 	private String sdt;
 	
 	@Column(name = "day_of_birth")
 	private String dayOfBirth;
+	
+	@Column(name = "id_bank")
+	private Integer idBank;
 	
 	public Integer getIdUser() {
 		return idUser;

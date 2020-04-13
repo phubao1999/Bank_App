@@ -4,6 +4,7 @@
 package com.BaoPT.api.service.impl;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,26 @@ public class TransServiceImpl implements TransService {
 			transEntity.setTranfferDay(timestamp);
 			transDao.createTrans(transEntity);
 			return transEntity;
+		}
+	}
+
+	@Override
+	public List<TransEntity> getAllById(int id) throws ApiValidateExeption {
+		List<TransEntity> transList = (List<TransEntity>) transDao.getAllById(id);
+		if (transList.size() == 0) {
+			throw new ApiValidateExeption("400", "No Data");
+		} else {
+			return transList;			
+		}
+	}
+
+	@Override
+	public List<TransEntity> filter(String json) throws ApiValidateExeption {
+		JSONObject transJson = new JSONObject(json);
+		if (transJson.isEmpty()) {
+			throw new ApiValidateExeption("400", "Please Enter All Field");
+		} else {
+			return transDao.filter(transJson.getInt("id_user"), transJson.getString("from"), transJson.getString("to"));
 		}
 	}
 

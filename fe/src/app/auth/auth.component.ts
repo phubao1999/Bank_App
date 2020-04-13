@@ -122,6 +122,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       id_bank: this.formRegister.value.idBank,
       monney: 0
     };
+    console.log(body);
     this.authService.register(body).subscribe(res => {
       console.log(res);
     }, err => {

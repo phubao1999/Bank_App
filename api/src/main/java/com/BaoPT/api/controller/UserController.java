@@ -62,11 +62,10 @@ public class UserController {
 			userEntity = userService.loginById(json);
 		} catch (ApiValidateExeption e) {
 			resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+			return resultBean;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			resultBean = new ResultBean("400", e.getMessage());
-			return resultBean;
 		}
 		resultBean = new ResultBean(userEntity, "200", "Login Successfully");
 		return resultBean;
@@ -120,7 +119,7 @@ public class UserController {
 		try {
 			userInfo = userService.getInfoUser(id);
 		} catch (ApiValidateExeption e) {
-			resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+			return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

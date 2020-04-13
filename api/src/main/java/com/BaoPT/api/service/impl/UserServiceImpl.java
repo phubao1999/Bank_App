@@ -63,8 +63,8 @@ public class UserServiceImpl implements UserService {
 			userEntity.setSdt(userJson.getString("sdt"));
 			userEntity.setDayOfBirth(userJson.getString("day_of_birth"));
 			userEntity.setPassword(userJson.getString("password"));
-//			userEntity.setIdBank(userJson.getInt("id_bank"));
 			userEntity.setMonney(userJson.getInt("monney"));
+			userEntity.setIdBank(userJson.getInt("id_bank"));
 			userDao.register(userEntity);
 			return userEntity;	
 		}
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
 			userUpdate.setSdt(userJson.getString("sdt"));
 			userUpdate.setDayOfBirth(userJson.getString("day_of_birth"));
 			userUpdate.setPassword(userJson.getString("password"));
-//			userUpdate.setIdBank(userJson.getInt("id_bank"));
+			userUpdate.setIdBank(userJson.getInt("id_bank"));
 			userUpdate.setMonney(userJson.getInt("monney"));
 			userDao.update(userUpdate);
 			return userUpdate;
