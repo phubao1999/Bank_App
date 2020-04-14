@@ -52,6 +52,11 @@ public class TransController {
 		return resultBean;
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return Get History Trans
+	 */
 	@RequestMapping(value = "/trans", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResultBean getAll(@RequestParam Integer id) {
 		List<TransEntity> transEntity = null;
@@ -68,12 +73,17 @@ public class TransController {
 		return resultBean;
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return Filter History Trans
+	 */
 	@RequestMapping(value = "/trans/filter", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResultBean filter(@RequestBody String json) {
+	public ResultBean filter(@RequestParam Integer id, @RequestBody String json) {
 		List<TransEntity> transEntity = null;
 		ResultBean resultBean = null;
 		try {
-			transEntity = transService.filter(json);
+			transEntity = transService.filter(id, json);
 		} catch (ApiValidateExeption e) {
 			return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
 		} catch (Exception e) {

@@ -4,6 +4,9 @@
 package com.BaoPT.api.service.impl;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -56,12 +59,29 @@ public class TransServiceImpl implements TransService {
 	}
 
 	@Override
-	public List<TransEntity> filter(String json) throws ApiValidateExeption {
+	public List<TransEntity> filter(int id, String json) throws ApiValidateExeption {
 		JSONObject transJson = new JSONObject(json);
+		List<TransEntity> transList = null;
 		if (transJson.isEmpty()) {
 			throw new ApiValidateExeption("400", "Please Enter All Field");
 		} else {
-			return transDao.filter(transJson.getInt("id_user"), transJson.getString("from"), transJson.getString("to"));
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+			Date fromDate = null;
+			Date toDate = null;
+			try {
+				String from = transJson.getString("from");
+				String to = transJson.getString("to");	
+				fromDate = dateFormat.parse(from + " 00:00");
+				toDate = dateFormat.parse(to + " 23:59");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			transList = transDao.filter(id, fromDate, toDate);
+			if (transList.size() == 0) {
+				throw new ApiValidateExeption("400", "There Is No Data");
+			} else {
+				return transList;
+			}
 		}
 	}
 

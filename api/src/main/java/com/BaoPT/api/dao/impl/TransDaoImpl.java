@@ -3,6 +3,7 @@
  */
 package com.BaoPT.api.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -57,19 +58,17 @@ public class TransDaoImpl implements TransDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<TransEntity> filter(int id, String from, String to) {
+	public List<TransEntity> filter(int id, Date from, Date to) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT t ");
 		sql.append(" FROM ");
-		sql.append("    TransEntity t ");
+		sql.append("   TransEntity t ");
 		sql.append(" WHERE ");
 		sql.append("    t.idUser = :id ");
-		sql.append(" AND (");
-		sql.append("    tranfferDay ");
-		sql.append(" BETWEEN ");
-		sql.append("    t.tranfferDay = :from ");
 		sql.append(" AND ");
-		sql.append("    t.tranfferDay = :to )");
+		sql.append("    t.tranfferDay > :from ");
+		sql.append(" AND ");
+		sql.append("    t.tranfferDay < :to ");
 		Query query = this.entityManager.createQuery(sql.toString());
 		query.setParameter("id", id);
 		query.setParameter("from", from);

@@ -11,5 +11,5 @@ public interface TransService {
 	
 	public List<TransEntity> getAllById(int id) throws ApiValidateExeption;
 	
-	public List<TransEntity> filter(String json) throws ApiValidateExeption;
+	public List<TransEntity> filter(int id, String json) throws ApiValidateExeption;
 }
