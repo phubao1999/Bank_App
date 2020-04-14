@@ -1,3 +1,4 @@
+import { AuthGuard } from './shared/guard/auth.guard';
 import { Routing } from './app-routing.routing';
 import { AdminModule } from './admin/admin.module';
 import { UserModule } from './user/user.module';
@@ -28,7 +29,7 @@ import { AuthComponent } from './auth/auth.component';
     UserModule,
     AdminModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

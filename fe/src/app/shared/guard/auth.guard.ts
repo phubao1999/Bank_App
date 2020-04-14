@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class AuthGuard implements CanActivate {
     constructor(private router: Router) { }
     canActivate(
@@ -16,6 +14,7 @@ export class AuthGuard implements CanActivate {
         if (!localStorage.getItem('user-info')) {
             this.router.navigate(['/auth']);
             subject.next(false);
+            return true;
         }
         return true;
     }
