@@ -1,3 +1,4 @@
+import { AuthGuard } from './shared/guard/auth.guard';
 import { AuthComponent } from './auth/auth.component';
 import { UserLayoutComponent } from './shared/layout/user-layout/user-layout.component';
 import { UserComponent } from './user/user.component';

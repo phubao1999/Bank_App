@@ -105,9 +105,14 @@ export class AuthComponent implements OnInit, OnDestroy {
       id: this.formLogin.value.idUser,
       password: this.formLogin.value.password
     };
-    console.log(body);
     this.authService.login(body).subscribe(res => {
-      console.log(res);
+      alert(`${res['meta']['message']}`);
+      const status = res['meta']['code'];
+      if (status === '200') {
+        const string = JSON.stringify(res['data'])
+        localStorage.setItem('user-info', string);
+        this.router.navigate(['/']);
+      }
     }, err => {
       console.log(err);
     });
@@ -122,9 +127,14 @@ export class AuthComponent implements OnInit, OnDestroy {
       id_bank: this.formRegister.value.idBank,
       monney: 0
     };
-    console.log(body);
     this.authService.register(body).subscribe(res => {
-      console.log(res);
+      alert(`${res['meta']['message']}`);
+      const status = res['meta']['code'];
+      if (status === '200') {
+        const string = JSON.stringify(res['data'])
+        localStorage.setItem('user-info', string);
+        this.router.navigate(['/']);
+      }
     }, err => {
       console.log(err);
     });
