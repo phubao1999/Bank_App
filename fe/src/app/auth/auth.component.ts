@@ -108,10 +108,11 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.authService.login(body).subscribe(res => {
       alert(`${res['meta']['message']}`);
       const status = res['meta']['code'];
+      const id = res['data']['idUser'];
       if (status === '200') {
         const string = JSON.stringify(res['data'])
         localStorage.setItem('user-info', string);
-        this.router.navigate(['/']);
+        this.router.navigate(['/'], { queryParams: { id: id } });
       }
     }, err => {
       console.log(err);
@@ -130,10 +131,11 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.authService.register(body).subscribe(res => {
       alert(`${res['meta']['message']}`);
       const status = res['meta']['code'];
+      const id = res['data']['id'];
       if (status === '200') {
         const string = JSON.stringify(res['data'])
         localStorage.setItem('user-info', string);
-        this.router.navigate(['/']);
+        this.router.navigate(['/'], { queryParams: { id: id } });
       }
     }, err => {
       console.log(err);

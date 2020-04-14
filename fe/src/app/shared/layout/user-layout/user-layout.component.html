@@ -1,2 +1,36 @@
-<app-nav></app-nav>
-<router-outlet></router-outlet>
+<div class="all">
+    <div class="nav">
+        <div class="left d-flex">
+            <div class="logo" (click)="back()">
+                BANK MANAGER
+            </div>
+            <div class="bars" (click)="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <div class="right">
+            <div class="user">
+                {{ email }}
+                <div class="btn ml-4" (click)="logoutButton()">
+                    {{ logout | translate }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="center">
+        <div class="nav-bottom">
+            <div class="list-item">
+                <ul>
+                    <li *ngFor="let item of listitems" (click)="toNewPage(item)"
+                        [ngClass]="{ actived: activeFirst === item.link }">
+                        <span><i class="{{ item.icon }}"></i></span>
+                        <div class="text-capitalize">{{ item.title | translate }}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="out-let">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
