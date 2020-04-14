@@ -1,6 +1,9 @@
-/**
- * 
- */
+/////////////////////////////////////////////////////////////////////////////
+//
+// © 2020 VNEXT TRAINING
+//
+/////////////////////////////////////////////////////////////////////////////
+
 package com.BaoPT.api.dao.impl;
 
 import java.util.List;
@@ -17,9 +20,15 @@ import com.BaoPT.api.dao.UserDao;
 import com.BaoPT.api.model.UserInfo;
 
 /**
- * @author BaoPT
+ * [OVERVIEW] UserDaoImpl.
  *
- */
+ * @author: (VNEXT) BaoPT
+ * @version: 1.0
+ * @History
+ * [NUMBER]  [VER]     [DATE]          [USER]             [CONTENT]
+ * --------------------------------------------------------------------------
+ * 001       1.0       2020/04/14      (VNEXT) BaoPT       Create new
+*/
 
 @Repository(value = "userDao")
 @Transactional()

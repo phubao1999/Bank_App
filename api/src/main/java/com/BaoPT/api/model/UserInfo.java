@@ -1,114 +1,121 @@
-/**
- * 
- */
+/////////////////////////////////////////////////////////////////////////////
+//
+// © 2020 VNEXT TRAINING
+//
+/////////////////////////////////////////////////////////////////////////////
+
 package com.BaoPT.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * @author BaoPT
+ * [OVERVIEW] UserInfo.
  *
- */
-
+ * @author: (VNEXT) BaoPT
+ * @version: 1.0
+ * @History
+ * [NUMBER]  [VER]     [DATE]          [USER]             [CONTENT]
+ * --------------------------------------------------------------------------
+ * 001       1.0       2020/04/14      (VNEXT) BaoPT       Create new
+*/
 
 public class UserInfo {
-	
-	@JsonProperty("id_user")
-	private Integer idUser;
-	
-	@JsonProperty("name")
-	private String name;
-	
-	@JsonProperty("sdt")
-	private String sdt;
 
-	@JsonProperty("password")
-	private String password;
-	
-	@JsonProperty("id_bank")
-	private Integer idBank;
-	
-	/**
-	 * @param idUser
-	 * @param name
-	 * @param sdt
-	 * @param password
-	 * @param idBank
-	 * @param monney
-	 * @param bankName
-	 */
-	public UserInfo(Integer idUser, String name, String sdt, String password, Integer idBank, Integer monney,
-			String bankName) {
-		super();
-		this.idUser = idUser;
-		this.name = name;
-		this.sdt = sdt;
-		this.password = password;
-		this.idBank = idBank;
-		this.monney = monney;
-		this.bankName = bankName;
-	}
+    @JsonProperty("id_user")
+    private Integer idUser;
 
-	public Integer getIdUser() {
-		return idUser;
-	}
+    @JsonProperty("name")
+    private String name;
 
-	public void setIdUser(Integer idUser) {
-		this.idUser = idUser;
-	}
+    @JsonProperty("sdt")
+    private String sdt;
 
-	public String getName() {
-		return name;
-	}
+    @JsonProperty("password")
+    private String password;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @JsonProperty("id_bank")
+    private Integer idBank;
 
-	public String getSdt() {
-		return sdt;
-	}
+    /**
+     * @param idUser
+     * @param name
+     * @param sdt
+     * @param password
+     * @param idBank
+     * @param monney
+     * @param bankName
+     */
+    public UserInfo(Integer idUser, String name, String sdt, String password, Integer idBank, Integer monney, String bankName) {
+        super();
+        this.idUser = idUser;
+        this.name = name;
+        this.sdt = sdt;
+        this.password = password;
+        this.idBank = idBank;
+        this.monney = monney;
+        this.bankName = bankName;
+    }
 
-	public void setSdt(String sdt) {
-		this.sdt = sdt;
-	}
+    public Integer getIdUser() {
+        return idUser;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Integer getIdBank() {
-		return idBank;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setIdBank(Integer idBank) {
-		this.idBank = idBank;
-	}
+    public String getSdt() {
+        return sdt;
+    }
 
-	public Integer getMonney() {
-		return monney;
-	}
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
 
-	public void setMonney(Integer monney) {
-		this.monney = monney;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getBankName() {
-		return bankName;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
+    public Integer getIdBank() {
+        return idBank;
+    }
 
-	@JsonProperty("monney")
-	private Integer monney;
-	
-	@JsonProperty("bank_name")
-	private String bankName;
-	
+    public void setIdBank(Integer idBank) {
+        this.idBank = idBank;
+    }
+
+    public Integer getMonney() {
+        return monney;
+    }
+
+    public void setMonney(Integer monney) {
+        this.monney = monney;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    @JsonProperty("monney")
+    private Integer monney;
+
+    @JsonProperty("bank_name")
+    private String bankName;
+
 }

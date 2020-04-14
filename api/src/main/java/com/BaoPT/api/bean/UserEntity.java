@@ -1,6 +1,9 @@
-/**
- * 
- */
+/////////////////////////////////////////////////////////////////////////////
+//
+// © 2020 VNEXT TRAINING
+//
+/////////////////////////////////////////////////////////////////////////////
+
 package com.BaoPT.api.bean;
 
 import javax.persistence.Column;
@@ -11,9 +14,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author BaoPT
+ * [OVERVIEW] UserEntity.
  *
- */
+ * @author: (VNEXT) BaoPT
+ * @version: 1.0
+ * @History
+ * [NUMBER]  [VER]     [DATE]          [USER]             [CONTENT]
+ * --------------------------------------------------------------------------
+ * 001       1.0       2020/04/14      (VNEXT) BaoPT       Create new
+*/
 
 @Entity
 @Table(name = "user")

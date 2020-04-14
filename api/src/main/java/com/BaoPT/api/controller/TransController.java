@@ -1,6 +1,9 @@
-/**
- * 
- */
+/////////////////////////////////////////////////////////////////////////////
+//
+// © 2020 VNEXT TRAINING
+//
+/////////////////////////////////////////////////////////////////////////////
+
 package com.BaoPT.api.controller;
 
 import java.util.List;
@@ -21,9 +24,15 @@ import com.BaoPT.api.service.TransService;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
 /**
- * @author BaoPT
+ * [OVERVIEW] TransController.
  *
- */
+ * @author: (VNEXT) BaoPT
+ * @version: 1.0
+ * @History
+ * [NUMBER]  [VER]     [DATE]          [USER]             [CONTENT]
+ * --------------------------------------------------------------------------
+ * 001       1.0       2020/04/14      (VNEXT) BaoPT       Create new
+*/
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/api")

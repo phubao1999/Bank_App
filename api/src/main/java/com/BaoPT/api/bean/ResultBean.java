@@ -1,6 +1,9 @@
-/**
- * 
- */
+/////////////////////////////////////////////////////////////////////////////
+//
+// © 2020 VNEXT TRAINING
+//
+/////////////////////////////////////////////////////////////////////////////
+
 package com.BaoPT.api.bean;
 
 import java.io.Serializable;
@@ -8,9 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author BaoPT
+ * [OVERVIEW] ResultBean.
  *
- */
+ * @author: (VNEXT) BaoPT
+ * @version: 1.0
+ * @History
+ * [NUMBER]  [VER]     [DATE]          [USER]             [CONTENT]
+ * --------------------------------------------------------------------------
+ * 001       1.0       2020/04/14      (VNEXT) BaoPT       Create new
+*/
+
 public class ResultBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 

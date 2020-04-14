@@ -1,4 +1,21 @@
+/////////////////////////////////////////////////////////////////////////////
+//
+// © 2020 VNEXT TRAINING
+//
+/////////////////////////////////////////////////////////////////////////////
+
 package com.BaoPT.api.utils;
+
+/**
+ * [OVERVIEW] ApiValidateExeption.
+ *
+ * @author: (VNEXT) BaoPT
+ * @version: 1.0
+ * @History
+ * [NUMBER]  [VER]     [DATE]          [USER]             [CONTENT]
+ * --------------------------------------------------------------------------
+ * 001       1.0       2020/04/14      (VNEXT) BaoPT       Create new
+*/
 
 public class ApiValidateExeption extends Exception {
 	private static final long serialVersionUID = 1320995563287455840L;

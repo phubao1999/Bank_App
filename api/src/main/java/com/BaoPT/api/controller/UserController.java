@@ -1,6 +1,9 @@
-/**
- * 
- */
+/////////////////////////////////////////////////////////////////////////////
+//
+// © 2020 VNEXT TRAINING
+//
+/////////////////////////////////////////////////////////////////////////////
+
 package com.BaoPT.api.controller;
 
 import java.util.List;
@@ -22,9 +25,15 @@ import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
 /**
- * @author BaoPT
+ * [OVERVIEW] UserController.
  *
- */
+ * @author: (VNEXT) BaoPT
+ * @version: 1.0
+ * @History
+ * [NUMBER]  [VER]     [DATE]          [USER]             [CONTENT]
+ * --------------------------------------------------------------------------
+ * 001       1.0       2020/04/14      (VNEXT) BaoPT       Create new
+*/
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/api")
@@ -133,7 +142,7 @@ public class UserController {
 	 * @param id
 	 */
 	
-	@RequestMapping(value = "/change-password", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(value = "/change-password", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody ResultBean changePassword(@RequestParam Integer id, @RequestBody String json) {
 		UserEntity userEntity = null;
 		ResultBean resultBean = null;
@@ -154,7 +163,7 @@ public class UserController {
 	 * 
 	 */
 
-	@RequestMapping(value = "/change-monney", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(value = "/change-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody ResultBean updateMonney(@RequestParam Integer id, @RequestBody String json) {
 		UserEntity userEntity = null;
 		ResultBean resultBean = null;
