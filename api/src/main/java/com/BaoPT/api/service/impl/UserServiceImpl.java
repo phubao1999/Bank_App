@@ -97,4 +97,35 @@ public class UserServiceImpl implements UserService {
 		return userInfo;
 	}
 
+	@Override
+	public UserEntity changePassword(int id, String json) throws ApiValidateExeption {
+		UserEntity userUpdatePassword = userDao.getUserById(id);
+		JSONObject userJson = new JSONObject(json);
+		if (userUpdatePassword == null) {
+			throw new ApiValidateExeption("400", "User Is Not Exist");
+		} else if (userJson.isEmpty()) {
+			throw new ApiValidateExeption("400", "Please Enter All Field");
+		} else {
+			userUpdatePassword.setPassword(userJson.getString("password"));
+			userDao.update(userUpdatePassword);
+			return userUpdatePassword;
+		}
+	}
+
+	@Override
+	public UserEntity updateMonney(int id, String json) throws ApiValidateExeption {
+		UserEntity userUpdateMonney = userDao.getUserById(id);
+		JSONObject userJson = new JSONObject(json);
+		if (userUpdateMonney == null) {
+			throw new ApiValidateExeption("400", "User Is Not Exist");
+		} else if (userJson.isEmpty()) {
+			throw new ApiValidateExeption("400", "Please Enter All Field");
+		} else {
+			userUpdateMonney.setMonney(userJson.getInt("monney"));
+			userDao.update(userUpdateMonney);
+			return userUpdateMonney;
+		}
+	}
+
+
 }

@@ -25,4 +25,8 @@ public interface UserService {
 	
 	public UserInfo getInfoUser(int id) throws ApiValidateExeption;
 	
+	public UserEntity changePassword(int id, String json) throws ApiValidateExeption;
+		
+	public UserEntity updateMonney(int id, String json) throws ApiValidateExeption;
+	
 }

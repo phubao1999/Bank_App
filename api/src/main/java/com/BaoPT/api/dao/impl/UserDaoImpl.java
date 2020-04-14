@@ -27,7 +27,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Autowired
 	private EntityManager entityManager;
-	
+
 	@Override
 	public List<UserEntity> getAll() {
 		return entityManager.createQuery("FROM UserEntity ue", UserEntity.class).getResultList();

@@ -63,8 +63,7 @@ public class UserController {
 		} catch (ApiValidateExeption e) {
 			resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
 			return resultBean;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		resultBean = new ResultBean(userEntity, "200", "Login Successfully");
@@ -88,11 +87,12 @@ public class UserController {
 		resultBean = new ResultBean(userEntity, "200", "Create Account Success");
 		return resultBean;
 	}
-	
+
 	/**
 	 * @return Update User By Id
+	 * @param id;
 	 */
-	
+
 	@RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json")
 	public @ResponseBody ResultBean updateUser(@RequestBody String json, @RequestParam Integer id) {
 		UserEntity userUpdate = null;
@@ -107,11 +107,12 @@ public class UserController {
 		resultBean = new ResultBean(userUpdate, "200", "Update Successfully");
 		return resultBean;
 	}
-	
+
 	/**
 	 * @return Get Info Of User
+	 * @param id
 	 */
-	
+
 	@RequestMapping(value = "/info", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody ResultBean getUserInfo(@RequestParam Integer id) {
 		UserInfo userInfo = null;
@@ -126,4 +127,46 @@ public class UserController {
 		resultBean = new ResultBean(userInfo, "200", "Done");
 		return resultBean;
 	}
+	
+	/**
+	 * @return Change Password Of User
+	 * @param id
+	 */
+	
+	@RequestMapping(value = "/change-password", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody ResultBean changePassword(@RequestParam Integer id, @RequestBody String json) {
+		UserEntity userEntity = null;
+		ResultBean resultBean = null;
+		try {
+			userEntity = userService.changePassword(id, json);
+		} catch (ApiValidateExeption e) {
+			return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		resultBean = new ResultBean(userEntity, "200", "Change Password Successfully");
+		return resultBean;
+	}
+	
+	/**
+	 * @param id
+	 * @return Update Money
+	 * 
+	 */
+
+	@RequestMapping(value = "/change-monney", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody ResultBean updateMonney(@RequestParam Integer id, @RequestBody String json) {
+		UserEntity userEntity = null;
+		ResultBean resultBean = null;
+		try {
+			userEntity = userService.updateMonney(id, json);
+		} catch (ApiValidateExeption e) {
+			return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		resultBean = new ResultBean(userEntity, "200", "Update Monney Success");
+		return resultBean;
+	}
+	
 }

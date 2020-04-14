@@ -23,5 +23,5 @@ public interface UserDao {
 	public void update(UserEntity userEntity);
 	
 	public UserInfo getInforUser(int id);
-	
+			
 }
