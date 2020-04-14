@@ -1,24 +1,44 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 
 @Component({
   selector: 'app-user-layout',
   templateUrl: './user-layout.component.html',
   styleUrls: ['./user-layout.component.scss']
 })
-export class UserLayoutComponent implements OnInit {
+export class UserLayoutComponent implements OnInit, DoCheck {
   listitems = [
     {
-      icon: 'fas fa-users',
+      icon: 'fas fa-tachometer-alt',
       title: 'Dash Board',
       link: '/dash-board'
+    },
+    {
+      icon: 'fas fa-money-check',
+      title: 'Tranffer Money',
+      link: 'tranffer-money'
+    },
+    {
+      icon: 'fas fa-bookmark',
+      title: 'Transaction History',
+      link: 'trans-history'
+    },
+    {
+      icon: 'fas fa-users',
+      title: 'Update Profile',
+      link: 'update-profile'
     }
   ];
+  activeFirst;
   constructor(
     public router: Router
   ) { }
 
   ngOnInit() {
+  }
+
+  ngDoCheck(): void {
+    this.activeFirst = window.location.pathname;
   }
 
   toggleMenu() {
