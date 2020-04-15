@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.BaoPT.api.bean.ResultBean;
 import com.BaoPT.api.bean.UserEntity;
+import com.BaoPT.api.model.TransfferMoney;
 import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.utils.ApiValidateExeption;
@@ -40,142 +41,157 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 @RestController
 public class UserController {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	/**
-	 * @author BaoPT
-	 * @return Get All Of User
-	 */
-	@RequestMapping(value = "/user", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResultBean getAll() {
-		List<UserEntity> userEntity = null;
-		ResultBean resultBean = null;
-		try {
-			userEntity = userService.getAll();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		resultBean = new ResultBean(userEntity, "200", "Done");
-		return resultBean;
-	}
+    /**
+     * @author BaoPT
+     * @return Get All Of User
+     */
+    @RequestMapping(value = "/user", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ResultBean getAll() {
+        List<UserEntity> userEntity = null;
+        ResultBean resultBean = null;
+        try {
+            userEntity = userService.getAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(userEntity, "200", "Done");
+        return resultBean;
+    }
 
-	/**
-	 * @return Login
-	 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody ResultBean login(@RequestBody String json) {
-		UserEntity userEntity = null;
-		ResultBean resultBean = null;
-		try {
-			userEntity = userService.loginById(json);
-		} catch (ApiValidateExeption e) {
-			resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-			return resultBean;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		resultBean = new ResultBean(userEntity, "200", "Login Successfully");
-		return resultBean;
-	}
+    /**
+     * @return Login
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody ResultBean login(@RequestBody String json) {
+        UserEntity userEntity = null;
+        ResultBean resultBean = null;
+        try {
+            userEntity = userService.loginById(json);
+        } catch (ApiValidateExeption e) {
+            resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+            return resultBean;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(userEntity, "200", "Login Successfully");
+        return resultBean;
+    }
 
-	/**
-	 * @return Register User
-	 */
-	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody ResultBean register(@RequestBody String json) {
-		UserEntity userEntity = null;
-		ResultBean resultBean = null;
-		try {
-			userEntity = userService.register(json);
-		} catch (ApiValidateExeption e) {
-			resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		resultBean = new ResultBean(userEntity, "200", "Create Account Success");
-		return resultBean;
-	}
+    /**
+     * @return Register User
+     */
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody ResultBean register(@RequestBody String json) {
+        UserEntity userEntity = null;
+        ResultBean resultBean = null;
+        try {
+            userEntity = userService.register(json);
+        } catch (ApiValidateExeption e) {
+            resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(userEntity, "200", "Create Account Success");
+        return resultBean;
+    }
 
-	/**
-	 * @return Update User By Id
-	 * @param id;
-	 */
+    /**
+     * @return Update User By Id
+     * @param id;
+     */
 
-	@RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody ResultBean updateUser(@RequestBody String json, @RequestParam Integer id) {
-		UserEntity userUpdate = null;
-		ResultBean resultBean = null;
-		try {
-			userUpdate = userService.update(json, id);
-		} catch (ApiValidateExeption e) {
-			resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		resultBean = new ResultBean(userUpdate, "200", "Update Successfully");
-		return resultBean;
-	}
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json")
+    public @ResponseBody ResultBean updateUser(@RequestBody String json, @RequestParam Integer id) {
+        UserEntity userUpdate = null;
+        ResultBean resultBean = null;
+        try {
+            userUpdate = userService.update(json, id);
+        } catch (ApiValidateExeption e) {
+            resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(userUpdate, "200", "Update Successfully");
+        return resultBean;
+    }
 
-	/**
-	 * @return Get Info Of User
-	 * @param id
-	 */
+    /**
+     * @return Get Info Of User
+     * @param id
+     */
 
-	@RequestMapping(value = "/info", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody ResultBean getUserInfo(@RequestParam Integer id) {
-		UserInfo userInfo = null;
-		ResultBean resultBean = null;
-		try {
-			userInfo = userService.getInfoUser(id);
-		} catch (ApiValidateExeption e) {
-			return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		resultBean = new ResultBean(userInfo, "200", "Done");
-		return resultBean;
-	}
-	
-	/**
-	 * @return Change Password Of User
-	 * @param id
-	 */
-	
-	@RequestMapping(value = "/change-password", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody ResultBean changePassword(@RequestParam Integer id, @RequestBody String json) {
-		UserEntity userEntity = null;
-		ResultBean resultBean = null;
-		try {
-			userEntity = userService.changePassword(id, json);
-		} catch (ApiValidateExeption e) {
-			return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		resultBean = new ResultBean(userEntity, "200", "Change Password Successfully");
-		return resultBean;
-	}
-	
-	/**
-	 * @param id
-	 * @return Update Money
-	 * 
-	 */
+    @RequestMapping(value = "/info", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody ResultBean getUserInfo(@RequestParam Integer id) {
+        UserInfo userInfo = null;
+        ResultBean resultBean = null;
+        try {
+            userInfo = userService.getInfoUser(id);
+        } catch (ApiValidateExeption e) {
+            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(userInfo, "200", "Done");
+        return resultBean;
+    }
 
-	@RequestMapping(value = "/change-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody ResultBean updateMonney(@RequestParam Integer id, @RequestBody String json) {
-		UserEntity userEntity = null;
-		ResultBean resultBean = null;
-		try {
-			userEntity = userService.updateMonney(id, json);
-		} catch (ApiValidateExeption e) {
-			return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		resultBean = new ResultBean(userEntity, "200", "Update Monney Success");
-		return resultBean;
-	}
-	
+    /**
+     * @return Change Password Of User
+     * @param id
+     */
+
+    @RequestMapping(value = "/change-password", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody ResultBean changePassword(@RequestParam Integer id, @RequestBody String json) {
+        UserEntity userEntity = null;
+        ResultBean resultBean = null;
+        try {
+            userEntity = userService.changePassword(id, json);
+        } catch (ApiValidateExeption e) {
+            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(userEntity, "200", "Change Password Successfully");
+        return resultBean;
+    }
+
+    /**
+     * @param id
+     * @return Update Money
+     * 
+     */
+
+    @RequestMapping(value = "/add-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody ResultBean updateMonney(@RequestParam Integer id, @RequestBody String json) {
+        ResultBean resultBean = null;
+        TransfferMoney tranffer = null;
+        try {
+            tranffer = userService.addMonney(id, json);
+        } catch (ApiValidateExeption e) {
+            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(tranffer, "200", "Update Monney Success");
+        return resultBean;
+    }
+    
+    @RequestMapping(value = "/tranffer-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody ResultBean tranfferMonney(@RequestParam Integer id, @RequestBody String json) {
+        ResultBean resultBean = null;
+        TransfferMoney tranffer = null;
+        try {
+            tranffer = userService.tranfferMonney(id, json);
+        } catch (ApiValidateExeption e) {
+            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(tranffer, "200", "Update Monney Success");
+        return resultBean;
+    }
+
 }

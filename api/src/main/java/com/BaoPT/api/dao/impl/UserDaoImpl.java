@@ -34,52 +34,52 @@ import com.BaoPT.api.model.UserInfo;
 @Transactional()
 public class UserDaoImpl implements UserDao {
 
-	@Autowired
-	private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-	@Override
-	public List<UserEntity> getAll() {
-		return entityManager.createQuery("FROM UserEntity ue", UserEntity.class).getResultList();
-	}
+    @Override
+    public List<UserEntity> getAll() {
+        return entityManager.createQuery("FROM UserEntity ue", UserEntity.class).getResultList();
+    }
 
-	@Override
-	public UserEntity getUserById(int id) {
-		return entityManager.find(UserEntity.class, id);
-	}
+    @Override
+    public UserEntity getUserById(int id) {
+        return entityManager.find(UserEntity.class, id);
+    }
 
-	@Override
-	public void register(UserEntity userEntity) {
-		entityManager.persist(userEntity);
-	}
+    @Override
+    public void register(UserEntity userEntity) {
+        entityManager.persist(userEntity);
+    }
 
-	@Override
-	public void update(UserEntity userEntity) {
-		entityManager.merge(userEntity);
-	}
+    @Override
+    public void update(UserEntity userEntity) {
+        entityManager.merge(userEntity);
+    }
 
-	@Override
-	public UserInfo getInforUser(int id) {
-		// TODO Auto-generated method stub
-		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT new com.BaoPT.api.model.UserInfo ( ");
-		sql.append("  u.idUser, u.name, u.sdt, u.password, u.idBank, u.monney, b.bankName) ");
-		sql.append(" FROM ");
-		sql.append("    UserEntity u ");
-		sql.append(" JOIN ");
-		sql.append("    BankEntity b ");
-		sql.append(" ON ");
-		sql.append(" u.idBank = b.idBank ");
-		sql.append(" WHERE ");
-		sql.append(" u.idUser = :id ");
-		Query query = this.entityManager.createQuery(sql.toString());
-		query.setParameter("id", id);
-		UserInfo entity = null;
-		try {
-			entity = (UserInfo) query.getSingleResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return entity;
-	}
+    @Override
+    public UserInfo getInforUser(int id) {
+        // TODO Auto-generated method stub
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT new com.BaoPT.api.model.UserInfo ( ");
+        sql.append("  u.idUser, u.name, u.sdt, u.password, u.idBank, u.monney, b.bankName) ");
+        sql.append(" FROM ");
+        sql.append("    UserEntity u ");
+        sql.append(" JOIN ");
+        sql.append("    BankEntity b ");
+        sql.append(" ON ");
+        sql.append(" u.idBank = b.idBank ");
+        sql.append(" WHERE ");
+        sql.append(" u.idUser = :id ");
+        Query query = this.entityManager.createQuery(sql.toString());
+        query.setParameter("id", id);
+        UserInfo entity = null;
+        try {
+            entity = (UserInfo) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return entity;
+    }
 
 }

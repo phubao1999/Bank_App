@@ -4,44 +4,49 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-package com.BaoPT.api.bean;
+package com.BaoPT.api.model;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * [OVERVIEW] TransEntity.
+ * [OVERVIEW] TransfferMoney.
  *
  * @author: (VNEXT) BaoPT
  * @version: 1.0
  * @History
  * [NUMBER]  [VER]     [DATE]          [USER]             [CONTENT]
  * --------------------------------------------------------------------------
- * 001       1.0       2020/04/14      (VNEXT) BaoPT       Create new
+ * 001       1.0       2020/04/15      (VNEXT) BaoPT       Create new
 */
+public class TransfferMoney {
 
-@Entity
-@Table(name = "transtion")
-public class TransEntity {
+    @JsonProperty("id_user")
+    private Integer idUser;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-
-    public Integer getId() {
-        return id;
+    /**
+     * @param idUser
+     * @param idBank
+     * @param tranfferDay
+     * @param status
+     * @param monneyTranffer
+     * @param fee
+     * @param monney
+     */
+    public TransfferMoney(Integer idUser, Integer idBank, Timestamp tranfferDay, Integer status, Integer monneyTranffer, Integer fee, Integer monney) {
+        super();
+        this.idUser = idUser;
+        this.idBank = idBank;
+        this.tranfferDay = tranfferDay;
+        this.status = status;
+        this.monneyTranffer = monneyTranffer;
+        this.fee = fee;
+        this.monney = monney;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @JsonProperty("id_bank")
+    private Integer idBank;
 
     public Integer getIdUser() {
         return idUser;
@@ -91,21 +96,26 @@ public class TransEntity {
         this.fee = fee;
     }
 
-    @Column(name = "id_user")
-    private Integer idUser;
+    public Integer getMonney() {
+        return monney;
+    }
 
-    @Column(name = "id_bank")
-    private Integer idBank;
+    public void setMonney(Integer monney) {
+        this.monney = monney;
+    }
 
-    @Column(name = "tranffer_day")
+    @JsonProperty("tranffer_day")
     private Timestamp tranfferDay;
 
-    @Column(name = "status")
+    @JsonProperty("status")
     private Integer status;
 
-    @Column(name = "monney_tranffer")
+    @JsonProperty("monney_tranffer")
     private Integer monneyTranffer;
 
-    @Column(name = "fee")
+    @JsonProperty("fee")
     private Integer fee;
+
+    @JsonProperty("monney")
+    private Integer monney;
 }

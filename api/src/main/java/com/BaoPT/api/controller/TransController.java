@@ -39,67 +39,66 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 @RestController
 public class TransController {
 
-	@Autowired
-	private TransService transService;
+    @Autowired
+    private TransService transService;
 
-	/**
-	 * @return Create New Transaction
-	 */
+    /**
+     * @return Create New Transaction
+     */
 
-	@RequestMapping(value = "/trans", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody ResultBean create(@RequestBody String json) {
-		TransEntity transEntity = null;
-		ResultBean resultBean = null;
-		try {
-			transEntity = transService.create(json);
-		} catch (ApiValidateExeption e) {
-			resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		resultBean = new ResultBean(transEntity, "200", "Create Transaction Success");
-		return resultBean;
-	}
-	
-	/**
-	 * 
-	 * @param id
-	 * @return Get History Trans
-	 */
-	@RequestMapping(value = "/trans", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResultBean getAll(@RequestParam Integer id) {
-		List<TransEntity> transEntity = null;
-		ResultBean resultBean = null;
-		try {
-			transEntity = transService.getAllById(id);
-		} catch (ApiValidateExeption e) {
-			return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		resultBean = new ResultBean(transEntity, "200", "Done");
-		return resultBean;
-	}
-	
-	/**
-	 * 
-	 * @param id
-	 * @return Filter History Trans
-	 */
-	@RequestMapping(value = "/trans/filter", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResultBean filter(@RequestParam Integer id, @RequestBody String json) {
-		List<TransEntity> transEntity = null;
-		ResultBean resultBean = null;
-		try {
-			transEntity = transService.filter(id, json);
-		} catch (ApiValidateExeption e) {
-			return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		resultBean = new ResultBean(transEntity, "200", "Done");
-		return resultBean;
-	}
+    @RequestMapping(value = "/trans", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody ResultBean create(@RequestBody String json) {
+        TransEntity transEntity = null;
+        ResultBean resultBean = null;
+        try {
+            transEntity = transService.create(json);
+        } catch (ApiValidateExeption e) {
+            resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(transEntity, "200", "Create Transaction Success");
+        return resultBean;
+    }
+
+    /**
+     * 
+     * @param id
+     * @return Get History Trans
+     */
+    @RequestMapping(value = "/trans", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ResultBean getAll(@RequestParam Integer id) {
+        List<TransEntity> transEntity = null;
+        ResultBean resultBean = null;
+        try {
+            transEntity = transService.getAllById(id);
+        } catch (ApiValidateExeption e) {
+            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(transEntity, "200", "Done");
+        return resultBean;
+    }
+
+    /**
+     * 
+     * @param id
+     * @return Filter History Trans
+     */
+    @RequestMapping(value = "/trans/filter", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ResultBean filter(@RequestParam Integer id, @RequestBody String json) {
+        List<TransEntity> transEntity = null;
+        ResultBean resultBean = null;
+        try {
+            transEntity = transService.filter(id, json);
+        } catch (ApiValidateExeption e) {
+            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(transEntity, "200", "Done");
+        return resultBean;
+    }
 
 }

@@ -24,14 +24,14 @@ import com.BaoPT.api.model.UserInfo;
 
 public interface UserDao {
 
-	public List<UserEntity> getAll();
-	
-	public UserEntity getUserById(int id);
-	
-	public void register(UserEntity userEntity);
-	
-	public void update(UserEntity userEntity);
-	
-	public UserInfo getInforUser(int id);
-			
+    public List<UserEntity> getAll();
+
+    public UserEntity getUserById(int id);
+
+    public void register(UserEntity userEntity);
+
+    public void update(UserEntity userEntity);
+
+    public UserInfo getInforUser(int id);
+
 }

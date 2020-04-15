@@ -9,6 +9,7 @@ package com.BaoPT.api.service;
 import java.util.List;
 
 import com.BaoPT.api.bean.UserEntity;
+import com.BaoPT.api.model.TransfferMoney;
 import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
@@ -24,19 +25,21 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 */
 
 public interface UserService {
-	
-	public List<UserEntity> getAll();
-	
-	public UserEntity loginById(String json) throws ApiValidateExeption;
-	
-	public UserEntity register(String json) throws ApiValidateExeption;
-	
-	public UserEntity update(String json, int id) throws ApiValidateExeption;
-	
-	public UserInfo getInfoUser(int id) throws ApiValidateExeption;
-	
-	public UserEntity changePassword(int id, String json) throws ApiValidateExeption;
-		
-	public UserEntity updateMonney(int id, String json) throws ApiValidateExeption;
-	
+
+    public List<UserEntity> getAll();
+
+    public UserEntity loginById(String json) throws ApiValidateExeption;
+
+    public UserEntity register(String json) throws ApiValidateExeption;
+
+    public UserEntity update(String json, int id) throws ApiValidateExeption;
+
+    public UserInfo getInfoUser(int id) throws ApiValidateExeption;
+
+    public UserEntity changePassword(int id, String json) throws ApiValidateExeption;
+
+    public TransfferMoney addMonney(int id, String json) throws ApiValidateExeption;
+    
+    public TransfferMoney tranfferMonney(int id, String json) throws ApiValidateExeption;
+
 }

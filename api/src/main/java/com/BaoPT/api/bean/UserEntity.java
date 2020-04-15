@@ -27,84 +27,84 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 public class UserEntity {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_user")
-	private Integer idUser;
-	
-	@Column(name = "name")
-	private String name;
-	
-	public Integer getIdBank() {
-		return idBank;
-	}
 
-	public void setIdBank(Integer idBank) {
-		this.idBank = idBank;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user")
+    private Integer idUser;
 
-	@Column(name = "sdt")
-	private String sdt;
-	
-	@Column(name = "day_of_birth")
-	private String dayOfBirth;
-	
-	@Column(name = "id_bank")
-	private Integer idBank;
-	
-	public Integer getIdUser() {
-		return idUser;
-	}
+    @Column(name = "name")
+    private String name;
 
-	public void setIdUser(Integer idUser) {
-		this.idUser = idUser;
-	}
+    public Integer getIdBank() {
+        return idBank;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setIdBank(Integer idBank) {
+        this.idBank = idBank;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Column(name = "sdt")
+    private String sdt;
 
-	public String getSdt() {
-		return sdt;
-	}
+    @Column(name = "day_of_birth")
+    private String dayOfBirth;
 
-	public void setSdt(String sdt) {
-		this.sdt = sdt;
-	}
+    @Column(name = "id_bank")
+    private Integer idBank;
 
-	public String getDayOfBirth() {
-		return dayOfBirth;
-	}
+    public Integer getIdUser() {
+        return idUser;
+    }
 
-	public void setDayOfBirth(String dayOfBirth) {
-		this.dayOfBirth = dayOfBirth;
-	}
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Integer getMonney() {
-		return monney;
-	}
+    public String getSdt() {
+        return sdt;
+    }
 
-	public void setMonney(Integer monney) {
-		this.monney = monney;
-	}
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
 
-	@Column(name = "password")
-	private String password;
-	
-	@Column(name = "monney")
-	private Integer monney;
+    public String getDayOfBirth() {
+        return dayOfBirth;
+    }
+
+    public void setDayOfBirth(String dayOfBirth) {
+        this.dayOfBirth = dayOfBirth;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getMonney() {
+        return monney;
+    }
+
+    public void setMonney(Integer monney) {
+        this.monney = monney;
+    }
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "monney")
+    private Integer monney;
 
 }

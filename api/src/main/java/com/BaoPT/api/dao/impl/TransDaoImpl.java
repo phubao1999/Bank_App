@@ -34,61 +34,61 @@ import com.BaoPT.api.dao.TransDao;
 @Transactional()
 public class TransDaoImpl implements TransDao {
 
-	@Autowired
-	private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-	/**
-	 * @return Create new Item
-	 */
-	@Override
-	public void createTrans(TransEntity trans) {
-		this.entityManager.persist(trans);
-	}
+    /**
+     * @return Create new Item
+     */
+    @Override
+    public void createTrans(TransEntity trans) {
+        this.entityManager.persist(trans);
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<TransEntity> getAllById(int id) {
-		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT t ");
-		sql.append(" FROM ");
-		sql.append("    TransEntity t ");
-		sql.append(" WHERE ");
-		sql.append("    t.idUser = :id ");
-		Query query = this.entityManager.createQuery(sql.toString());
-		query.setParameter("id", id);
-		List<TransEntity> entity = null;
-		try {
-			entity = (List<TransEntity>) query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return entity;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<TransEntity> getAllById(int id) {
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT t ");
+        sql.append(" FROM ");
+        sql.append("    TransEntity t ");
+        sql.append(" WHERE ");
+        sql.append("    t.idUser = :id ");
+        Query query = this.entityManager.createQuery(sql.toString());
+        query.setParameter("id", id);
+        List<TransEntity> entity = null;
+        try {
+            entity = (List<TransEntity>) query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return entity;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<TransEntity> filter(int id, Date from, Date to) {
-		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT t ");
-		sql.append(" FROM ");
-		sql.append("   TransEntity t ");
-		sql.append(" WHERE ");
-		sql.append("    t.idUser = :id ");
-		sql.append(" AND ");
-		sql.append("    t.tranfferDay > :from ");
-		sql.append(" AND ");
-		sql.append("    t.tranfferDay < :to ");
-		Query query = this.entityManager.createQuery(sql.toString());
-		query.setParameter("id", id);
-		query.setParameter("from", from);
-		query.setParameter("to", to);
-		List<TransEntity> entity = null;
-		try {
-			entity = (List<TransEntity>) query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return entity;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<TransEntity> filter(int id, Date from, Date to) {
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT t ");
+        sql.append(" FROM ");
+        sql.append("   TransEntity t ");
+        sql.append(" WHERE ");
+        sql.append("    t.idUser = :id ");
+        sql.append(" AND ");
+        sql.append("    t.tranfferDay > :from ");
+        sql.append(" AND ");
+        sql.append("    t.tranfferDay < :to ");
+        Query query = this.entityManager.createQuery(sql.toString());
+        query.setParameter("id", id);
+        query.setParameter("from", from);
+        query.setParameter("to", to);
+        List<TransEntity> entity = null;
+        try {
+            entity = (List<TransEntity>) query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return entity;
+    }
 
 }

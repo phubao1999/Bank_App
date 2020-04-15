@@ -24,9 +24,9 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 
 public interface TransService {
 
-	public TransEntity create(String json) throws ApiValidateExeption;
-	
-	public List<TransEntity> getAllById(int id) throws ApiValidateExeption;
-	
-	public List<TransEntity> filter(int id, String json) throws ApiValidateExeption;
+    public TransEntity create(String json) throws ApiValidateExeption;
+
+    public List<TransEntity> getAllById(int id) throws ApiValidateExeption;
+
+    public List<TransEntity> filter(int id, String json) throws ApiValidateExeption;
 }
