@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.BaoPT.api.bean.ResultBean;
 import com.BaoPT.api.bean.UserEntity;
-import com.BaoPT.api.model.TransfferMoney;
 import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.utils.ApiValidateExeption;
@@ -155,42 +154,6 @@ public class UserController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(userEntity, "200", "Change Password Successfully");
-        return resultBean;
-    }
-
-    /**
-     * @param id
-     * @return Update Money
-     * 
-     */
-
-    @RequestMapping(value = "/add-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean updateMonney(@RequestParam Integer id, @RequestBody String json) {
-        ResultBean resultBean = null;
-        TransfferMoney tranffer = null;
-        try {
-            tranffer = userService.addMonney(id, json);
-        } catch (ApiValidateExeption e) {
-            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        resultBean = new ResultBean(tranffer, "200", "Update Monney Success");
-        return resultBean;
-    }
-    
-    @RequestMapping(value = "/tranffer-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean tranfferMonney(@RequestParam Integer id, @RequestBody String json) {
-        ResultBean resultBean = null;
-        TransfferMoney tranffer = null;
-        try {
-            tranffer = userService.tranfferMonney(id, json);
-        } catch (ApiValidateExeption e) {
-            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        resultBean = new ResultBean(tranffer, "200", "Update Monney Success");
         return resultBean;
     }
 
