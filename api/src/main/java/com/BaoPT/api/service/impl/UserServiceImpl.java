@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.BaoPT.api.bean.UserEntity;
+import com.BaoPT.api.common.Validate;
 import com.BaoPT.api.dao.UserDao;
 import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
@@ -68,13 +69,26 @@ public class UserServiceImpl implements UserService {
             throw new ApiValidateExeption("400", "Please Enter All Field");
         } else {
             UserEntity userEntity = new UserEntity();
-
-            userEntity.setName(userJson.getString("name"));
-            userEntity.setSdt(userJson.getString("sdt"));
-            userEntity.setDayOfBirth(userJson.getString("day_of_birth"));
-            userEntity.setPassword(userJson.getString("password"));
-            userEntity.setMonney(userJson.getInt("monney"));
-            userEntity.setIdBank(userJson.getInt("id_bank"));
+            if (!userJson.getString("name").trim().matches(Validate.USER_NAME)) {
+                throw new ApiValidateExeption("400", "Name Have To Be Less Than 10 Character");
+            } else if (userJson.getString("sdt").length() < 10 || userJson.getString("sdt").length() > 11) {
+                throw new ApiValidateExeption("400", "Phone Number Is Between 10 and 11 Number");
+            } else if (!userJson.getString("day_of_birth").trim().matches(Validate.DATE)) {
+                throw new ApiValidateExeption("400", "Day of birth must like ex: 1999/08/27");
+            } else if (!userJson.getString("password").matches(Validate.PASSWORD)) {
+                throw new ApiValidateExeption("400",
+                        "Password Must Have Less Then 8 Character, Must Have Character, Number And Special Character. Ex: Bao@123");
+            } else if (userJson.getInt("id_bank") > 3) {
+                throw new ApiValidateExeption("400", "Id Bank Must Be Between 1 and 3");
+            } 
+            else {
+                userEntity.setName(userJson.getString("name"));
+                userEntity.setSdt(userJson.getString("sdt"));
+                userEntity.setDayOfBirth(userJson.getString("day_of_birth"));
+                userEntity.setPassword(userJson.getString("password"));
+                userEntity.setMonney(userJson.getInt("monney"));
+                userEntity.setIdBank(userJson.getInt("id_bank"));
+            }
 
             userDao.register(userEntity);
             return userEntity;
@@ -89,9 +103,17 @@ public class UserServiceImpl implements UserService {
         } else {
             UserEntity userUpdate = userDao.getUserById(id);
 
-            userUpdate.setName(userJson.getString("name"));
-            userUpdate.setSdt(userJson.getString("sdt"));
-            userUpdate.setDayOfBirth(userJson.getString("day_of_birth"));
+            if (!userJson.getString("name").trim().matches(Validate.USER_NAME)) {
+                throw new ApiValidateExeption("400", "Name Have To Be Less Than 10 Character");
+            } else if (userJson.getString("sdt").length() < 10 || userJson.getString("sdt").length() > 11) {
+                throw new ApiValidateExeption("400", "Phone Number Is Between 10 and 11 Number");
+            } else if (!userJson.getString("day_of_birth").trim().matches(Validate.DATE)) {
+                throw new ApiValidateExeption("400", "Day of birth must like ex: 1999/08/27");
+            } else {
+                userUpdate.setName(userJson.getString("name"));
+                userUpdate.setSdt(userJson.getString("sdt"));
+                userUpdate.setDayOfBirth(userJson.getString("day_of_birth"));
+            }
 
             userDao.update(userUpdate);
             return userUpdate;
@@ -104,6 +126,8 @@ public class UserServiceImpl implements UserService {
         if (userInfo == null) {
             throw new ApiValidateExeption("400", "User Is Not Exist");
         }
+        String dobFormat = userInfo.getDob().replace("-", "/");
+        userInfo.setDob(dobFormat);
         return userInfo;
     }
 
@@ -115,6 +139,8 @@ public class UserServiceImpl implements UserService {
             throw new ApiValidateExeption("400", "User Is Not Exist");
         } else if (userJson.isEmpty()) {
             throw new ApiValidateExeption("400", "Please Enter All Field");
+        } else if (!userJson.getString("password").matches(Validate.PASSWORD)) {
+            throw new ApiValidateExeption("400", "Password Must Have Less Then 8 Character, Must Have Character, Number And Special Character. Ex: Bao@123");
         } else {
             userUpdatePassword.setPassword(userJson.getString("password"));
             userDao.update(userUpdatePassword);

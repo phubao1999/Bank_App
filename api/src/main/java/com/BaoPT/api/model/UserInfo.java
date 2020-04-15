@@ -36,26 +36,6 @@ public class UserInfo {
     @JsonProperty("id_bank")
     private Integer idBank;
 
-    /**
-     * @param idUser
-     * @param name
-     * @param sdt
-     * @param password
-     * @param idBank
-     * @param monney
-     * @param bankName
-     */
-    public UserInfo(Integer idUser, String name, String sdt, String password, Integer idBank, Integer monney, String bankName) {
-        super();
-        this.idUser = idUser;
-        this.name = name;
-        this.sdt = sdt;
-        this.password = password;
-        this.idBank = idBank;
-        this.monney = monney;
-        this.bankName = bankName;
-    }
-
     public Integer getIdUser() {
         return idUser;
     }
@@ -88,6 +68,36 @@ public class UserInfo {
         this.password = password;
     }
 
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    /**
+     * @param idUser
+     * @param name
+     * @param sdt
+     * @param password
+     * @param idBank
+     * @param monney
+     * @param bankName
+     * @param dob
+     */
+    public UserInfo(Integer idUser, String name, String sdt, String password, Integer idBank, Integer monney, String bankName, String dob) {
+        super();
+        this.idUser = idUser;
+        this.name = name;
+        this.sdt = sdt;
+        this.password = password;
+        this.idBank = idBank;
+        this.monney = monney;
+        this.bankName = bankName;
+        this.dob = dob;
+    }
+
     public Integer getIdBank() {
         return idBank;
     }
@@ -117,5 +127,8 @@ public class UserInfo {
 
     @JsonProperty("bank_name")
     private String bankName;
+    
+    @JsonProperty("day_of_birth")
+    private String dob;
 
 }

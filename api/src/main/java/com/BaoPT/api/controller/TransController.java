@@ -54,6 +54,7 @@ public class TransController {
             transEntity = transService.create(json);
         } catch (ApiValidateExeption e) {
             resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+            return resultBean;
         } catch (Exception e) {
             e.printStackTrace();
         }

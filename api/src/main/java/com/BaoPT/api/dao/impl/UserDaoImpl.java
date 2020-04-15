@@ -62,7 +62,7 @@ public class UserDaoImpl implements UserDao {
         // TODO Auto-generated method stub
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT new com.BaoPT.api.model.UserInfo ( ");
-        sql.append("  u.idUser, u.name, u.sdt, u.password, u.idBank, u.monney, b.bankName) ");
+        sql.append("  u.idUser, u.name, u.sdt, u.password, u.idBank, u.monney, b.bankName, u.dayOfBirth) ");
         sql.append(" FROM ");
         sql.append("    UserEntity u ");
         sql.append(" JOIN ");

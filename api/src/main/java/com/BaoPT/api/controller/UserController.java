@@ -90,6 +90,7 @@ public class UserController {
             userEntity = userService.register(json);
         } catch (ApiValidateExeption e) {
             resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+            return resultBean;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,6 +111,7 @@ public class UserController {
             userUpdate = userService.update(json, id);
         } catch (ApiValidateExeption e) {
             resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+            return resultBean;
         } catch (Exception e) {
             e.printStackTrace();
         }
