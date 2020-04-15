@@ -69,4 +69,20 @@ public class TransferController {
         resultBean = new ResultBean(tranffer, "200", "Update Monney Success");
         return resultBean;
     }
+
+    @RequestMapping(value = "/send-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody ResultBean sendMonney(@RequestParam Integer id, @RequestBody String json) {
+        ResultBean resultBean = null;
+        TransfferMoney tranffer = null;
+        try {
+            tranffer = tranfferService.sendMonney(id, json);
+        } catch (ApiValidateExeption e) {
+            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(tranffer, "200", "Send Money Successfully");
+        return resultBean;
+    }
+
 }

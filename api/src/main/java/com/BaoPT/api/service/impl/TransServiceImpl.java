@@ -52,7 +52,9 @@ public class TransServiceImpl implements TransService {
             transEntity.setMonneyTranffer(transJson.getInt("monney_tranffer"));
             transEntity.setFee(transJson.getInt("fee"));
             transEntity.setTranfferDay(timestamp);
-            
+            transEntity.setIdUserTransfer(transJson.getInt("id_user_trans"));
+            transEntity.setIdBankTransfer(transJson.getInt("id_bank_trans"));
+
             transDao.createTrans(transEntity);
             return transEntity;
         }

@@ -7,7 +7,6 @@
 package com.BaoPT.api.model;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -25,26 +24,6 @@ public class TransfferMoney {
 
     @JsonProperty("id_user")
     private Integer idUser;
-
-    /**
-     * @param idUser
-     * @param idBank
-     * @param tranfferDay
-     * @param status
-     * @param monneyTranffer
-     * @param fee
-     * @param monney
-     */
-    public TransfferMoney(Integer idUser, Integer idBank, Timestamp tranfferDay, Integer status, Integer monneyTranffer, Integer fee, Integer monney) {
-        super();
-        this.idUser = idUser;
-        this.idBank = idBank;
-        this.tranfferDay = tranfferDay;
-        this.status = status;
-        this.monneyTranffer = monneyTranffer;
-        this.fee = fee;
-        this.monney = monney;
-    }
 
     @JsonProperty("id_bank")
     private Integer idBank;
@@ -101,16 +80,30 @@ public class TransfferMoney {
         return monney;
     }
 
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
     public void setMonney(Integer monney) {
         this.monney = monney;
+    }
+
+    @JsonProperty("tranffer_day")
+    private Timestamp tranfferDay;
+
+    @JsonProperty("status")
+    private Integer status;
+
+    public Integer getIdUserTrans() {
+        return idUserTrans;
+    }
+
+    public void setIdUserTrans(Integer idUserTrans) {
+        this.idUserTrans = idUserTrans;
+    }
+
+    public Integer getIdBankTrans() {
+        return idBankTrans;
+    }
+
+    public void setIdBankTrans(Integer idBankTrans) {
+        this.idBankTrans = idBankTrans;
     }
 
     /**
@@ -120,11 +113,12 @@ public class TransfferMoney {
      * @param status
      * @param monneyTranffer
      * @param fee
+     * @param idUserTrans
+     * @param idBankTrans
      * @param monney
-     * @param dob
      */
-    public TransfferMoney(Integer idUser, Integer idBank, Timestamp tranfferDay, Integer status, Integer monneyTranffer, Integer fee, Integer monney,
-            Date dob) {
+    public TransfferMoney(Integer idUser, Integer idBank, Timestamp tranfferDay, Integer status, Integer monneyTranffer, Integer fee, Integer idUserTrans,
+            Integer idBankTrans, Integer monney) {
         super();
         this.idUser = idUser;
         this.idBank = idBank;
@@ -132,15 +126,10 @@ public class TransfferMoney {
         this.status = status;
         this.monneyTranffer = monneyTranffer;
         this.fee = fee;
+        this.idUserTrans = idUserTrans;
+        this.idBankTrans = idBankTrans;
         this.monney = monney;
-        this.dob = dob;
     }
-
-    @JsonProperty("tranffer_day")
-    private Timestamp tranfferDay;
-
-    @JsonProperty("status")
-    private Integer status;
 
     @JsonProperty("monney_tranffer")
     private Integer monneyTranffer;
@@ -150,7 +139,11 @@ public class TransfferMoney {
 
     @JsonProperty("monney")
     private Integer monney;
-    
-    @JsonProperty("day_of_birth")
-    private Date dob;
+
+    @JsonProperty("id_user_trans")
+    private Integer idUserTrans;
+
+    @JsonProperty("id_bank_trans")
+    private Integer idBankTrans;
+
 }

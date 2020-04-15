@@ -100,6 +100,22 @@ public class TransEntity {
     @Column(name = "tranffer_day")
     private Timestamp tranfferDay;
 
+    public Integer getIdUserTransfer() {
+        return idUserTransfer;
+    }
+
+    public void setIdUserTransfer(Integer idUserTransfer) {
+        this.idUserTransfer = idUserTransfer;
+    }
+
+    public Integer getIdBankTransfer() {
+        return idBankTransfer;
+    }
+
+    public void setIdBankTransfer(Integer idBankTransfer) {
+        this.idBankTransfer = idBankTransfer;
+    }
+
     @Column(name = "status")
     private Integer status;
 
@@ -108,4 +124,10 @@ public class TransEntity {
 
     @Column(name = "fee")
     private Integer fee;
+
+    @Column(name = "id_user_transfer")
+    private Integer idUserTransfer;
+
+    @Column(name = "id_bank_transfer")
+    private Integer idBankTransfer;
 }

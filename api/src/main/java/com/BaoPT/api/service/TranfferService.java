@@ -26,4 +26,6 @@ public interface TranfferService {
 
     public TransfferMoney tranfferMonney(int id, String json) throws ApiValidateExeption;
 
+    public TransfferMoney sendMonney(int id, String json) throws ApiValidateExeption;
+
 }

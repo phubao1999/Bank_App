@@ -51,7 +51,7 @@ public class TranfferServiceImpl implements TranfferService {
             Timestamp tranfferDay = new Timestamp(System.currentTimeMillis());
             int fee = 0;
             int monney = userUpdateMonney.getMonney() + monneyTranffer;
-            TransfferMoney tranffer = new TransfferMoney(idUser, idBank, tranfferDay, status, monneyTranffer, fee, monney);
+            TransfferMoney tranffer = new TransfferMoney(idUser, idBank, tranfferDay, status, monneyTranffer, fee, 0, 0, monney);
 
             userUpdateMonney.setMonney(tranffer.getMonney());
             userDao.update(userUpdateMonney);
@@ -92,13 +92,56 @@ public class TranfferServiceImpl implements TranfferService {
                 }
             }
             int monney = userUpdateMonney.getMonney() - monneyTranffer - fee;
-            TransfferMoney tranffer = new TransfferMoney(idUser, idBank, tranfferDay, status, monneyTranffer, fee, monney);
+            TransfferMoney tranffer = new TransfferMoney(idUser, idBank, tranfferDay, status, monneyTranffer, fee, 0, 0, monney);
 
             userUpdateMonney.setMonney(tranffer.getMonney());
             userDao.update(userUpdateMonney);
 
             return tranffer;
         }
+    }
+
+    @Override
+    public TransfferMoney sendMonney(int id, String json) throws ApiValidateExeption {
+        UserEntity userSendMoney = userDao.getUserById(id);
+        JSONObject userJson = new JSONObject(json);
+        TransfferMoney transfer = null;
+        if (userSendMoney == null) {
+            throw new ApiValidateExeption("400", "User Is Not Exist");
+        } else if (userJson.isEmpty()) {
+            throw new ApiValidateExeption("400", "Please Enter All Field");
+        } else {
+            int idUserTo = userJson.getInt("id_user_to");
+            int monneyTransfer = userJson.getInt("money_transfer");
+            int fee = 0;
+            Timestamp tranfferDay = new Timestamp(System.currentTimeMillis());
+            UserEntity userTakeMoney = userDao.getUserById(idUserTo);
+
+            if (userTakeMoney == null) {
+                throw new ApiValidateExeption("400", "User Is Not Exist");
+            } else if (userSendMoney.getMonney() < 50) {
+                throw new ApiValidateExeption("400", "Can not tranffer Because Your Money Less than 50");
+            } else if (userSendMoney.getMonney() < monneyTransfer) {
+                throw new ApiValidateExeption("400", "Can not tranffer Because Your Money Less than money that you want to transfer");
+            } else {
+                if (userSendMoney.getIdBank() != userTakeMoney.getIdBank()) {
+                    fee = (int) (monneyTransfer * 0.8);
+                } else {
+                    fee = 10;
+                }
+            }
+
+            userSendMoney.setMonney(userSendMoney.getMonney() - monneyTransfer - fee);
+            userDao.update(userSendMoney);
+
+            userTakeMoney.setMonney(userTakeMoney.getMonney() + monneyTransfer);
+            userDao.update(userTakeMoney);
+
+            transfer = new TransfferMoney(id, userSendMoney.getIdBank(), tranfferDay, 3, monneyTransfer, fee, idUserTo,
+                    userTakeMoney.getIdBank(), userSendMoney.getMonney());
+
+        }
+        return transfer;
     }
 
 }
