@@ -24,9 +24,9 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 
 public interface TranfferService {
 
-    public TransfferMoney addMonney(int id, String json) throws ApiValidateExeption;
+    public List<TransfferMoney> addMonney(int id, String json) throws ApiValidateExeption;
 
-    public TransfferMoney tranfferMonney(int id, String json) throws ApiValidateExeption;
+    public List<TransfferMoney> tranfferMonney(int id, String json) throws ApiValidateExeption;
 
     public List<TransfferMoney> sendMonney(int id, String json) throws ApiValidateExeption;
 

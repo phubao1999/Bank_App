@@ -38,9 +38,10 @@ public class TranfferServiceImpl implements TranfferService {
     private UserDao userDao;
 
     @Override
-    public TransfferMoney addMonney(int id, String json) throws ApiValidateExeption {
+    public List<TransfferMoney> addMonney(int id, String json) throws ApiValidateExeption {
         UserEntity userUpdateMonney = userDao.getUserById(id);
         JSONObject userJson = new JSONObject(json);
+        List<TransfferMoney> tranfferList = new ArrayList<TransfferMoney>();
         if (userUpdateMonney == null) {
             throw new ApiValidateExeption("400", "User Is Not Exist");
         } else if (userJson.isEmpty()) {
@@ -54,18 +55,19 @@ public class TranfferServiceImpl implements TranfferService {
             int fee = 0;
             int monney = userUpdateMonney.getMonney() + monneyTranffer;
             TransfferMoney tranffer = new TransfferMoney(idUser, idBank, tranfferDay, status, monneyTranffer, fee, 0, 0, monney);
-
+            tranfferList.add(tranffer);
             userUpdateMonney.setMonney(tranffer.getMonney());
             userDao.update(userUpdateMonney);
 
-            return tranffer;
+            return tranfferList;
         }
     }
 
     @Override
-    public TransfferMoney tranfferMonney(int id, String json) throws ApiValidateExeption {
+    public List<TransfferMoney> tranfferMonney(int id, String json) throws ApiValidateExeption {
         UserEntity userUpdateMonney = userDao.getUserById(id);
         JSONObject userJson = new JSONObject(json);
+        List<TransfferMoney> tranfferList = new ArrayList<TransfferMoney>();
         if (userUpdateMonney == null) {
             throw new ApiValidateExeption("400", "User Is Not Exist");
         } else if (userJson.isEmpty()) {
@@ -98,8 +100,8 @@ public class TranfferServiceImpl implements TranfferService {
 
             userUpdateMonney.setMonney(tranffer.getMonney());
             userDao.update(userUpdateMonney);
-
-            return tranffer;
+            tranfferList.add(tranffer);
+            return tranfferList;
         }
     }
 

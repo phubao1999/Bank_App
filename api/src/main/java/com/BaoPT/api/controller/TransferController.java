@@ -45,7 +45,7 @@ public class TransferController {
     @RequestMapping(value = "/add-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean updateMonney(@RequestParam Integer id, @RequestBody String json) {
         ResultBean resultBean = null;
-        TransfferMoney tranffer = null;
+        List<TransfferMoney> tranffer = null;
         try {
             tranffer = tranfferService.addMonney(id, json);
         } catch (ApiValidateExeption e) {
@@ -60,7 +60,7 @@ public class TransferController {
     @RequestMapping(value = "/tranffer-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean tranfferMonney(@RequestParam Integer id, @RequestBody String json) {
         ResultBean resultBean = null;
-        TransfferMoney tranffer = null;
+        List<TransfferMoney> tranffer = null;
         try {
             tranffer = tranfferService.tranfferMonney(id, json);
         } catch (ApiValidateExeption e) {
