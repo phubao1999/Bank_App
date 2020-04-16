@@ -6,6 +6,8 @@
 
 package com.BaoPT.api.service;
 
+import java.util.List;
+
 import com.BaoPT.api.model.TransfferMoney;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
@@ -26,6 +28,6 @@ public interface TranfferService {
 
     public TransfferMoney tranfferMonney(int id, String json) throws ApiValidateExeption;
 
-    public TransfferMoney sendMonney(int id, String json) throws ApiValidateExeption;
+    public List<TransfferMoney> sendMonney(int id, String json) throws ApiValidateExeption;
 
 }

@@ -30,6 +30,12 @@ import javax.persistence.Table;
 @Table(name = "transtion")
 public class TransEntity {
 
+    @Override
+    public String toString() {
+        return "TransEntity [id=" + id + ", idUser=" + idUser + ", idBank=" + idBank + ", tranfferDay=" + tranfferDay + ", status=" + status
+                + ", monneyTranffer=" + monneyTranffer + ", fee=" + fee + ", idUserTransfer=" + idUserTransfer + ", idBankTransfer=" + idBankTransfer + "]";
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

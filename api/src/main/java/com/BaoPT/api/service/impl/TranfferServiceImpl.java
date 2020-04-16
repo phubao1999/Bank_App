@@ -7,6 +7,8 @@
 package com.BaoPT.api.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,10 +104,13 @@ public class TranfferServiceImpl implements TranfferService {
     }
 
     @Override
-    public TransfferMoney sendMonney(int id, String json) throws ApiValidateExeption {
+    public List<TransfferMoney> sendMonney(int id, String json) throws ApiValidateExeption {
         UserEntity userSendMoney = userDao.getUserById(id);
+
         JSONObject userJson = new JSONObject(json);
-        TransfferMoney transfer = null;
+        List<TransfferMoney> tranfferResponse = new ArrayList<TransfferMoney>();
+        TransfferMoney tranffer = null;
+        TransfferMoney tranfferTo = null;
         if (userSendMoney == null) {
             throw new ApiValidateExeption("400", "User Is Not Exist");
         } else if (userJson.isEmpty()) {
@@ -137,11 +142,18 @@ public class TranfferServiceImpl implements TranfferService {
             userTakeMoney.setMonney(userTakeMoney.getMonney() + monneyTransfer);
             userDao.update(userTakeMoney);
 
-            transfer = new TransfferMoney(id, userSendMoney.getIdBank(), tranfferDay, 3, monneyTransfer, fee, idUserTo,
-                    userTakeMoney.getIdBank(), userSendMoney.getMonney());
+            tranffer = new TransfferMoney(id, userSendMoney.getIdBank(), tranfferDay, 3, monneyTransfer, fee, idUserTo, userTakeMoney.getIdBank(),
+                    userSendMoney.getMonney());
+
+            tranfferTo = new TransfferMoney(idUserTo, userTakeMoney.getIdBank(), tranfferDay, 4, monneyTransfer, 0, id, userSendMoney.getIdBank(),
+                    userTakeMoney.getMonney());
+            
+//            tranfferResponse.add(tranffer);
+            tranfferResponse.add(0, tranffer);
+            tranfferResponse.add(1, tranfferTo);
 
         }
-        return transfer;
+        return tranfferResponse;
     }
 
 }

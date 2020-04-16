@@ -48,7 +48,7 @@ public class TransController {
 
     @RequestMapping(value = "/trans", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody ResultBean create(@RequestBody String json) {
-        TransEntity transEntity = null;
+        List<TransEntity> transEntity = null;
         ResultBean resultBean = null;
         try {
             transEntity = transService.create(json);

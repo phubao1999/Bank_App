@@ -6,6 +6,8 @@
 
 package com.BaoPT.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -73,7 +75,7 @@ public class TransferController {
     @RequestMapping(value = "/send-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean sendMonney(@RequestParam Integer id, @RequestBody String json) {
         ResultBean resultBean = null;
-        TransfferMoney tranffer = null;
+        List<TransfferMoney> tranffer = null;
         try {
             tranffer = tranfferService.sendMonney(id, json);
         } catch (ApiValidateExeption e) {

@@ -9,9 +9,11 @@ package com.BaoPT.api.service.impl;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,24 +41,30 @@ public class TransServiceImpl implements TransService {
     private TransDao transDao;
 
     @Override
-    public TransEntity create(String json) throws ApiValidateExeption {
+    public List<TransEntity> create(String json) throws ApiValidateExeption {
         JSONObject transJson = new JSONObject(json);
+        Timestamp tranfferDay = new Timestamp(System.currentTimeMillis());
+        List<TransEntity> transEntityList = new ArrayList<TransEntity>();
         if (transJson.isEmpty()) {
             throw new ApiValidateExeption("400", "Please Enter All Field");
         } else {
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            TransEntity transEntity = new TransEntity();
-            transEntity.setIdUser(transJson.getInt("id_user"));
-            transEntity.setIdBank(transJson.getInt("id_bank"));
-            transEntity.setStatus(transJson.getInt("status"));
-            transEntity.setMonneyTranffer(transJson.getInt("monney_tranffer"));
-            transEntity.setFee(transJson.getInt("fee"));
-            transEntity.setTranfferDay(timestamp);
-            transEntity.setIdUserTransfer(transJson.getInt("id_user_trans"));
-            transEntity.setIdBankTransfer(transJson.getInt("id_bank_trans"));
+            JSONArray transList = transJson.getJSONArray("data");
+            for (int i = 0; i < transList.length(); i++) {
+                JSONObject obj = transList.getJSONObject(i);
+                TransEntity transEntity = new TransEntity();
+                transEntity.setIdUser(obj.getInt("id_user"));
+                transEntity.setIdBank(obj.getInt("id_bank"));
+                transEntity.setStatus(obj.getInt("status"));
+                transEntity.setMonneyTranffer(obj.getInt("monney_tranffer"));
+                transEntity.setFee(obj.getInt("fee"));
+                transEntity.setTranfferDay(tranfferDay);
+                transEntity.setIdUserTransfer(obj.getInt("id_user_trans"));
+                transEntity.setIdBankTransfer(obj.getInt("id_bank_trans"));
+                transEntityList.add(transEntity);
+                this.transDao.createTrans(transEntity);
+            }
 
-            transDao.createTrans(transEntity);
-            return transEntity;
+            return transEntityList;
         }
     }
 
