@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.BaoPT.api.bean.TransEntity;
+import com.BaoPT.api.common.Define;
 import com.BaoPT.api.dao.TransDao;
 import com.BaoPT.api.service.TransService;
 import com.BaoPT.api.utils.ApiValidateExeption;
@@ -35,7 +36,7 @@ import com.opencsv.CSVWriter;
  * @History
  * [NUMBER]  [VER]     [DATE]          [USER]             [CONTENT]
  * --------------------------------------------------------------------------
- * 001       1.0       2020/04/14      (VNEXT) BaoPT       Create new
+ * 001       1.0       2020/04/18      (VNEXT) BaoPT       Create new
 */
 
 @Service
@@ -129,7 +130,7 @@ public class TransServiceImpl implements TransService {
                         CSVWriter.DEFAULT_LINE_END);
                 csvWriter.writeNext(new String[] { "idBank", "status", "tranfferDay", "monneyTranffer", "fee", "id_User_Transfer" });
                 for (TransEntity trans : transEntity) {
-                    csvWriter.writeNext(new String[] { trans.getIdBank().toString(), trans.getStatus().toString(), trans.getTranfferDay().toString(),
+                    csvWriter.writeNext(new String[] { trans.getIdBank().toString(), Define.defineStatus(trans.getStatus()), trans.getTranfferDay().toString(),
                             trans.getMonneyTranffer().toString(), trans.getFee().toString(), trans.getIdUserTransfer().toString() });
                 }
                 csvWriter.close();
