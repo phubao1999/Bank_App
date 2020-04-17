@@ -35,7 +35,7 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 */
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-@RequestMapping("/api")
+@RequestMapping("/transaction")
 @RestController
 public class TransController {
 
