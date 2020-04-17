@@ -6,6 +6,9 @@
 
 package com.BaoPT.api.service.impl;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +25,7 @@ import com.BaoPT.api.bean.TransEntity;
 import com.BaoPT.api.dao.TransDao;
 import com.BaoPT.api.service.TransService;
 import com.BaoPT.api.utils.ApiValidateExeption;
+import com.opencsv.CSVWriter;
 
 /**
  * [OVERVIEW] TransServiceImpl.
@@ -103,6 +107,38 @@ public class TransServiceImpl implements TransService {
                 return transList;
             }
         }
+    }
+
+    @Override
+    public List<TransEntity> csvWriterByUserId(int id) throws ApiValidateExeption {
+
+        List<TransEntity> transEntity = null;
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timeCreate = formatter.format(new Date());
+        String csv = "src/output/transactions_" + timeCreate + ".csv";
+
+        transEntity = transDao.getAllById(id);
+
+        if (transEntity.size() == 0) {
+            throw new ApiValidateExeption("400", "Transaction Is Not Found");
+        } else {
+            try {
+                Writer writer = new FileWriter(csv);
+                CSVWriter csvWriter = new CSVWriter(writer, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                        CSVWriter.DEFAULT_LINE_END);
+                csvWriter.writeNext(new String[] { "idBank", "status", "tranfferDay", "monneyTranffer", "fee", "id_User_Transfer" });
+                for (TransEntity trans : transEntity) {
+                    csvWriter.writeNext(new String[] { trans.getIdBank().toString(), trans.getStatus().toString(), trans.getTranfferDay().toString(),
+                            trans.getMonneyTranffer().toString(), trans.getFee().toString(), trans.getIdUserTransfer().toString() });
+                }
+                csvWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return transEntity;
+
     }
 
 }

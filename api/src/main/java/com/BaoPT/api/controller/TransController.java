@@ -101,5 +101,20 @@ public class TransController {
         resultBean = new ResultBean(transEntity, "200", "Done");
         return resultBean;
     }
+//    
+    @RequestMapping(value = "/trans/get", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ResultBean exportCsv(@RequestParam Integer id) {
+        List<TransEntity> transEntity = null;
+        ResultBean resultBean = null;
+        try {
+            transEntity = transService.csvWriterByUserId(id);
+        } catch (ApiValidateExeption e) {
+            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(transEntity, "200", "Done");
+        return resultBean;
+    }
 
 }
