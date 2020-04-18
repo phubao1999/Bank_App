@@ -9,12 +9,14 @@ package com.BaoPT.api.service.impl;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.BaoPT.api.bean.UserEntity;
+import com.BaoPT.api.common.CheckToken;
 import com.BaoPT.api.dao.UserDao;
 import com.BaoPT.api.model.TransfferMoney;
 import com.BaoPT.api.service.TranfferService;
@@ -37,8 +39,11 @@ public class TranfferServiceImpl implements TranfferService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private CheckToken checkToken;
+
     @Override
-    public List<TransfferMoney> addMonney(int id, String json) throws ApiValidateExeption {
+    public List<TransfferMoney> addMonney(int id, String json, UUID token) throws ApiValidateExeption {
         UserEntity userUpdateMonney = userDao.getUserById(id);
         JSONObject userJson = new JSONObject(json);
         List<TransfferMoney> tranfferList = new ArrayList<TransfferMoney>();
@@ -46,6 +51,8 @@ public class TranfferServiceImpl implements TranfferService {
             throw new ApiValidateExeption("400", "User Is Not Exist");
         } else if (userJson.isEmpty()) {
             throw new ApiValidateExeption("400", "Please Enter All Field");
+        } else if (!this.checkToken.checkToken(id, token)) {
+            throw new ApiValidateExeption("400", "Invalid Token");
         } else {
             int idUser = userUpdateMonney.getIdUser();
             int idBank = userUpdateMonney.getIdBank();
@@ -64,7 +71,7 @@ public class TranfferServiceImpl implements TranfferService {
     }
 
     @Override
-    public List<TransfferMoney> tranfferMonney(int id, String json) throws ApiValidateExeption {
+    public List<TransfferMoney> tranfferMonney(int id, String json, UUID token) throws ApiValidateExeption {
         UserEntity userUpdateMonney = userDao.getUserById(id);
         JSONObject userJson = new JSONObject(json);
         List<TransfferMoney> tranfferList = new ArrayList<TransfferMoney>();
@@ -81,6 +88,8 @@ public class TranfferServiceImpl implements TranfferService {
                 throw new ApiValidateExeption("400", "The amount in your account is less than 50 so you can not tranffer now");
             } else if (userUpdateMonney.getMonney() < monneyTranffer) {
                 throw new ApiValidateExeption("400", "The amount in your account is less than your tranffer monney so you can not tranffer now");
+            } else if (!this.checkToken.checkToken(id, token)) {
+                throw new ApiValidateExeption("400", "Invalid Token");
             }
             Timestamp tranfferDay = new Timestamp(System.currentTimeMillis());
             int fee;
@@ -106,7 +115,7 @@ public class TranfferServiceImpl implements TranfferService {
     }
 
     @Override
-    public List<TransfferMoney> sendMonney(int id, String json) throws ApiValidateExeption {
+    public List<TransfferMoney> sendMonney(int id, String json, UUID token) throws ApiValidateExeption {
         UserEntity userSendMoney = userDao.getUserById(id);
 
         JSONObject userJson = new JSONObject(json);
@@ -130,6 +139,8 @@ public class TranfferServiceImpl implements TranfferService {
                 throw new ApiValidateExeption("400", "Can not tranffer Because Your Money Less than 50");
             } else if (userSendMoney.getMonney() < monneyTransfer) {
                 throw new ApiValidateExeption("400", "Can not tranffer Because Your Money Less than money that you want to transfer");
+            } else if (!this.checkToken.checkToken(id, token)) {
+                throw new ApiValidateExeption("400", "Invalid Token");
             } else {
                 if (userSendMoney.getIdBank() != userTakeMoney.getIdBank()) {
                     fee = (int) (monneyTransfer * 0.8);
@@ -149,8 +160,8 @@ public class TranfferServiceImpl implements TranfferService {
 
             tranfferTo = new TransfferMoney(idUserTo, userTakeMoney.getIdBank(), tranfferDay, 4, monneyTransfer, 0, id, userSendMoney.getIdBank(),
                     userTakeMoney.getMonney());
-            
-//            tranfferResponse.add(tranffer);
+
+            //            tranfferResponse.add(tranffer);
             tranfferResponse.add(0, tranffer);
             tranfferResponse.add(1, tranfferTo);
 

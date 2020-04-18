@@ -7,11 +7,13 @@
 package com.BaoPT.api.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,11 +45,11 @@ public class TransferController {
     private TranfferService tranfferService;
 
     @RequestMapping(value = "/add-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean updateMonney(@RequestParam Integer id, @RequestBody String json) {
+    public @ResponseBody ResultBean updateMonney(@RequestHeader UUID token ,@RequestParam Integer id, @RequestBody String json) {
         ResultBean resultBean = null;
         List<TransfferMoney> tranffer = null;
         try {
-            tranffer = tranfferService.addMonney(id, json);
+            tranffer = tranfferService.addMonney(id, json, token);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
         } catch (Exception e) {
@@ -58,11 +60,11 @@ public class TransferController {
     }
 
     @RequestMapping(value = "/tranffer-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean tranfferMonney(@RequestParam Integer id, @RequestBody String json) {
+    public @ResponseBody ResultBean tranfferMonney(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
         ResultBean resultBean = null;
         List<TransfferMoney> tranffer = null;
         try {
-            tranffer = tranfferService.tranfferMonney(id, json);
+            tranffer = tranfferService.tranfferMonney(id, json, token);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
         } catch (Exception e) {
@@ -73,11 +75,11 @@ public class TransferController {
     }
 
     @RequestMapping(value = "/send-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean sendMonney(@RequestParam Integer id, @RequestBody String json) {
+    public @ResponseBody ResultBean sendMonney(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
         ResultBean resultBean = null;
         List<TransfferMoney> tranffer = null;
         try {
-            tranffer = tranfferService.sendMonney(id, json);
+            tranffer = tranfferService.sendMonney(id, json, token);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
         } catch (Exception e) {
