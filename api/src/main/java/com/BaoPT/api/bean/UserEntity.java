@@ -6,6 +6,8 @@
 
 package com.BaoPT.api.bean;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -93,6 +95,14 @@ public class UserEntity {
         this.password = password;
     }
 
+    public UUID getToken() {
+        return token;
+    }
+
+    public void setToken(UUID token) {
+        this.token = token;
+    }
+
     public Integer getMonney() {
         return monney;
     }
@@ -106,5 +116,8 @@ public class UserEntity {
 
     @Column(name = "monney")
     private Integer monney;
+    
+    @Column(name = "token")
+    private UUID token;
 
 }

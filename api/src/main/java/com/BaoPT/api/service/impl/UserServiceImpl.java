@@ -7,6 +7,7 @@
 package com.BaoPT.api.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,7 @@ public class UserServiceImpl implements UserService {
                 userEntity.setPassword(userJson.getString("password"));
                 userEntity.setMonney(userJson.getInt("monney"));
                 userEntity.setIdBank(userJson.getInt("id_bank"));
+                userEntity.setToken(UUID.randomUUID());
             }
 
             userDao.register(userEntity);
