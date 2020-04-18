@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.BaoPT.api.bean.TransEntity;
+import com.BaoPT.api.common.CheckToken;
 import com.BaoPT.api.common.Define;
 import com.BaoPT.api.dao.TransDao;
 import com.BaoPT.api.service.TransService;
@@ -44,6 +46,9 @@ public class TransServiceImpl implements TransService {
 
     @Autowired
     private TransDao transDao;
+
+    @Autowired
+    private CheckToken checkToken;
 
     @Override
     public List<TransEntity> create(String json) throws ApiValidateExeption {
@@ -74,17 +79,19 @@ public class TransServiceImpl implements TransService {
     }
 
     @Override
-    public List<TransEntity> getAllById(int id) throws ApiValidateExeption {
+    public List<TransEntity> getAllById(int id, UUID token) throws ApiValidateExeption {
         List<TransEntity> transList = (List<TransEntity>) transDao.getAllById(id);
         if (transList.size() == 0) {
             throw new ApiValidateExeption("400", "No Data");
+        } else if (!this.checkToken.checkToken(id, token)) {
+            throw new ApiValidateExeption("400", "Invalid Token");
         } else {
             return transList;
         }
     }
 
     @Override
-    public List<TransEntity> filter(int id, String json) throws ApiValidateExeption {
+    public List<TransEntity> filter(int id, String json, UUID token) throws ApiValidateExeption {
         JSONObject transJson = new JSONObject(json);
         List<TransEntity> transList = null;
         if (transJson.isEmpty()) {
@@ -104,6 +111,8 @@ public class TransServiceImpl implements TransService {
             transList = transDao.filter(id, fromDate, toDate);
             if (transList.size() == 0) {
                 throw new ApiValidateExeption("400", "There Is No Data");
+            } else if (!this.checkToken.checkToken(id, token)) {
+                throw new ApiValidateExeption("400", "Invalid Token");
             } else {
                 return transList;
             }
@@ -111,7 +120,7 @@ public class TransServiceImpl implements TransService {
     }
 
     @Override
-    public List<TransEntity> csvWriterByUserId(int id) throws ApiValidateExeption {
+    public List<TransEntity> csvWriterByUserId(int id, UUID token) throws ApiValidateExeption {
 
         List<TransEntity> transEntity = null;
 
@@ -123,6 +132,8 @@ public class TransServiceImpl implements TransService {
 
         if (transEntity.size() == 0) {
             throw new ApiValidateExeption("400", "Transaction Is Not Found");
+        } else if (!this.checkToken.checkToken(id, token)) {
+            throw new ApiValidateExeption("400", "Invalid Token");
         } else {
             try {
                 Writer writer = new FileWriter(csv);
