@@ -7,11 +7,13 @@
 package com.BaoPT.api.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,11 +106,11 @@ public class UserController {
      */
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json")
-    public @ResponseBody ResultBean updateUser(@RequestBody String json, @RequestParam Integer id) {
+    public @ResponseBody ResultBean updateUser(@RequestHeader UUID token ,@RequestBody String json, @RequestParam Integer id) {
         UserEntity userUpdate = null;
         ResultBean resultBean = null;
         try {
-            userUpdate = userService.update(json, id);
+            userUpdate = userService.update(json, id, token);
         } catch (ApiValidateExeption e) {
             resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
             return resultBean;
@@ -125,11 +127,11 @@ public class UserController {
      */
 
     @RequestMapping(value = "/info", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean getUserInfo(@RequestParam Integer id) {
+    public @ResponseBody ResultBean getUserInfo(@RequestHeader UUID token ,@RequestParam Integer id) {
         UserInfo userInfo = null;
         ResultBean resultBean = null;
         try {
-            userInfo = userService.getInfoUser(id);
+            userInfo = userService.getInfoUser(id, token);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
         } catch (Exception e) {
@@ -145,11 +147,11 @@ public class UserController {
      */
 
     @RequestMapping(value = "/change-password", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean changePassword(@RequestParam Integer id, @RequestBody String json) {
+    public @ResponseBody ResultBean changePassword(@RequestHeader UUID token ,@RequestParam Integer id, @RequestBody String json) {
         UserEntity userEntity = null;
         ResultBean resultBean = null;
         try {
-            userEntity = userService.changePassword(id, json);
+            userEntity = userService.changePassword(id, json, token);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
         } catch (Exception e) {
