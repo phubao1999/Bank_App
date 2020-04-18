@@ -49,6 +49,9 @@ public class TransServiceImpl implements TransService {
 
     @Autowired
     private CheckToken checkToken;
+    
+    @Autowired
+    private Define define;
 
     @Override
     public List<TransEntity> create(String json) throws ApiValidateExeption {
@@ -141,7 +144,7 @@ public class TransServiceImpl implements TransService {
                         CSVWriter.DEFAULT_LINE_END);
                 csvWriter.writeNext(new String[] { "idBank", "status", "tranfferDay", "monneyTranffer", "fee", "id_User_Transfer" });
                 for (TransEntity trans : transEntity) {
-                    csvWriter.writeNext(new String[] { trans.getIdBank().toString(), Define.defineStatus(trans.getStatus()), trans.getTranfferDay().toString(),
+                    csvWriter.writeNext(new String[] { this.define.defineBank(trans.getIdBank()), Define.defineStatus(trans.getStatus()), trans.getTranfferDay().toString(),
                             trans.getMonneyTranffer().toString(), trans.getFee().toString(), trans.getIdUserTransfer().toString() });
                 }
                 csvWriter.close();

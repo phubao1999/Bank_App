@@ -6,6 +6,12 @@
 
 package com.BaoPT.api.common;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.BaoPT.api.bean.BankEntity;
+import com.BaoPT.api.dao.BankDao;
+
 /**
  * [OVERVIEW] Define.
  *
@@ -16,7 +22,12 @@ package com.BaoPT.api.common;
  * --------------------------------------------------------------------------
  * 001       1.0       2020/04/18      (VNEXT) BaoPT       Create new
 */
+
+@Service
 public class Define {
+    
+    @Autowired
+    private BankDao bankDao;
 
     public static String defineStatus(int status) {
         String mean = null;
@@ -30,6 +41,13 @@ public class Define {
             mean = "Be Transferred Money";
         }
         return mean;
+    }
+    
+    public String defineBank(int id) {
+        String bankName = null;
+        BankEntity bankEntity = this.bankDao.getBank(id);
+        bankName = bankEntity.getBankName();
+        return bankName;
     }
 
 }
