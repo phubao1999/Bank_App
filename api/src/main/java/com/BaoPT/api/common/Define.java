@@ -49,5 +49,20 @@ public class Define {
         bankName = bankEntity.getBankName();
         return bankName;
     }
+    
+    public double getFee(int id, int option) {
+        double fee = 0;
+        BankEntity bankEntity = this.bankDao.getBank(id);
+        if (option == 1) {
+            fee = bankEntity.getFeeFirst();
+        } else if (option == 2) {
+            fee = bankEntity.getFeeSecond();
+        } else if (option == 3) {
+            fee = bankEntity.getFeeThird();
+        } else {
+            fee = bankEntity.getFeeTransfer();
+        }
+        return fee;
+    }
 
 }

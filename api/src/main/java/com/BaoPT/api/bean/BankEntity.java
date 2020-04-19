@@ -33,6 +33,50 @@ public class BankEntity {
     @Column(name = "bank_name")
     private String bankName;
 
+    @Column(name = "fee_first")
+    private double feeFirst;
+
+    @Column(name = "fee_second")
+    private double feeSecond;
+
+    @Column(name = "fee_third")
+    private double feeThird;
+
+    @Column(name = "fee_transfer")
+    private double feeTransfer;
+
+    public double getFeeTransfer() {
+        return feeTransfer;
+    }
+
+    public void setFeeTransfer(double feeTransfer) {
+        this.feeTransfer = feeTransfer;
+    }
+
+    public double getFeeFirst() {
+        return feeFirst;
+    }
+
+    public void setFeeFirst(double feeFirst) {
+        this.feeFirst = feeFirst;
+    }
+
+    public double getFeeSecond() {
+        return feeSecond;
+    }
+
+    public void setFeeSecond(double feeSecond) {
+        this.feeSecond = feeSecond;
+    }
+
+    public double getFeeThird() {
+        return feeThird;
+    }
+
+    public void setFeeThird(double feeThird) {
+        this.feeThird = feeThird;
+    }
+
     public Integer getIdBank() {
         return idBank;
     }

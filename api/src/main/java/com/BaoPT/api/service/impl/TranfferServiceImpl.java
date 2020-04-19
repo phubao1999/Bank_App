@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.BaoPT.api.bean.UserEntity;
 import com.BaoPT.api.common.CheckToken;
+import com.BaoPT.api.common.Define;
 import com.BaoPT.api.dao.UserDao;
 import com.BaoPT.api.model.TransfferMoney;
 import com.BaoPT.api.service.TranfferService;
@@ -41,6 +42,9 @@ public class TranfferServiceImpl implements TranfferService {
 
     @Autowired
     private CheckToken checkToken;
+    
+    @Autowired
+    private Define define;
 
     @Override
     public List<TransfferMoney> addMonney(int id, String json, UUID token) throws ApiValidateExeption {
@@ -97,11 +101,11 @@ public class TranfferServiceImpl implements TranfferService {
                 fee = 0;
             } else {
                 if (monneyTranffer < 5000) {
-                    fee = 10;
+                    fee = (int) this.define.getFee(idBank, 1);
                 } else if (monneyTranffer < 10000) {
-                    fee = 20;
+                    fee = (int) this.define.getFee(idBank, 2);
                 } else {
-                    fee = (int) (monneyTranffer * 0.08);
+                    fee = (int) (monneyTranffer * this.define.getFee(idBank, 3));
                 }
             }
             int monney = userUpdateMonney.getMonney() - monneyTranffer - fee;
@@ -143,7 +147,7 @@ public class TranfferServiceImpl implements TranfferService {
                 throw new ApiValidateExeption("400", "Invalid Token");
             } else {
                 if (userSendMoney.getIdBank() != userTakeMoney.getIdBank()) {
-                    fee = (int) (monneyTransfer * 0.8);
+                    fee = (int) (monneyTransfer * this.define.getFee(userSendMoney.getIdBank(), 4));
                 } else {
                     fee = 10;
                 }
