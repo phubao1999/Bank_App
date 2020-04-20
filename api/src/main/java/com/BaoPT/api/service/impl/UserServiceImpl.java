@@ -202,7 +202,7 @@ public class UserServiceImpl implements UserService {
         } else if (!this.checkToken.checkToken(id, token)) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         } else {
-            userUpdatePassword.setPassword(userJson.getString("password"));
+            userUpdatePassword.setPassword(this.encodeDecode.encode(userJson.getString("password")));
             userDao.update(userUpdatePassword);
             log.debug("### Change Password End ###");
             return userUpdatePassword;
