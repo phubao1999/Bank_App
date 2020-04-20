@@ -30,6 +30,7 @@ import com.BaoPT.api.common.Define;
 import com.BaoPT.api.dao.TransDao;
 import com.BaoPT.api.service.TransService;
 import com.BaoPT.api.utils.ApiValidateExeption;
+import com.BaoPT.api.utils.Constant;
 import com.opencsv.CSVWriter;
 
 /**
@@ -69,7 +70,7 @@ public class TransServiceImpl implements TransService {
         Timestamp tranfferDay = new Timestamp(System.currentTimeMillis());
         List<TransEntity> transEntityList = new ArrayList<TransEntity>();
         if (transJson.isEmpty()) {
-            throw new ApiValidateExeption("400", "Please Enter All Field");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else {
             JSONArray transList = transJson.getJSONArray("data");
             for (int i = 0; i < transList.length(); i++) {
@@ -102,9 +103,9 @@ public class TransServiceImpl implements TransService {
         log.debug("### Get Transaction List Start ###");
         List<TransEntity> transList = (List<TransEntity>) transDao.getAllById(id);
         if (transList.size() == 0) {
-            throw new ApiValidateExeption("400", "No Data");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "No Data");
         } else if (!this.checkToken.checkToken(id, token)) {
-            throw new ApiValidateExeption("400", "Invalid Token");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         } else {
             log.debug("### Get Transaction List End ###");
             return transList;
@@ -124,7 +125,7 @@ public class TransServiceImpl implements TransService {
         JSONObject transJson = new JSONObject(json);
         List<TransEntity> transList = null;
         if (transJson.isEmpty()) {
-            throw new ApiValidateExeption("400", "Please Enter All Field");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
             Date fromDate = null;
@@ -139,9 +140,9 @@ public class TransServiceImpl implements TransService {
             }
             transList = transDao.filter(id, fromDate, toDate);
             if (transList.size() == 0) {
-                throw new ApiValidateExeption("400", "There Is No Data");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "There Is No Data");
             } else if (!this.checkToken.checkToken(id, token)) {
-                throw new ApiValidateExeption("400", "Invalid Token");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
             } else {
                 log.debug("### Get Transaction List By Id and date End ###");
                 return transList;
@@ -168,9 +169,9 @@ public class TransServiceImpl implements TransService {
         transEntity = transDao.getAllById(id);
 
         if (transEntity.size() == 0) {
-            throw new ApiValidateExeption("400", "Transaction Is Not Found");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Transaction Is Not Found");
         } else if (!this.checkToken.checkToken(id, token)) {
-            throw new ApiValidateExeption("400", "Invalid Token");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         } else {
             try {
                 Writer writer = new FileWriter(csv);

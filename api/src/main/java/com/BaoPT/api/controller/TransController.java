@@ -27,6 +27,7 @@ import com.BaoPT.api.bean.TransEntity;
 import com.BaoPT.api.service.TransService;
 import com.BaoPT.api.service.impl.UserServiceImpl;
 import com.BaoPT.api.utils.ApiValidateExeption;
+import com.BaoPT.api.utils.Constant;
 
 /**
  * [OVERVIEW] TransController.
@@ -68,7 +69,7 @@ public class TransController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(transEntity, "200", "Create Transaction Success");
+        resultBean = new ResultBean(transEntity, Constant.OK, "Create Transaction Success");
         log.debug("### Create Transaction End ###");
         return resultBean;
     }
@@ -91,7 +92,7 @@ public class TransController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(transEntity, "200", "Done");
+        resultBean = new ResultBean(transEntity, Constant.OK, "Done");
         log.debug("### Get Transaction End ###");
         return resultBean;
     }
@@ -117,7 +118,7 @@ public class TransController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(transEntity, "200", "Done");
+        resultBean = new ResultBean(transEntity, Constant.OK, "Done");
         log.debug("### Get Transaction by date End ###");
         return resultBean;
     }
@@ -140,7 +141,7 @@ public class TransController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(transEntity, "200", "Done");
+        resultBean = new ResultBean(transEntity, Constant.OK, "Done");
         log.debug("### Export Transaction End ###");
         return resultBean;
     }

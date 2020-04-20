@@ -24,6 +24,7 @@ import com.BaoPT.api.dao.UserDao;
 import com.BaoPT.api.model.TransfferMoney;
 import com.BaoPT.api.service.TranfferService;
 import com.BaoPT.api.utils.ApiValidateExeption;
+import com.BaoPT.api.utils.Constant;
 
 /**
  * [OVERVIEW] TranfferServiceImpl.
@@ -64,11 +65,11 @@ public class TranfferServiceImpl implements TranfferService {
         JSONObject userJson = new JSONObject(json);
         List<TransfferMoney> tranfferList = new ArrayList<TransfferMoney>();
         if (userUpdateMonney == null) {
-            throw new ApiValidateExeption("400", "User Is Not Exist");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exist");
         } else if (userJson.isEmpty()) {
-            throw new ApiValidateExeption("400", "Please Enter All Field");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else if (!this.checkToken.checkToken(id, token)) {
-            throw new ApiValidateExeption("400", "Invalid Token");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         } else {
             int idUser = userUpdateMonney.getIdUser();
             int idBank = userUpdateMonney.getIdBank();
@@ -100,20 +101,20 @@ public class TranfferServiceImpl implements TranfferService {
         JSONObject userJson = new JSONObject(json);
         List<TransfferMoney> tranfferList = new ArrayList<TransfferMoney>();
         if (userUpdateMonney == null) {
-            throw new ApiValidateExeption("400", "User Is Not Exist");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exist");
         } else if (userJson.isEmpty()) {
-            throw new ApiValidateExeption("400", "Please Enter All Field");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else {
             int idUser = userUpdateMonney.getIdUser();
             int idBank = userUpdateMonney.getIdBank();
             int status = 2;
             int monneyTranffer = userJson.getInt("monney");
             if (userUpdateMonney.getMonney() < 50) {
-                throw new ApiValidateExeption("400", "The amount in your account is less than 50 so you can not tranffer now");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "The amount in your account is less than 50 so you can not tranffer now");
             } else if (userUpdateMonney.getMonney() < monneyTranffer) {
-                throw new ApiValidateExeption("400", "The amount in your account is less than your tranffer monney so you can not tranffer now");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "The amount in your account is less than your tranffer monney so you can not tranffer now");
             } else if (!this.checkToken.checkToken(id, token)) {
-                throw new ApiValidateExeption("400", "Invalid Token");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
             }
             Timestamp tranfferDay = new Timestamp(System.currentTimeMillis());
             int fee;
@@ -156,9 +157,9 @@ public class TranfferServiceImpl implements TranfferService {
         TransfferMoney tranffer = null;
         TransfferMoney tranfferTo = null;
         if (userSendMoney == null) {
-            throw new ApiValidateExeption("400", "User Is Not Exist");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exist");
         } else if (userJson.isEmpty()) {
-            throw new ApiValidateExeption("400", "Please Enter All Field");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else {
             int idUserTo = userJson.getInt("id_user_to");
             int monneyTransfer = userJson.getInt("money_transfer");
@@ -167,13 +168,13 @@ public class TranfferServiceImpl implements TranfferService {
             UserEntity userTakeMoney = userDao.getUserById(idUserTo);
 
             if (userTakeMoney == null) {
-                throw new ApiValidateExeption("400", "User Is Not Exist");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exist");
             } else if (userSendMoney.getMonney() < 50) {
-                throw new ApiValidateExeption("400", "Can not tranffer Because Your Money Less than 50");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Can not tranffer Because Your Money Less than 50");
             } else if (userSendMoney.getMonney() < monneyTransfer) {
-                throw new ApiValidateExeption("400", "Can not tranffer Because Your Money Less than money that you want to transfer");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Can not tranffer Because Your Money Less than money that you want to transfer");
             } else if (!this.checkToken.checkToken(id, token)) {
-                throw new ApiValidateExeption("400", "Invalid Token");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
             } else {
                 if (userSendMoney.getIdBank() != userTakeMoney.getIdBank()) {
                     fee = (int) (monneyTransfer * this.define.getFee(userSendMoney.getIdBank(), 4));

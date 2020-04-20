@@ -16,11 +16,13 @@ import org.springframework.stereotype.Service;
 import com.BaoPT.api.bean.UserEntity;
 import com.BaoPT.api.common.CheckToken;
 import com.BaoPT.api.common.EncodeDecode;
-import com.BaoPT.api.common.Validate;
 import com.BaoPT.api.dao.UserDao;
 import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.utils.ApiValidateExeption;
+import com.BaoPT.api.utils.Constant;
+import com.BaoPT.api.utils.Validate;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -65,14 +67,14 @@ public class UserServiceImpl implements UserService {
         log.debug("### Login START ###");
         JSONObject userJson = new JSONObject(json);
         if (userJson.isEmpty()) {
-            throw new ApiValidateExeption("400", "Please Enter All Field");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else {
             UserEntity user = userDao.getUserById(userJson.getInt("id"));
             if (user == null) {
-                throw new ApiValidateExeption("400", "Id User Is Not Found");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Id User Is Not Found");
             } else {
                 if (!user.getPassword().equals(this.encodeDecode.encode(userJson.getString("password")))) {
-                    throw new ApiValidateExeption("400", "Password Is Not Right");
+                    throw new ApiValidateExeption(Constant.BAD_REQUEST, "Password Is Not Right");
                 } else {
                     log.debug("### Login End ###");
                     return user;
@@ -92,20 +94,20 @@ public class UserServiceImpl implements UserService {
         // Check If User Exist => throw Exception
         JSONObject userJson = new JSONObject(json);
         if (userJson.isEmpty()) {
-            throw new ApiValidateExeption("400", "Please Enter All Field");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else {
             UserEntity userEntity = new UserEntity();
             if (!userJson.getString("name").trim().matches(Validate.USER_NAME)) {
-                throw new ApiValidateExeption("400", "Name Have To Be Less Than 10 Character");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Name Have To Be Less Than 10 Character");
             } else if (userJson.getString("sdt").length() < 10 || userJson.getString("sdt").length() > 11) {
-                throw new ApiValidateExeption("400", "Phone Number Is Between 10 and 11 Number");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Phone Number Is Between 10 and 11 Number");
             } else if (!userJson.getString("day_of_birth").trim().matches(Validate.DATE)) {
-                throw new ApiValidateExeption("400", "Day of birth must like ex: 1999/08/27");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Day of birth must like ex: 1999/08/27");
             } else if (!userJson.getString("password").matches(Validate.PASSWORD)) {
-                throw new ApiValidateExeption("400",
+                throw new ApiValidateExeption(Constant.BAD_REQUEST,
                         "Password Must Have Less Then 8 Character, Must Have Character, Number And Special Character. Ex: Bao@123");
             } else if (userJson.getInt("id_bank") > 3) {
-                throw new ApiValidateExeption("400", "Id Bank Must Be Between 1 and 3");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Id Bank Must Be Between 1 and 3");
             } else {
                 userEntity.setName(userJson.getString("name"));
                 userEntity.setSdt(userJson.getString("sdt"));
@@ -134,18 +136,18 @@ public class UserServiceImpl implements UserService {
         log.debug("### Update User Start ###");
         JSONObject userJson = new JSONObject(json);
         if (userJson.isEmpty()) {
-            throw new ApiValidateExeption("400", "Please Enter All Field");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else {
             UserEntity userUpdate = userDao.getUserById(id);
 
             if (!userJson.getString("name").trim().matches(Validate.USER_NAME)) {
-                throw new ApiValidateExeption("400", "Name Have To Be Less Than 10 Character");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Name Have To Be Less Than 10 Character");
             } else if (userJson.getString("sdt").length() < 10 || userJson.getString("sdt").length() > 11) {
-                throw new ApiValidateExeption("400", "Phone Number Is Between 10 and 11 Number");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Phone Number Is Between 10 and 11 Number");
             } else if (!userJson.getString("day_of_birth").trim().matches(Validate.DATE)) {
-                throw new ApiValidateExeption("400", "Day of birth must like ex: 1999/08/27");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Day of birth must like ex: 1999/08/27");
             } else if (!this.checkToken.checkToken(id, token)) {
-                throw new ApiValidateExeption("400", "Invalid Token");
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
             } else {
                 userUpdate.setName(userJson.getString("name"));
                 userUpdate.setSdt(userJson.getString("sdt"));
@@ -169,9 +171,9 @@ public class UserServiceImpl implements UserService {
         log.debug("### Get User Info Start ###");
         UserInfo userInfo = userDao.getInforUser(id);
         if (userInfo == null) {
-            throw new ApiValidateExeption("400", "User Is Not Exist");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exist");
         } else if (!this.checkToken.checkToken(id, token)) {
-            throw new ApiValidateExeption("400", "Invalid Token");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         }
         String dobFormat = userInfo.getDob().replace("-", "/");
         userInfo.setDob(dobFormat);
@@ -192,13 +194,13 @@ public class UserServiceImpl implements UserService {
         UserEntity userUpdatePassword = userDao.getUserById(id);
         JSONObject userJson = new JSONObject(json);
         if (userUpdatePassword == null) {
-            throw new ApiValidateExeption("400", "User Is Not Exist");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exist");
         } else if (userJson.isEmpty()) {
-            throw new ApiValidateExeption("400", "Please Enter All Field");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else if (!userJson.getString("password").matches(Validate.PASSWORD)) {
-            throw new ApiValidateExeption("400", "Password Must Have Less Then 8 Character, Must Have Character, Number And Special Character. Ex: Bao@123");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Password Must Have Less Then 8 Character, Must Have Character, Number And Special Character. Ex: Bao@123");
         } else if (!this.checkToken.checkToken(id, token)) {
-            throw new ApiValidateExeption("400", "Invalid Token");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         } else {
             userUpdatePassword.setPassword(userJson.getString("password"));
             userDao.update(userUpdatePassword);

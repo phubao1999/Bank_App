@@ -28,6 +28,7 @@ import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.service.impl.UserServiceImpl;
 import com.BaoPT.api.utils.ApiValidateExeption;
+import com.BaoPT.api.utils.Constant;
 
 /**
  * [OVERVIEW] UserController.
@@ -63,7 +64,7 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(userEntity, "200", "Done");
+        resultBean = new ResultBean(userEntity, Constant.OK, "Done");
         return resultBean;
     }
 
@@ -87,7 +88,7 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(userEntity, "200", "Login Successfully");
+        resultBean = new ResultBean(userEntity, Constant.OK, "Login Successfully");
         log.debug("### Login End ###");
         return resultBean;
     }
@@ -115,7 +116,7 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(userEntity, "200", "Create Account Success");
+        resultBean = new ResultBean(userEntity, Constant.OK, "Create Account Success");
         log.debug("### Register End ###");
         return resultBean;
     }
@@ -144,7 +145,7 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(userUpdate, "200", "Update Successfully");
+        resultBean = new ResultBean(userUpdate, Constant.OK, "Update Successfully");
         log.debug("### update user End ###");
         return resultBean;
     }
@@ -168,7 +169,7 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(userInfo, "200", "Done");
+        resultBean = new ResultBean(userInfo, Constant.OK, "Done");
         log.debug("### Get Info User End ###");
         return resultBean;
     }
@@ -194,7 +195,7 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(userEntity, "200", "Change Password Successfully");
+        resultBean = new ResultBean(userEntity, Constant.OK, "Change Password Successfully");
         log.debug("### Change Password User End ###");
         return resultBean;
     }

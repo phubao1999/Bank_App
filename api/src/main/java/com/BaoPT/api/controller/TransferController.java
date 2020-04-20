@@ -27,6 +27,7 @@ import com.BaoPT.api.model.TransfferMoney;
 import com.BaoPT.api.service.TranfferService;
 import com.BaoPT.api.service.impl.UserServiceImpl;
 import com.BaoPT.api.utils.ApiValidateExeption;
+import com.BaoPT.api.utils.Constant;
 
 /**
  * [OVERVIEW] TransferController.
@@ -69,7 +70,7 @@ public class TransferController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(tranffer, "200", "Update Monney Success");
+        resultBean = new ResultBean(tranffer, Constant.OK, "Update Monney Success");
         log.debug("### Add Money End ###");
         return resultBean;
     }
@@ -94,7 +95,7 @@ public class TransferController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(tranffer, "200", "Update Monney Success");
+        resultBean = new ResultBean(tranffer, Constant.OK, "Update Monney Success");
         log.debug("### Tranffer Money End ###");
         return resultBean;
     }
@@ -119,7 +120,7 @@ public class TransferController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resultBean = new ResultBean(tranffer, "200", "Send Money Successfully");
+        resultBean = new ResultBean(tranffer, Constant.OK, "Send Money Successfully");
         log.debug("### Send Money End ###");
         return resultBean;
     }
