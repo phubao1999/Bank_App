@@ -9,6 +9,8 @@ package com.BaoPT.api.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.BaoPT.api.bean.ResultBean;
 import com.BaoPT.api.model.TransfferMoney;
 import com.BaoPT.api.service.TranfferService;
+import com.BaoPT.api.service.impl.UserServiceImpl;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
 /**
@@ -41,6 +44,8 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 @RestController
 public class TransferController {
 
+    private static final Log log = LogFactory.getLog(UserServiceImpl.class);
+
     @Autowired
     private TranfferService tranfferService;
 
@@ -53,7 +58,8 @@ public class TransferController {
      * @return Update Money of user and send Data To Call Api Create Transaction (Add Monney)
      */
     @RequestMapping(value = "/add-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean updateMonney(@RequestHeader UUID token ,@RequestParam Integer id, @RequestBody String json) {
+    public @ResponseBody ResultBean updateMonney(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
+        log.debug("### Add Money Start ###");
         ResultBean resultBean = null;
         List<TransfferMoney> tranffer = null;
         try {
@@ -64,6 +70,7 @@ public class TransferController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(tranffer, "200", "Update Monney Success");
+        log.debug("### Add Money End ###");
         return resultBean;
     }
 
@@ -77,6 +84,7 @@ public class TransferController {
      */
     @RequestMapping(value = "/tranffer-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean tranfferMonney(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
+        log.debug("### Tranffer Money Start ###");
         ResultBean resultBean = null;
         List<TransfferMoney> tranffer = null;
         try {
@@ -87,6 +95,7 @@ public class TransferController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(tranffer, "200", "Update Monney Success");
+        log.debug("### Tranffer Money End ###");
         return resultBean;
     }
 
@@ -100,6 +109,7 @@ public class TransferController {
      */
     @RequestMapping(value = "/send-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean sendMonney(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
+        log.debug("### Send Money Start ###");
         ResultBean resultBean = null;
         List<TransfferMoney> tranffer = null;
         try {
@@ -110,6 +120,7 @@ public class TransferController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(tranffer, "200", "Send Money Successfully");
+        log.debug("### Send Money End ###");
         return resultBean;
     }
 

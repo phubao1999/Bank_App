@@ -9,6 +9,8 @@ package com.BaoPT.api.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.BaoPT.api.bean.ResultBean;
 import com.BaoPT.api.bean.TransEntity;
 import com.BaoPT.api.service.TransService;
+import com.BaoPT.api.service.impl.UserServiceImpl;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
 /**
@@ -41,6 +44,8 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 @RestController
 public class TransController {
 
+    private static final Log log = LogFactory.getLog(UserServiceImpl.class);
+
     @Autowired
     private TransService transService;
 
@@ -52,6 +57,7 @@ public class TransController {
 
     @RequestMapping(value = "/trans", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody ResultBean create(@RequestBody String json) {
+        log.debug("### Create Transaction Start ###");
         List<TransEntity> transEntity = null;
         ResultBean resultBean = null;
         try {
@@ -63,6 +69,7 @@ public class TransController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(transEntity, "200", "Create Transaction Success");
+        log.debug("### Create Transaction End ###");
         return resultBean;
     }
 
@@ -73,7 +80,8 @@ public class TransController {
      * @return Get History Trans
      */
     @RequestMapping(value = "/trans", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResultBean getAll(@RequestHeader UUID token ,@RequestParam Integer id) {
+    public ResultBean getAll(@RequestHeader UUID token, @RequestParam Integer id) {
+        log.debug("### Get Transaction Start ###");
         List<TransEntity> transEntity = null;
         ResultBean resultBean = null;
         try {
@@ -84,6 +92,7 @@ public class TransController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(transEntity, "200", "Done");
+        log.debug("### Get Transaction End ###");
         return resultBean;
     }
 
@@ -97,7 +106,8 @@ public class TransController {
      * @return Filter History Trans By Date and Id
      */
     @RequestMapping(value = "/trans/filter", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResultBean filter(@RequestHeader UUID token ,@RequestParam Integer id, @RequestBody String json) {
+    public ResultBean filter(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
+        log.debug("### Get Transaction by date Start ###");
         List<TransEntity> transEntity = null;
         ResultBean resultBean = null;
         try {
@@ -108,6 +118,7 @@ public class TransController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(transEntity, "200", "Done");
+        log.debug("### Get Transaction by date End ###");
         return resultBean;
     }
 
@@ -118,7 +129,8 @@ public class TransController {
      * @return Export to csv file
      */
     @RequestMapping(value = "/trans/get", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResultBean exportCsv(@RequestHeader UUID token ,@RequestParam Integer id) {
+    public ResultBean exportCsv(@RequestHeader UUID token, @RequestParam Integer id) {
+        log.debug("### Export Transaction Start ###");
         List<TransEntity> transEntity = null;
         ResultBean resultBean = null;
         try {
@@ -129,6 +141,7 @@ public class TransController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(transEntity, "200", "Done");
+        log.debug("### Export Transaction End ###");
         return resultBean;
     }
 

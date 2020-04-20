@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,8 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 @Service
 public class TranfferServiceImpl implements TranfferService {
 
+    private static final Log log = LogFactory.getLog(UserServiceImpl.class);
+
     @Autowired
     private UserDao userDao;
 
@@ -55,6 +59,7 @@ public class TranfferServiceImpl implements TranfferService {
      */
     @Override
     public List<TransfferMoney> addMonney(int id, String json, UUID token) throws ApiValidateExeption {
+        log.debug("### Add Monney To User Start ###");
         UserEntity userUpdateMonney = userDao.getUserById(id);
         JSONObject userJson = new JSONObject(json);
         List<TransfferMoney> tranfferList = new ArrayList<TransfferMoney>();
@@ -76,7 +81,7 @@ public class TranfferServiceImpl implements TranfferService {
             tranfferList.add(tranffer);
             userUpdateMonney.setMonney(tranffer.getMonney());
             userDao.update(userUpdateMonney);
-
+            log.debug("### Add Monney To User End ###");
             return tranfferList;
         }
     }
@@ -90,6 +95,7 @@ public class TranfferServiceImpl implements TranfferService {
      */
     @Override
     public List<TransfferMoney> tranfferMonney(int id, String json, UUID token) throws ApiValidateExeption {
+        log.debug("### TranfferMonney User Start ###");
         UserEntity userUpdateMonney = userDao.getUserById(id);
         JSONObject userJson = new JSONObject(json);
         List<TransfferMoney> tranfferList = new ArrayList<TransfferMoney>();
@@ -128,6 +134,7 @@ public class TranfferServiceImpl implements TranfferService {
             userUpdateMonney.setMonney(tranffer.getMonney());
             userDao.update(userUpdateMonney);
             tranfferList.add(tranffer);
+            log.debug("### TranfferMonney User End ###");
             return tranfferList;
         }
     }
@@ -141,6 +148,7 @@ public class TranfferServiceImpl implements TranfferService {
      */
     @Override
     public List<TransfferMoney> sendMonney(int id, String json, UUID token) throws ApiValidateExeption {
+        log.debug("### Send Monney Start ###");
         UserEntity userSendMoney = userDao.getUserById(id);
 
         JSONObject userJson = new JSONObject(json);
@@ -191,6 +199,7 @@ public class TranfferServiceImpl implements TranfferService {
             tranfferResponse.add(1, tranfferTo);
 
         }
+        log.debug("### Send Monney End ###");
         return tranfferResponse;
     }
 

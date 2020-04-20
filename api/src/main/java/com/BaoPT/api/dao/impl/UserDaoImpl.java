@@ -12,12 +12,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.BaoPT.api.bean.UserEntity;
 import com.BaoPT.api.dao.UserDao;
 import com.BaoPT.api.model.UserInfo;
+import com.BaoPT.api.service.impl.UserServiceImpl;
 
 /**
  * [OVERVIEW] UserDaoImpl.
@@ -33,6 +36,8 @@ import com.BaoPT.api.model.UserInfo;
 @Repository(value = "userDao")
 @Transactional()
 public class UserDaoImpl implements UserDao {
+
+    private static final Log log = LogFactory.getLog(UserServiceImpl.class);
 
     @Autowired
     private EntityManager entityManager;
@@ -79,6 +84,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public UserInfo getInforUser(int id) {
+        log.debug("### Get User Info Start ###");
         // TODO Auto-generated method stub
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT new com.BaoPT.api.model.UserInfo ( ");
@@ -99,6 +105,7 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log.debug("### Get User Info End ###");
         return entity;
     }
 

@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +46,14 @@ import com.opencsv.CSVWriter;
 @Service
 public class TransServiceImpl implements TransService {
 
+    private static final Log log = LogFactory.getLog(UserServiceImpl.class);
+
     @Autowired
     private TransDao transDao;
 
     @Autowired
     private CheckToken checkToken;
-    
+
     @Autowired
     private Define define;
 
@@ -60,6 +64,7 @@ public class TransServiceImpl implements TransService {
      */
     @Override
     public List<TransEntity> create(String json) throws ApiValidateExeption {
+        log.debug("### Create Transaction Start ###");
         JSONObject transJson = new JSONObject(json);
         Timestamp tranfferDay = new Timestamp(System.currentTimeMillis());
         List<TransEntity> transEntityList = new ArrayList<TransEntity>();
@@ -81,7 +86,7 @@ public class TransServiceImpl implements TransService {
                 transEntityList.add(transEntity);
                 this.transDao.createTrans(transEntity);
             }
-
+            log.debug("### Create Transaction End ###");
             return transEntityList;
         }
     }
@@ -94,12 +99,14 @@ public class TransServiceImpl implements TransService {
      */
     @Override
     public List<TransEntity> getAllById(int id, UUID token) throws ApiValidateExeption {
+        log.debug("### Get Transaction List Start ###");
         List<TransEntity> transList = (List<TransEntity>) transDao.getAllById(id);
         if (transList.size() == 0) {
             throw new ApiValidateExeption("400", "No Data");
         } else if (!this.checkToken.checkToken(id, token)) {
             throw new ApiValidateExeption("400", "Invalid Token");
         } else {
+            log.debug("### Get Transaction List End ###");
             return transList;
         }
     }
@@ -113,6 +120,7 @@ public class TransServiceImpl implements TransService {
      */
     @Override
     public List<TransEntity> filter(int id, String json, UUID token) throws ApiValidateExeption {
+        log.debug("### Get Transaction List By Id and date Start ###");
         JSONObject transJson = new JSONObject(json);
         List<TransEntity> transList = null;
         if (transJson.isEmpty()) {
@@ -135,6 +143,7 @@ public class TransServiceImpl implements TransService {
             } else if (!this.checkToken.checkToken(id, token)) {
                 throw new ApiValidateExeption("400", "Invalid Token");
             } else {
+                log.debug("### Get Transaction List By Id and date End ###");
                 return transList;
             }
         }
@@ -148,6 +157,7 @@ public class TransServiceImpl implements TransService {
      */
     @Override
     public List<TransEntity> csvWriterByUserId(int id, UUID token) throws ApiValidateExeption {
+        log.debug("### Export Transaction List By Id Start ###");
 
         List<TransEntity> transEntity = null;
 
@@ -168,14 +178,16 @@ public class TransServiceImpl implements TransService {
                         CSVWriter.DEFAULT_LINE_END);
                 csvWriter.writeNext(new String[] { "idBank", "status", "tranfferDay", "monneyTranffer", "fee", "id_User_Transfer" });
                 for (TransEntity trans : transEntity) {
-                    csvWriter.writeNext(new String[] { this.define.defineBank(trans.getIdBank()), Define.defineStatus(trans.getStatus()), trans.getTranfferDay().toString(),
-                            trans.getMonneyTranffer().toString(), trans.getFee().toString(), trans.getIdUserTransfer().toString() });
+                    csvWriter.writeNext(
+                            new String[] { this.define.defineBank(trans.getIdBank()), Define.defineStatus(trans.getStatus()), trans.getTranfferDay().toString(),
+                                    trans.getMonneyTranffer().toString(), trans.getFee().toString(), trans.getIdUserTransfer().toString() });
                 }
                 csvWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        log.debug("### Export Transaction List By Id End ###");
         return transEntity;
 
     }

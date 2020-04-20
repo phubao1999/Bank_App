@@ -13,11 +13,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.BaoPT.api.bean.TransEntity;
 import com.BaoPT.api.dao.TransDao;
+import com.BaoPT.api.service.impl.UserServiceImpl;
 
 /**
  * [OVERVIEW] TransDaoImpl.
@@ -33,6 +36,8 @@ import com.BaoPT.api.dao.TransDao;
 @Repository(value = "transDao")
 @Transactional()
 public class TransDaoImpl implements TransDao {
+
+    private static final Log log = LogFactory.getLog(UserServiceImpl.class);
 
     @Autowired
     private EntityManager entityManager;
@@ -53,6 +58,7 @@ public class TransDaoImpl implements TransDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<TransEntity> getAllById(int id) {
+        log.debug("### Get Transaction By Id Start ###");
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT t ");
         sql.append(" FROM ");
@@ -67,6 +73,7 @@ public class TransDaoImpl implements TransDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log.debug("### Get Transaction By Id End ###");
         return entity;
     }
 
@@ -77,6 +84,7 @@ public class TransDaoImpl implements TransDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<TransEntity> filter(int id, Date from, Date to) {
+        log.debug("### Get Transaction By Id and Date Start ###");
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT t ");
         sql.append(" FROM ");
@@ -97,6 +105,7 @@ public class TransDaoImpl implements TransDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log.debug("### Get Transaction By Id and Date End ###");
         return entity;
     }
 

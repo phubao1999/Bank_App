@@ -9,6 +9,8 @@ package com.BaoPT.api.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +26,7 @@ import com.BaoPT.api.bean.ResultBean;
 import com.BaoPT.api.bean.UserEntity;
 import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
+import com.BaoPT.api.service.impl.UserServiceImpl;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
 /**
@@ -41,6 +44,8 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 @RequestMapping("/user")
 @RestController
 public class UserController {
+
+    private static final Log log = LogFactory.getLog(UserServiceImpl.class);
 
     @Autowired
     private UserService userService;
@@ -71,6 +76,7 @@ public class UserController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody ResultBean login(@RequestBody String json) {
+        log.debug("### Login Start ###");
         UserEntity userEntity = null;
         ResultBean resultBean = null;
         try {
@@ -82,6 +88,7 @@ public class UserController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(userEntity, "200", "Login Successfully");
+        log.debug("### Login End ###");
         return resultBean;
     }
 
@@ -97,6 +104,7 @@ public class UserController {
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody ResultBean register(@RequestBody String json) {
+        log.debug("### Register Start ###");
         UserEntity userEntity = null;
         ResultBean resultBean = null;
         try {
@@ -108,6 +116,7 @@ public class UserController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(userEntity, "200", "Create Account Success");
+        log.debug("### Register End ###");
         return resultBean;
     }
 
@@ -124,6 +133,7 @@ public class UserController {
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json")
     public @ResponseBody ResultBean updateUser(@RequestHeader UUID token, @RequestBody String json, @RequestParam Integer id) {
+        log.debug("### update user Start ###");
         UserEntity userUpdate = null;
         ResultBean resultBean = null;
         try {
@@ -135,6 +145,7 @@ public class UserController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(userUpdate, "200", "Update Successfully");
+        log.debug("### update user End ###");
         return resultBean;
     }
 
@@ -147,6 +158,7 @@ public class UserController {
 
     @RequestMapping(value = "/info", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean getUserInfo(@RequestHeader UUID token, @RequestParam Integer id) {
+        log.debug("### Get Info User Start ###");
         UserInfo userInfo = null;
         ResultBean resultBean = null;
         try {
@@ -157,6 +169,7 @@ public class UserController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(userInfo, "200", "Done");
+        log.debug("### Get Info User End ###");
         return resultBean;
     }
 
@@ -171,6 +184,7 @@ public class UserController {
 
     @RequestMapping(value = "/change-password", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean changePassword(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
+        log.debug("### Change Password User Start ###");
         UserEntity userEntity = null;
         ResultBean resultBean = null;
         try {
@@ -181,6 +195,7 @@ public class UserController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(userEntity, "200", "Change Password Successfully");
+        log.debug("### Change Password User End ###");
         return resultBean;
     }
 

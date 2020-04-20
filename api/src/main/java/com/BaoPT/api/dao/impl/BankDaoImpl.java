@@ -12,11 +12,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.BaoPT.api.bean.BankEntity;
 import com.BaoPT.api.dao.BankDao;
+import com.BaoPT.api.service.impl.UserServiceImpl;
 
 /**
  * [OVERVIEW] XXXXX.
@@ -32,6 +35,8 @@ import com.BaoPT.api.dao.BankDao;
 @Repository(value = "bankDao")
 @Transactional
 public class BankDaoImpl implements BankDao {
+
+    private static final Log log = LogFactory.getLog(UserServiceImpl.class);
 
     @Autowired
     private EntityManager entityManager;
@@ -51,6 +56,7 @@ public class BankDaoImpl implements BankDao {
      */
     @Override
     public BankEntity getBank(int id) {
+        log.debug("### Get Bank Start ###");
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT b ");
         sql.append(" FROM BankEntity b ");
@@ -64,6 +70,7 @@ public class BankDaoImpl implements BankDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        log.debug("### Get Bank End ###");
         return entity;
     }
 

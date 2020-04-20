@@ -74,8 +74,6 @@ public class UserServiceImpl implements UserService {
                 if (!user.getPassword().equals(this.encodeDecode.encode(userJson.getString("password")))) {
                     throw new ApiValidateExeption("400", "Password Is Not Right");
                 } else {
-                    String password = "123456";
-                    System.out.println(this.encodeDecode.encode(password));
                     log.debug("### Login End ###");
                     return user;
                 }
