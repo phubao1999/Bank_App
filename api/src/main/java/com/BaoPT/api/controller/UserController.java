@@ -63,6 +63,10 @@ public class UserController {
     }
 
     /**
+     * @author (VNEXT) BaoPT
+     * @param req.body String Json
+     * @param "id"
+     * @param "password"
      * @return Login
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
@@ -82,6 +86,13 @@ public class UserController {
     }
 
     /**
+     * @author (VNEXT) BaoPT
+     * @param req.body String json
+     * @param "name"
+     * @param "sdt"
+     * @param "day_of_birth"
+     * @param "id_bank"
+     * @param "monney"
      * @return Register User
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
@@ -101,12 +112,18 @@ public class UserController {
     }
 
     /**
+     * @author (VNEXT) BaoPT
+     * @param req.header token
+     * @param req.param id_user
+     * @param req.body String Json
+     * @param "name"
+     * @param "sdt"
+     * @param "day_of_birth"
      * @return Update User By Id
-     * @param id;
      */
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json")
-    public @ResponseBody ResultBean updateUser(@RequestHeader UUID token ,@RequestBody String json, @RequestParam Integer id) {
+    public @ResponseBody ResultBean updateUser(@RequestHeader UUID token, @RequestBody String json, @RequestParam Integer id) {
         UserEntity userUpdate = null;
         ResultBean resultBean = null;
         try {
@@ -122,12 +139,14 @@ public class UserController {
     }
 
     /**
+     * @author (VNEXT) BaoPT
+     * @param req.header token
+     * @param req.param id_user
      * @return Get Info Of User
-     * @param id
      */
 
     @RequestMapping(value = "/info", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean getUserInfo(@RequestHeader UUID token ,@RequestParam Integer id) {
+    public @ResponseBody ResultBean getUserInfo(@RequestHeader UUID token, @RequestParam Integer id) {
         UserInfo userInfo = null;
         ResultBean resultBean = null;
         try {
@@ -142,12 +161,16 @@ public class UserController {
     }
 
     /**
+     * @author (VNEXT) BaoPT
+     * @param req.header token
+     * @param req.param id_user
+     * @param req.body String Json
+     * @param "password"
      * @return Change Password Of User
-     * @param id
      */
 
     @RequestMapping(value = "/change-password", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean changePassword(@RequestHeader UUID token ,@RequestParam Integer id, @RequestBody String json) {
+    public @ResponseBody ResultBean changePassword(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
         UserEntity userEntity = null;
         ResultBean resultBean = null;
         try {

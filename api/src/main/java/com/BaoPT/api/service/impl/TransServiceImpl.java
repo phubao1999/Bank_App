@@ -53,6 +53,11 @@ public class TransServiceImpl implements TransService {
     @Autowired
     private Define define;
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param json
+     * @return Create New Transaction
+     */
     @Override
     public List<TransEntity> create(String json) throws ApiValidateExeption {
         JSONObject transJson = new JSONObject(json);
@@ -81,6 +86,12 @@ public class TransServiceImpl implements TransService {
         }
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param id
+     * @param Token (UUID)
+     * @return Get All Transtion By Id
+     */
     @Override
     public List<TransEntity> getAllById(int id, UUID token) throws ApiValidateExeption {
         List<TransEntity> transList = (List<TransEntity>) transDao.getAllById(id);
@@ -93,6 +104,13 @@ public class TransServiceImpl implements TransService {
         }
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param id
+     * @param json
+     * @param Token (UUID)
+     * @return Filtel All Transaction By date and Id
+     */
     @Override
     public List<TransEntity> filter(int id, String json, UUID token) throws ApiValidateExeption {
         JSONObject transJson = new JSONObject(json);
@@ -122,6 +140,12 @@ public class TransServiceImpl implements TransService {
         }
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param id
+     * @param Token (UUID)
+     * @return Export To File .csv in src/output
+     */
     @Override
     public List<TransEntity> csvWriterByUserId(int id, UUID token) throws ApiValidateExeption {
 

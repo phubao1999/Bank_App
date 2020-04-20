@@ -44,6 +44,14 @@ public class TransferController {
     @Autowired
     private TranfferService tranfferService;
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param req.header token
+     * @param req.param id_user
+     * @param req.body String Json
+     * @param "monney"
+     * @return Update Money of user and send Data To Call Api Create Transaction (Add Monney)
+     */
     @RequestMapping(value = "/add-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean updateMonney(@RequestHeader UUID token ,@RequestParam Integer id, @RequestBody String json) {
         ResultBean resultBean = null;
@@ -59,6 +67,14 @@ public class TransferController {
         return resultBean;
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param req.header token
+     * @param req.param id_user
+     * @param req.body String Json
+     * @param "monney"
+     * @return Update Money of user and send Data To Call Api Create Transaction (Minus Money)
+     */
     @RequestMapping(value = "/tranffer-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean tranfferMonney(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
         ResultBean resultBean = null;
@@ -74,6 +90,14 @@ public class TransferController {
         return resultBean;
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param req.header token
+     * @param req.param id_user
+     * @param req.body String Json
+     * @param "monney"
+     * @return Update Money of user and send Data To Call Api Create Transaction (Send Money)
+     */
     @RequestMapping(value = "/send-monney", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean sendMonney(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
         ResultBean resultBean = null;

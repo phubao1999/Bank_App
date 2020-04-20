@@ -36,11 +36,19 @@ public class BankDaoImpl implements BankDao {
     @Autowired
     private EntityManager entityManager;
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Get All Record
+     */
     @Override
     public List<BankEntity> getAll() {
         return this.entityManager.createQuery("FROM BankEntity b", BankEntity.class).getResultList();
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Get col Record By Id
+     */
     @Override
     public BankEntity getBank(int id) {
         StringBuilder sql = new StringBuilder();

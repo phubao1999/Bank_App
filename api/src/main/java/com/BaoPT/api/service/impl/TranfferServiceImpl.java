@@ -42,10 +42,17 @@ public class TranfferServiceImpl implements TranfferService {
 
     @Autowired
     private CheckToken checkToken;
-    
+
     @Autowired
     private Define define;
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param id
+     * @param json
+     * @param Token (UUID)
+     * @return Add Monney to user
+     */
     @Override
     public List<TransfferMoney> addMonney(int id, String json, UUID token) throws ApiValidateExeption {
         UserEntity userUpdateMonney = userDao.getUserById(id);
@@ -74,6 +81,13 @@ public class TranfferServiceImpl implements TranfferService {
         }
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param id
+     * @param json
+     * @param Token (UUID)
+     * @return Tranffer Monney to user
+     */
     @Override
     public List<TransfferMoney> tranfferMonney(int id, String json, UUID token) throws ApiValidateExeption {
         UserEntity userUpdateMonney = userDao.getUserById(id);
@@ -118,6 +132,13 @@ public class TranfferServiceImpl implements TranfferService {
         }
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param id
+     * @param json
+     * @param Token (UUID)
+     * @return Send Money To Another User
+     */
     @Override
     public List<TransfferMoney> sendMonney(int id, String json, UUID token) throws ApiValidateExeption {
         UserEntity userSendMoney = userDao.getUserById(id);

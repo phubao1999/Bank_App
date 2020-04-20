@@ -47,6 +47,11 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param Token (UUID)
+     * @return Login
+     */
     @Override
     public UserEntity loginById(String json) throws ApiValidateExeption {
         JSONObject userJson = new JSONObject(json);
@@ -66,6 +71,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param json
+     * @return Register User
+     */
     @Override
     public UserEntity register(String json) throws ApiValidateExeption {
         // Check If User Exist => throw Exception
@@ -100,6 +110,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param id
+     * @param json
+     * @param Token (UUID)
+     * @return Update User Info
+     */
     @Override
     public UserEntity update(String json, int id, UUID token) throws ApiValidateExeption {
         JSONObject userJson = new JSONObject(json);
@@ -127,6 +144,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param id
+     * @param Token (UUID)
+     * @return Get User Info
+     */
     @Override
     public UserInfo getInfoUser(int id, UUID token) throws ApiValidateExeption {
         UserInfo userInfo = userDao.getInforUser(id);
@@ -140,6 +163,13 @@ public class UserServiceImpl implements UserService {
         return userInfo;
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param id
+     * @param json
+     * @param Token (UUID)
+     * @return Change Password User
+     */
     @Override
     public UserEntity changePassword(int id, String json, UUID token) throws ApiValidateExeption {
         UserEntity userUpdatePassword = userDao.getUserById(id);

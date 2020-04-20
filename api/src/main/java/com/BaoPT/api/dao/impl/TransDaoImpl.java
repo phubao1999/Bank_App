@@ -38,13 +38,18 @@ public class TransDaoImpl implements TransDao {
     private EntityManager entityManager;
 
     /**
-     * @return Create new Item
+     * @author (VNEXT) BaoPT
+     * @return Create New Col
      */
     @Override
     public void createTrans(TransEntity trans) {
         this.entityManager.persist(trans);
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Filter Record By Id
+     */
     @SuppressWarnings("unchecked")
     @Override
     public List<TransEntity> getAllById(int id) {
@@ -65,6 +70,10 @@ public class TransDaoImpl implements TransDao {
         return entity;
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Get col Record By Id Filter By Date
+     */
     @SuppressWarnings("unchecked")
     @Override
     public List<TransEntity> filter(int id, Date from, Date to) {

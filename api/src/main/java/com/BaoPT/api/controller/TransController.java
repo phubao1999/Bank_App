@@ -45,6 +45,8 @@ public class TransController {
     private TransService transService;
 
     /**
+     * @author (VNEXT) BaoPT
+     * @param req.body String json
      * @return Create New Transaction
      */
 
@@ -65,8 +67,9 @@ public class TransController {
     }
 
     /**
-     * 
-     * @param id
+     * @author (VNEXT) BaoPT
+     * @param req.param id_user
+     * @param req.header token
      * @return Get History Trans
      */
     @RequestMapping(value = "/trans", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -85,9 +88,13 @@ public class TransController {
     }
 
     /**
-     * 
-     * @param id
-     * @return Filter History Trans
+     * @author (VNEXT) BaoPT
+     * @param req.header token
+     * @param req.param id_user
+     * @param req.body String json
+     * @param "from"
+     * @param "to"
+     * @return Filter History Trans By Date and Id
      */
     @RequestMapping(value = "/trans/filter", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResultBean filter(@RequestHeader UUID token ,@RequestParam Integer id, @RequestBody String json) {
@@ -104,6 +111,12 @@ public class TransController {
         return resultBean;
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param req.param id_user
+     * @param req.header token
+     * @return Export to csv file
+     */
     @RequestMapping(value = "/trans/get", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResultBean exportCsv(@RequestHeader UUID token ,@RequestParam Integer id) {
         List<TransEntity> transEntity = null;

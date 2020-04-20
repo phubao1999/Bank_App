@@ -37,26 +37,46 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private EntityManager entityManager;
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Get All Record
+     */
     @Override
     public List<UserEntity> getAll() {
         return entityManager.createQuery("FROM UserEntity ue", UserEntity.class).getResultList();
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Get Cols By Id
+     */
     @Override
     public UserEntity getUserById(int id) {
         return entityManager.find(UserEntity.class, id);
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Create New Record
+     */
     @Override
     public void register(UserEntity userEntity) {
         entityManager.persist(userEntity);
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Update Record
+     */
     @Override
     public void update(UserEntity userEntity) {
         entityManager.merge(userEntity);
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Join User And Bank Table by "id_bank" And Then Get That Record
+     */
     @Override
     public UserInfo getInforUser(int id) {
         // TODO Auto-generated method stub
