@@ -9,6 +9,8 @@ package com.BaoPT.api.service.impl;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +24,6 @@ import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.utils.ApiValidateExeption;
 import com.BaoPT.api.utils.Constant;
 import com.BaoPT.api.utils.Validate;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * [OVERVIEW] UserServiceImpl.
@@ -109,7 +108,7 @@ public class UserServiceImpl implements UserService {
             } else if (userJson.getInt("id_bank") > 3) {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "Id Bank Must Be Between 1 and 3");
             } else {
-                userEntity.setName(userJson.getString("name"));
+                userEntity.setUsername(userJson.getString("name"));
                 userEntity.setSdt(userJson.getString("sdt"));
                 userEntity.setDayOfBirth(userJson.getString("day_of_birth"));
                 userEntity.setPassword(this.encodeDecode.encode(userJson.getString("password")));
@@ -149,7 +148,7 @@ public class UserServiceImpl implements UserService {
             } else if (!this.checkToken.checkToken(id, token)) {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
             } else {
-                userUpdate.setName(userJson.getString("name"));
+                userUpdate.setUsername(userJson.getString("name"));
                 userUpdate.setSdt(userJson.getString("sdt"));
                 userUpdate.setDayOfBirth(userJson.getString("day_of_birth"));
             }
@@ -198,7 +197,8 @@ public class UserServiceImpl implements UserService {
         } else if (userJson.isEmpty()) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else if (!userJson.getString("password").matches(Validate.PASSWORD)) {
-            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Password Must Have Less Then 8 Character, Must Have Character, Number And Special Character. Ex: Bao@123");
+            throw new ApiValidateExeption(Constant.BAD_REQUEST,
+                    "Password Must Have Less Then 8 Character, Must Have Character, Number And Special Character. Ex: Bao@123");
         } else if (!this.checkToken.checkToken(id, token)) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         } else {

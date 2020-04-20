@@ -36,7 +36,7 @@ public class UserEntity {
     private Integer idUser;
 
     @Column(name = "name")
-    private String name;
+    private String username;
 
     public Integer getIdBank() {
         return idBank;
@@ -63,12 +63,12 @@ public class UserEntity {
         this.idUser = idUser;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getSdt() {
