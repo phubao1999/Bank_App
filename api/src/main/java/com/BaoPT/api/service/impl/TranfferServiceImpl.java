@@ -9,7 +9,6 @@ package com.BaoPT.api.service.impl;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.BaoPT.api.bean.UserEntity;
-import com.BaoPT.api.common.CheckToken;
 import com.BaoPT.api.common.Define;
 import com.BaoPT.api.dao.UserDao;
 import com.BaoPT.api.model.TransfferMoney;
@@ -46,9 +44,6 @@ public class TranfferServiceImpl implements TranfferService {
     private UserDao userDao;
 
     @Autowired
-    private CheckToken checkToken;
-
-    @Autowired
     private Define define;
 
     /**
@@ -59,7 +54,7 @@ public class TranfferServiceImpl implements TranfferService {
      * @return Add Monney to user
      */
     @Override
-    public List<TransfferMoney> addMonney(int id, String json, UUID token) throws ApiValidateExeption {
+    public List<TransfferMoney> addMonney(int id, String json) throws ApiValidateExeption {
         log.debug("### Add Monney To User Start ###");
         UserEntity userUpdateMonney = userDao.getUserById(id);
         JSONObject userJson = new JSONObject(json);
@@ -68,8 +63,6 @@ public class TranfferServiceImpl implements TranfferService {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exist");
         } else if (userJson.isEmpty()) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
-        } else if (!this.checkToken.checkToken(id, token)) {
-            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         } else {
             int idUser = userUpdateMonney.getIdUser();
             int idBank = userUpdateMonney.getIdBank();
@@ -95,7 +88,7 @@ public class TranfferServiceImpl implements TranfferService {
      * @return Tranffer Monney to user
      */
     @Override
-    public List<TransfferMoney> tranfferMonney(int id, String json, UUID token) throws ApiValidateExeption {
+    public List<TransfferMoney> tranfferMonney(int id, String json) throws ApiValidateExeption {
         log.debug("### TranfferMonney User Start ###");
         UserEntity userUpdateMonney = userDao.getUserById(id);
         JSONObject userJson = new JSONObject(json);
@@ -113,8 +106,6 @@ public class TranfferServiceImpl implements TranfferService {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "The amount in your account is less than 50 so you can not tranffer now");
             } else if (userUpdateMonney.getMonney() < monneyTranffer) {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "The amount in your account is less than your tranffer monney so you can not tranffer now");
-            } else if (!this.checkToken.checkToken(id, token)) {
-                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
             }
             Timestamp tranfferDay = new Timestamp(System.currentTimeMillis());
             int fee;
@@ -148,7 +139,7 @@ public class TranfferServiceImpl implements TranfferService {
      * @return Send Money To Another User
      */
     @Override
-    public List<TransfferMoney> sendMonney(int id, String json, UUID token) throws ApiValidateExeption {
+    public List<TransfferMoney> sendMonney(int id, String json) throws ApiValidateExeption {
         log.debug("### Send Monney Start ###");
         UserEntity userSendMoney = userDao.getUserById(id);
 
@@ -173,8 +164,6 @@ public class TranfferServiceImpl implements TranfferService {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "Can not tranffer Because Your Money Less than 50");
             } else if (userSendMoney.getMonney() < monneyTransfer) {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "Can not tranffer Because Your Money Less than money that you want to transfer");
-            } else if (!this.checkToken.checkToken(id, token)) {
-                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
             } else {
                 if (userSendMoney.getIdBank() != userTakeMoney.getIdBank()) {
                     fee = (int) (monneyTransfer * this.define.getFee(userSendMoney.getIdBank(), 4));

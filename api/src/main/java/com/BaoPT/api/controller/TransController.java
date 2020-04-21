@@ -7,7 +7,6 @@
 package com.BaoPT.api.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,12 +79,12 @@ public class TransController {
      * @return Get History Trans
      */
     @RequestMapping(value = "/trans", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResultBean getAll(@RequestHeader UUID token, @RequestParam Integer id) {
+    public ResultBean getAll(@RequestParam Integer id) {
         log.debug("### Get Transaction Start ###");
         List<TransEntity> transEntity = null;
         ResultBean resultBean = null;
         try {
-            transEntity = transService.getAllById(id, token);
+            transEntity = transService.getAllById(id);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
         } catch (Exception e) {
@@ -107,12 +105,12 @@ public class TransController {
      * @return Filter History Trans By Date and Id
      */
     @RequestMapping(value = "/trans/filter", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResultBean filter(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
+    public ResultBean filter(@RequestParam Integer id, @RequestBody String json) {
         log.debug("### Get Transaction by date Start ###");
         List<TransEntity> transEntity = null;
         ResultBean resultBean = null;
         try {
-            transEntity = transService.filter(id, json, token);
+            transEntity = transService.filter(id, json);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
         } catch (Exception e) {
@@ -130,12 +128,12 @@ public class TransController {
      * @return Export to csv file
      */
     @RequestMapping(value = "/trans/get", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResultBean exportCsv(@RequestHeader UUID token, @RequestParam Integer id) {
+    public ResultBean exportCsv(@RequestParam Integer id) {
         log.debug("### Export Transaction Start ###");
         List<TransEntity> transEntity = null;
         ResultBean resultBean = null;
         try {
-            transEntity = transService.csvWriterByUserId(id, token);
+            transEntity = transService.csvWriterByUserId(id);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
         } catch (Exception e) {

@@ -7,9 +7,9 @@
 package com.BaoPT.api.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.BaoPT.api.bean.UserEntity;
+import com.BaoPT.api.model.JwtResponse;
 import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
@@ -32,10 +32,14 @@ public interface UserService {
 
     public UserEntity register(String json) throws ApiValidateExeption;
 
-    public UserEntity update(String json, int id, UUID token) throws ApiValidateExeption;
+    public UserEntity update(String json, int id) throws ApiValidateExeption;
 
-    public UserInfo getInfoUser(int id, UUID token) throws ApiValidateExeption;
+    public UserInfo getInfoUser(int id) throws ApiValidateExeption;
 
-    public UserEntity changePassword(int id, String json, UUID token) throws ApiValidateExeption;
+    public UserEntity changePassword(int id, String json) throws ApiValidateExeption;
+
+    public UserEntity getByUsername(String username);
+
+    public JwtResponse login(String json) throws ApiValidateExeption, Exception;
 
 }

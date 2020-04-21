@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.BaoPT.api.bean.TransEntity;
-import com.BaoPT.api.common.CheckToken;
 import com.BaoPT.api.common.Define;
 import com.BaoPT.api.dao.TransDao;
 import com.BaoPT.api.service.TransService;
@@ -51,9 +49,6 @@ public class TransServiceImpl implements TransService {
 
     @Autowired
     private TransDao transDao;
-
-    @Autowired
-    private CheckToken checkToken;
 
     @Autowired
     private Define define;
@@ -99,13 +94,11 @@ public class TransServiceImpl implements TransService {
      * @return Get All Transtion By Id
      */
     @Override
-    public List<TransEntity> getAllById(int id, UUID token) throws ApiValidateExeption {
+    public List<TransEntity> getAllById(int id) throws ApiValidateExeption {
         log.debug("### Get Transaction List Start ###");
         List<TransEntity> transList = (List<TransEntity>) transDao.getAllById(id);
         if (transList.size() == 0) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "No Data");
-        } else if (!this.checkToken.checkToken(id, token)) {
-            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         } else {
             log.debug("### Get Transaction List End ###");
             return transList;
@@ -120,7 +113,7 @@ public class TransServiceImpl implements TransService {
      * @return Filtel All Transaction By date and Id
      */
     @Override
-    public List<TransEntity> filter(int id, String json, UUID token) throws ApiValidateExeption {
+    public List<TransEntity> filter(int id, String json) throws ApiValidateExeption {
         log.debug("### Get Transaction List By Id and date Start ###");
         JSONObject transJson = new JSONObject(json);
         List<TransEntity> transList = null;
@@ -141,8 +134,6 @@ public class TransServiceImpl implements TransService {
             transList = transDao.filter(id, fromDate, toDate);
             if (transList.size() == 0) {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "There Is No Data");
-            } else if (!this.checkToken.checkToken(id, token)) {
-                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
             } else {
                 log.debug("### Get Transaction List By Id and date End ###");
                 return transList;
@@ -157,7 +148,7 @@ public class TransServiceImpl implements TransService {
      * @return Export To File .csv in src/output
      */
     @Override
-    public List<TransEntity> csvWriterByUserId(int id, UUID token) throws ApiValidateExeption {
+    public List<TransEntity> csvWriterByUserId(int id) throws ApiValidateExeption {
         log.debug("### Export Transaction List By Id Start ###");
 
         List<TransEntity> transEntity = null;
@@ -170,8 +161,6 @@ public class TransServiceImpl implements TransService {
 
         if (transEntity.size() == 0) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Transaction Is Not Found");
-        } else if (!this.checkToken.checkToken(id, token)) {
-            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         } else {
             try {
                 Writer writer = new FileWriter(csv);

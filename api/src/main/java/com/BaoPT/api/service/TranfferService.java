@@ -7,7 +7,6 @@
 package com.BaoPT.api.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.BaoPT.api.model.TransfferMoney;
 import com.BaoPT.api.utils.ApiValidateExeption;
@@ -25,10 +24,10 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 
 public interface TranfferService {
 
-    public List<TransfferMoney> addMonney(int id, String json, UUID token) throws ApiValidateExeption;
+    public List<TransfferMoney> addMonney(int id, String json) throws ApiValidateExeption;
 
-    public List<TransfferMoney> tranfferMonney(int id, String json, UUID token) throws ApiValidateExeption;
+    public List<TransfferMoney> tranfferMonney(int id, String json) throws ApiValidateExeption;
 
-    public List<TransfferMoney> sendMonney(int id, String json, UUID token) throws ApiValidateExeption;
+    public List<TransfferMoney> sendMonney(int id, String json) throws ApiValidateExeption;
 
 }

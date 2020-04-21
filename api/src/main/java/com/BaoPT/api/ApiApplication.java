@@ -7,8 +7,8 @@
 package com.BaoPT.api;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 /**
  * [OVERVIEW] XXXXX.
@@ -21,7 +21,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
  * 001       1.0       2020/04/14      (VNEXT) BaoPT       Create new
 */
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@EnableAutoConfiguration
+@SpringBootApplication
 public class ApiApplication {
 
     public static void main(String[] args) {

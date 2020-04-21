@@ -7,22 +7,26 @@
 package com.BaoPT.api.service.impl;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.BaoPT.api.bean.UserEntity;
-import com.BaoPT.api.common.CheckToken;
 import com.BaoPT.api.common.EncodeDecode;
 import com.BaoPT.api.dao.UserDao;
+import com.BaoPT.api.dao.UserRepository;
+import com.BaoPT.api.model.JwtResponse;
 import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.utils.ApiValidateExeption;
 import com.BaoPT.api.utils.Constant;
+import com.BaoPT.api.utils.JwtTokenUtil;
 import com.BaoPT.api.utils.Validate;
 
 /**
@@ -45,10 +49,16 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Autowired
-    private CheckToken checkToken;
+    private EncodeDecode encodeDecode;
 
     @Autowired
-    private EncodeDecode encodeDecode;
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired(required = true)
+    private JwtTokenUtil jwtTokenUtil;
 
     @Override
     public List<UserEntity> getAll() {
@@ -114,7 +124,6 @@ public class UserServiceImpl implements UserService {
                 userEntity.setPassword(this.encodeDecode.encode(userJson.getString("password")));
                 userEntity.setMonney(userJson.getInt("monney"));
                 userEntity.setIdBank(userJson.getInt("id_bank"));
-                userEntity.setToken(UUID.randomUUID());
             }
 
             userDao.register(userEntity);
@@ -131,7 +140,7 @@ public class UserServiceImpl implements UserService {
      * @return Update User Info
      */
     @Override
-    public UserEntity update(String json, int id, UUID token) throws ApiValidateExeption {
+    public UserEntity update(String json, int id) throws ApiValidateExeption {
         log.debug("### Update User Start ###");
         JSONObject userJson = new JSONObject(json);
         if (userJson.isEmpty()) {
@@ -145,8 +154,6 @@ public class UserServiceImpl implements UserService {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "Phone Number Is Between 10 and 11 Number");
             } else if (!userJson.getString("day_of_birth").trim().matches(Validate.DATE)) {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "Day of birth must like ex: 1999/08/27");
-            } else if (!this.checkToken.checkToken(id, token)) {
-                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
             } else {
                 userUpdate.setUsername(userJson.getString("name"));
                 userUpdate.setSdt(userJson.getString("sdt"));
@@ -166,13 +173,11 @@ public class UserServiceImpl implements UserService {
      * @return Get User Info
      */
     @Override
-    public UserInfo getInfoUser(int id, UUID token) throws ApiValidateExeption {
+    public UserInfo getInfoUser(int id) throws ApiValidateExeption {
         log.debug("### Get User Info Start ###");
         UserInfo userInfo = userDao.getInforUser(id);
         if (userInfo == null) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exist");
-        } else if (!this.checkToken.checkToken(id, token)) {
-            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         }
         String dobFormat = userInfo.getDob().replace("-", "/");
         userInfo.setDob(dobFormat);
@@ -188,7 +193,7 @@ public class UserServiceImpl implements UserService {
      * @return Change Password User
      */
     @Override
-    public UserEntity changePassword(int id, String json, UUID token) throws ApiValidateExeption {
+    public UserEntity changePassword(int id, String json) throws ApiValidateExeption {
         log.debug("### Change Password Start ###");
         UserEntity userUpdatePassword = userDao.getUserById(id);
         JSONObject userJson = new JSONObject(json);
@@ -199,13 +204,52 @@ public class UserServiceImpl implements UserService {
         } else if (!userJson.getString("password").matches(Validate.PASSWORD)) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST,
                     "Password Must Have Less Then 8 Character, Must Have Character, Number And Special Character. Ex: Bao@123");
-        } else if (!this.checkToken.checkToken(id, token)) {
-            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Invalid Token");
         } else {
             userUpdatePassword.setPassword(this.encodeDecode.encode(userJson.getString("password")));
             userDao.update(userUpdatePassword);
             log.debug("### Change Password End ###");
             return userUpdatePassword;
+        }
+    }
+
+    /**
+     * @author (VNEXT) BaoPT
+     * @param username
+     * @return UserEntity
+     */
+    @Override
+    public UserEntity getByUsername(String username) {
+        log.debug("### getByUsername Start ###");
+        Optional<UserEntity> userOptional = userRepository.findByUsername(username);
+        log.debug("### getByUsername End ###");
+        return userOptional.orElse(null);
+    }
+
+    /**
+     * login
+     * @author (VNEXT) BaoPT
+     * @param json
+     * @return JwtResponse
+     */
+    @Override
+    public JwtResponse login(String json) throws ApiValidateExeption, Exception {
+        log.debug("### login START ###");
+        JSONObject jsonObject = new JSONObject(json);
+        if (jsonObject.isEmpty()) {
+            throw new ApiValidateExeption(Constant.NOT_FOUND, "faild", "not found");
+        }
+        String username = jsonObject.getString("username");
+        String password = this.encodeDecode.encode(jsonObject.getString("password"));
+        //        authenticate(username, password);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (!password.equals(userDetails.getPassword())) {
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Password Is Not Right");
+        } else {
+            String token = jwtTokenUtil.generateToken(userDetails);
+            UserEntity user = this.getByUsername(username);
+            JwtResponse jwtResponse = new JwtResponse(token, user);
+            log.debug("### login END ###");
+            return jwtResponse;
         }
     }
 

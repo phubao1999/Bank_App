@@ -7,15 +7,15 @@
 package com.BaoPT.api.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.BaoPT.api.bean.ResultBean;
 import com.BaoPT.api.bean.UserEntity;
+import com.BaoPT.api.model.JwtResponse;
 import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.service.impl.UserServiceImpl;
@@ -133,12 +134,12 @@ public class UserController {
      */
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json")
-    public @ResponseBody ResultBean updateUser(@RequestHeader UUID token, @RequestBody String json, @RequestParam Integer id) {
+    public @ResponseBody ResultBean updateUser(@RequestBody String json, @RequestParam Integer id) {
         log.debug("### update user Start ###");
         UserEntity userUpdate = null;
         ResultBean resultBean = null;
         try {
-            userUpdate = userService.update(json, id, token);
+            userUpdate = userService.update(json, id);
         } catch (ApiValidateExeption e) {
             resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
             return resultBean;
@@ -158,12 +159,12 @@ public class UserController {
      */
 
     @RequestMapping(value = "/info", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean getUserInfo(@RequestHeader UUID token, @RequestParam Integer id) {
+    public @ResponseBody ResultBean getUserInfo(@RequestParam Integer id) {
         log.debug("### Get Info User Start ###");
         UserInfo userInfo = null;
         ResultBean resultBean = null;
         try {
-            userInfo = userService.getInfoUser(id, token);
+            userInfo = userService.getInfoUser(id);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
         } catch (Exception e) {
@@ -184,12 +185,12 @@ public class UserController {
      */
 
     @RequestMapping(value = "/change-password", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody ResultBean changePassword(@RequestHeader UUID token, @RequestParam Integer id, @RequestBody String json) {
+    public @ResponseBody ResultBean changePassword(@RequestParam Integer id, @RequestBody String json) {
         log.debug("### Change Password User Start ###");
         UserEntity userEntity = null;
         ResultBean resultBean = null;
         try {
-            userEntity = userService.changePassword(id, json, token);
+            userEntity = userService.changePassword(id, json);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
         } catch (Exception e) {
@@ -198,6 +199,31 @@ public class UserController {
         resultBean = new ResultBean(userEntity, Constant.OK, "Change Password Successfully");
         log.debug("### Change Password User End ###");
         return resultBean;
+    }
+
+    /**
+     * loginToken
+     * @author: (VNEXT) BaoPT
+     * @param json
+     * @return Return User With Token
+     */
+    @RequestMapping(value = "/login-token", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<ResultBean> loginToken(@RequestBody String json) {
+        log.debug("### loginToken START ###");
+        JwtResponse jwtResponse = null;
+        ResultBean resultBean = null;
+        try {
+            jwtResponse = userService.login(json);
+        } catch (ApiValidateExeption e) {
+            resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+            return new ResponseEntity<ResultBean>(resultBean, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            resultBean = new ResultBean("401", e.getMessage());
+            return new ResponseEntity<ResultBean>(resultBean, HttpStatus.UNAUTHORIZED);
+        }
+        resultBean = new ResultBean(jwtResponse, "200", "OK");
+        log.debug("### loginToken END ###");
+        return new ResponseEntity<ResultBean>(resultBean, HttpStatus.OK);
     }
 
 }
