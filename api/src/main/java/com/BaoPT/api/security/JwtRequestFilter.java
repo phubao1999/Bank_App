@@ -47,6 +47,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    /**
+     * doFilterInternal
+     * @author (VNEXT) BaoPT
+     * @param request
+     * @param response
+     * @param filterChain
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.debug("### doFilterInternal START ###");

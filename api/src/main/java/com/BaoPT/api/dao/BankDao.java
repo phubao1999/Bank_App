@@ -22,8 +22,18 @@ import com.BaoPT.api.bean.BankEntity;
 */
 public interface BankDao {
 
+    /**
+     * getAll
+     * @author: (VNEXT) BaoPT
+     */
     public List<BankEntity> getAll();
-    
+
+    /**
+     * getBank
+     * @author: (VNEXT) BaoPT
+     * @param id
+     * @return BankEntity
+     */
     public BankEntity getBank(int id);
 
 }

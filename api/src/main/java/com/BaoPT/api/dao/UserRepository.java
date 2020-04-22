@@ -24,6 +24,12 @@ import com.BaoPT.api.bean.UserEntity;
 */
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
+    /**
+     * findByUsername
+     * @author: (VNEXT) BaoPT
+     * @param username
+     * @return Optional UserEntity
+     */
     Optional<UserEntity> findByUsername(String username);
 
 }

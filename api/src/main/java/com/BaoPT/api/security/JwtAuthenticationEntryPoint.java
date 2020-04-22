@@ -36,6 +36,11 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
 
     private static final long serialVersionUID = -7858869558953243875L;
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param req, res, authExeprion
+     * Từ chối truy cập chưa được xác thực và gửi về lỗi code 401
+     */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         log.debug("### commence START ###");

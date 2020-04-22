@@ -71,31 +71,6 @@ public class UserController {
 
     /**
      * @author (VNEXT) BaoPT
-     * @param req.body String Json
-     * @param "id"
-     * @param "password"
-     * @return Login
-     */
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody ResultBean login(@RequestBody String json) {
-        log.debug("### Login Start ###");
-        UserEntity userEntity = null;
-        ResultBean resultBean = null;
-        try {
-            userEntity = userService.loginById(json);
-        } catch (ApiValidateExeption e) {
-            resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
-            return resultBean;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        resultBean = new ResultBean(userEntity, Constant.OK, "Login Successfully");
-        log.debug("### Login End ###");
-        return resultBean;
-    }
-
-    /**
-     * @author (VNEXT) BaoPT
      * @param req.body String json
      * @param "name"
      * @param "sdt"
@@ -207,7 +182,7 @@ public class UserController {
      * @param json
      * @return Return User With Token
      */
-    @RequestMapping(value = "/login-token", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<ResultBean> loginToken(@RequestBody String json) {
         log.debug("### loginToken START ###");
         JwtResponse jwtResponse = null;

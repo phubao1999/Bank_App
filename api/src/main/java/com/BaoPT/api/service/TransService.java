@@ -24,11 +24,40 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 
 public interface TransService {
 
+    /**
+     * create
+     * @author: (VNEXT) BaoPT
+     * @param json
+     * @return List TransEntity
+     * @throws ApiValidateExeption
+     */
     public List<TransEntity> create(String json) throws ApiValidateExeption;
 
+    /**
+     * getAllById
+     * @author: (VNEXT) BaoPT
+     * @param id
+     * @return List TransEntity
+     * @throws ApiValidateExeption
+     */
     public List<TransEntity> getAllById(int id) throws ApiValidateExeption;
 
+    /**
+     * filter
+     * @author: (VNEXT) BaoPT
+     * @param id
+     * @param json
+     * @return List TransEntity
+     * @throws ApiValidateExeption
+     */
     public List<TransEntity> filter(int id, String json) throws ApiValidateExeption;
 
+    /**
+     * csvWriterByUserId
+     * @author: (VNEXT) BaoPT
+     * @param id
+     * @return List TransEntity
+     * @throws ApiValidateExeption
+     */
     public List<TransEntity> csvWriterByUserId(int id) throws ApiValidateExeption;
 }

@@ -24,10 +24,34 @@ import com.BaoPT.api.utils.ApiValidateExeption;
 
 public interface TranfferService {
 
+    /**
+     * addMonney
+     * @author: (VNEXT) BaoPT
+     * @param id
+     * @param json
+     * @return List TransfferMoney
+     * @throws ApiValidateExeption
+     */
     public List<TransfferMoney> addMonney(int id, String json) throws ApiValidateExeption;
 
+    /**
+     * tranfferMonney
+     * @author: (VNEXT) BaoPT
+     * @param id
+     * @param json
+     * @return List TransfferMonney
+     * @throws ApiValidateExeption
+     */
     public List<TransfferMoney> tranfferMonney(int id, String json) throws ApiValidateExeption;
 
+    /**
+     * sendMonney
+     * @author: (VNEXT) BaoPT
+     * @param id
+     * @param json
+     * @return List TransfferMoney
+     * @throws ApiValidateExeption
+     */
     public List<TransfferMoney> sendMonney(int id, String json) throws ApiValidateExeption;
 
 }

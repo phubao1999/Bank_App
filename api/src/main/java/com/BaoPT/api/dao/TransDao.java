@@ -24,10 +24,29 @@ import com.BaoPT.api.bean.TransEntity;
 
 public interface TransDao {
 
+    /**
+     * createTrans
+     * @author: (VNEXT) BaoPT
+     * @param trans
+     */
     public void createTrans(TransEntity trans);
 
+    /**
+     * getAllById
+     * @author: (VNEXT) BaoPT
+     * @param id
+     * @return List TransEntity
+     */
     public List<TransEntity> getAllById(int id);
 
+    /**
+     * filter
+     * @author: (VNEXT) BaoPT
+     * @param id
+     * @param fromDate
+     * @param toDate
+     * @return List TransEntity
+     */
     public List<TransEntity> filter(int id, Date fromDate, Date toDate);
 
 }

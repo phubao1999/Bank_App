@@ -68,32 +68,6 @@ public class UserServiceImpl implements UserService {
 
     /**
      * @author (VNEXT) BaoPT
-     * @param Token (UUID)
-     * @return Login
-     */
-    @Override
-    public UserEntity loginById(String json) throws ApiValidateExeption {
-        log.debug("### Login START ###");
-        JSONObject userJson = new JSONObject(json);
-        if (userJson.isEmpty()) {
-            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
-        } else {
-            UserEntity user = userDao.getUserById(userJson.getInt("id"));
-            if (user == null) {
-                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Id User Is Not Found");
-            } else {
-                if (!user.getPassword().equals(this.encodeDecode.encode(userJson.getString("password")))) {
-                    throw new ApiValidateExeption(Constant.BAD_REQUEST, "Password Is Not Right");
-                } else {
-                    log.debug("### Login End ###");
-                    return user;
-                }
-            }
-        }
-    }
-
-    /**
-     * @author (VNEXT) BaoPT
      * @param json
      * @return Register User
      */

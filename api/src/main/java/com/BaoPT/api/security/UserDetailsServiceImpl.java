@@ -40,6 +40,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService userService;
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @param username
+     * Return UserEntity And Hash username and password to token
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("### loadbyusername Start ###");
