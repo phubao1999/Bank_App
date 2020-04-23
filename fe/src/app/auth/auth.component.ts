@@ -106,16 +106,16 @@ export class AuthComponent implements OnInit, OnDestroy {
       password: this.formLogin.value.password
     };
     this.authService.login(body).subscribe(res => {
-      alert(`${res['meta']['message']}`);
-      const status = res['meta']['code'];
-      const id = res['data']['idUser'];
-      if (status === '200') {
-        const string = JSON.stringify(res['data'])
-        localStorage.setItem('user-info', string);
-        this.router.navigate(['/'], { queryParams: { id: id } });
-      }
+      const token = res['data']['token'];
+      const data = JSON.stringify(res['data']['user']);
+      const message = res['meta']['message'];
+      localStorage.setItem('token', token);
+      localStorage.setItem('user-info', data);
+      this.router.navigate(['/']);
+      alert(message);
+      console.log(res);
     }, err => {
-      console.log(err);
+      alert(err['error']['meta']['message']);
     });
   }
 
@@ -124,22 +124,22 @@ export class AuthComponent implements OnInit, OnDestroy {
       name: this.formRegister.value.name,
       sdt: this.formRegister.value.phoneNumber,
       password: this.formRegister.value.password,
-      day_of_birth: this.formRegister.value.dayOfBirth,
+      day_of_birth: this.formatDate(this.formRegister.value.dayOfBirth),
       id_bank: this.formRegister.value.idBank,
       monney: 0
     };
     this.authService.register(body).subscribe(res => {
-      alert(`${res['meta']['message']}`);
-      const status = res['meta']['code'];
-      const id = res['data']['id'];
-      if (status === '200') {
-        const string = JSON.stringify(res['data'])
-        localStorage.setItem('user-info', string);
-        this.router.navigate(['/'], { queryParams: { id: id } });
-      }
+      const message = res['meta']['message'];
+      alert(`${message} Please Login Again`);
+      this.isLogin = true;
     }, err => {
-      console.log(err);
-    });
+      const message = err['meta']['message'];
+      alert(message);
+    })
+  }
+
+  formatDate(date: String) {
+    return date.replace(/\-/g, '/');
   }
 
 }

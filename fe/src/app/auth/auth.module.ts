@@ -1,3 +1,4 @@
+import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -10,7 +11,8 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AuthRoutingModule
   ],
   providers: [
     AuthService

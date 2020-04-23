@@ -12,11 +12,11 @@ export class AuthService {
   ) { }
 
   login(body) {
-    return this.http.post(`${config.hostServer}/api/login`, body);
+    return this.http.post(`${config.hostServer}/user/login`, body);
   }
 
   register(body) {
-    return this.http.post(`${config.hostServer}/api/register`, body);
+    return this.http.post(`${config.hostServer}/user/register`, body);
   }
 
 }
