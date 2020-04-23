@@ -9,6 +9,7 @@ package com.BaoPT.api.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -55,7 +56,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().and().authorizeRequests()
                 // User controller
-                .antMatchers("/user/login-token", "/user/register", "/transaction/trans").permitAll()
+                .antMatchers("/user/register").permitAll().antMatchers("/user/login").permitAll().antMatchers(HttpMethod.POST, "/transaction/trans").permitAll()
+                .anyRequest().authenticated()
 
                 // Disable form login
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
