@@ -212,7 +212,9 @@ public class UserServiceImpl implements UserService {
         if (jsonObject.isEmpty()) {
             throw new ApiValidateExeption(Constant.NOT_FOUND, "faild", "not found");
         }
-        String username = jsonObject.getString("username");
+        int id = jsonObject.getInt("id");
+        UserEntity userLogin = this.userDao.getUserById(id);
+        String username = userLogin.getUsername();
         String password = this.encodeDecode.encode(jsonObject.getString("password"));
         //        authenticate(username, password);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
