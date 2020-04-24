@@ -16,6 +16,12 @@ export const routes: Routes = [
     component: UserLayoutComponent,
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'tranffer-money',
+    component: UserLayoutComponent,
+    loadChildren: () => import('./tranffer-monney/tranffer-money.module').then(m => m.TranfferMoneyModule),
+    canActivate: [AuthGuard]
   }
 ];
 
