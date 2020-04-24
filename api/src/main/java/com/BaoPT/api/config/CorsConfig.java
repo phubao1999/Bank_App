@@ -6,9 +6,19 @@
 
 package com.BaoPT.api.config;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * [OVERVIEW] XXXXX.
@@ -21,18 +31,27 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 001       1.0       2020/04/22      (VNEXT) BaoPT       Create new
 */
 
-@Configuration
-public class CorsConfig implements WebMvcConfigurer {
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class CorsConfig extends OncePerRequestFilter {
 
-    /**
-     * addCorsMappings
-     * @author (VNEXT) BaoPT
-     * @param registry
-     */
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        WebMvcConfigurer.super.addCorsMappings(registry);
-        registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "PUT,POST,GET,OPTIONS,DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Headers",
+                "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Allow-Methods,Access-Control-Allow-Request-Headers,Authorization,Access-Control-Expose-Headers");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+        if (request.getMethod().equals(HttpMethod.OPTIONS.name())) {
+            response.setStatus(HttpStatus.NO_CONTENT.value());
+        } else {
+            filterChain.doFilter(request, response);
+        }
+        
     }
 
+    
 }
