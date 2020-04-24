@@ -30,11 +30,13 @@ export class UserLayoutComponent implements OnInit, DoCheck {
     }
   ];
   activeFirst;
+  userName: String;
   constructor(
     public router: Router
   ) { }
 
   ngOnInit() {
+    this.getInfo();
   }
 
   ngDoCheck(): void {
@@ -54,6 +56,17 @@ export class UserLayoutComponent implements OnInit, DoCheck {
 
   back() {
     this.router.navigate(['/']);
+  }
+
+  getInfo() {
+    const infoUser = JSON.parse(localStorage.getItem('user-info'));
+    this.userName = infoUser['username'];
+  }
+
+  logout() {
+    localStorage.removeItem('user-info');
+    localStorage.removeItem('token');
+    location.reload();
   }
 
 }

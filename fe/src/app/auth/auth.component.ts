@@ -113,7 +113,6 @@ export class AuthComponent implements OnInit, OnDestroy {
       localStorage.setItem('user-info', data);
       this.router.navigate(['/']);
       alert(message);
-      console.log(res);
     }, err => {
       alert(err['error']['meta']['message']);
     });
