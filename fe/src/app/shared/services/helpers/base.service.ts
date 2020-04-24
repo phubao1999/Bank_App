@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 
@@ -11,7 +12,7 @@ export class BaseService {
 
     OBJECT_ERROR = { code: 400, message: 'Please check your internet connection and try again' };
 
-    constructor(protected http: Http) { }
+    constructor(protected http: HttpClient) { }
 
     private getUrlApi() {
         return config.hostServer;
@@ -22,7 +23,7 @@ export class BaseService {
         return this.http.get(`${this.getUrlApi()}/${path}`, options)
             .pipe(
                 map(res => {
-                    return res.json();
+                    return res;
                 }),
                 catchError(err => this.getError(err))
             );
@@ -33,7 +34,7 @@ export class BaseService {
         return this.http.post(`${this.getUrlApi()}/${path}`, body, options)
             .pipe(
                 map(res => {
-                    return res.json();
+                    return res;
                 }),
                 catchError(err => this.getError(err))
             );
@@ -45,34 +46,36 @@ export class BaseService {
         return this.http.delete(`${this.getUrlApi()}/${path}`, options)
             .pipe(
                 map(res => {
-                    return res.json();
+                    return res;
                 }),
                 catchError(err => this.getError(err))
             );
     }
 
     getError(err) {
-        if (!err.json().message) {
+        if (!err.message) {
             return throwError(this.OBJECT_ERROR);
         }
-        return throwError(err.json());
+        return throwError(err);
     }
 
     private getHeaders(headersPairs?: any) {
-        const headers = new Headers();
+        const httpOptions = {
+            headers: new HttpHeaders()
+        }
         const token = localStorage.getItem('token');
         if (token) {
-            headers.append('token', token);
+            const realToken = `Bearer ${token}`;
+            httpOptions.headers = httpOptions.headers.set('Authorization', realToken);
         }
-        headers.append('money', 'USD');
-        headers.append('locale', localStorage.getItem('locale') || 'en');
-        headers.append('Content-Type', 'application/json');
+        httpOptions.headers = httpOptions.headers.set('locale', localStorage.getItem('locale') || 'ja');
+        httpOptions.headers = httpOptions.headers.set('Content-Type', 'application/json');
+
         if (headersPairs) {
-            _.forEach(headersPairs, (value, key) => {
-                headers.append(key, value);
+            headersPairs.forEach(e => {
+                httpOptions.headers = httpOptions.headers.set(e.key, e.value);
             });
         }
-        return new RequestOptions({ headers });
-
+        return httpOptions;
     }
 }

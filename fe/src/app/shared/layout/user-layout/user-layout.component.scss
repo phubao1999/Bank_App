@@ -76,32 +76,17 @@ select {
     }
 
     .bars {
-      display: none;
-
-      @include tablet() {
-        display: block;
-        margin-left: 150px;
-        transition: all 0.5s ease;
-        cursor: pointer;
-      }
-
-      @include small() {
-        margin-left: 35px;
-        color: #fff;
-        font-size: 20px;
-      }
-
+      // display: none;
+      margin-left: 35px;
+      color: #fff;
+      font-size: 20px;
+      transition: all .3s ease;
       &:hover {
         background-color: orange;
         padding: 5px 10px;
         border-radius: 50%;
         color: #ffffff;
 
-        @include tablet() {
-          background-color: transparent;
-          padding: 0px;
-          color: #ffffff;
-        }
       }
     }
   }
@@ -146,7 +131,8 @@ select {
     position: relative;
 
     ul {
-        padding-left: 0px!important;
+      padding-left: 0px !important;
+
       li {
         color: #fff;
         padding: 0 25px;
@@ -202,11 +188,12 @@ select {
 .out-let {
   // padding-top: 10vh;
   padding: 10vh 55px;
-  transform: translateX(20%);
   transition: all 0.5s ease;
   width: 80%;
-  margin-left: 40px;
+  margin-left: 20px;
   min-height: 100vh;
+  transform: translateX(20%);
+  margin: 1.5rem 3rem;
 
   @include lessDesktop() {
     width: 80%;
@@ -232,9 +219,10 @@ select {
     padding: 10vh 10px;
   }
 
-  // &.move {
-  //   transform: translateX(0);
-  // }
+  &.move {
+    transform: translateX(0);
+    margin: 5rem;
+  }
 }
 
 .custom {
