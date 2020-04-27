@@ -53,6 +53,7 @@ public class BankDaoImpl implements BankDao {
     /**
      * @author (VNEXT) BaoPT
      * @return Get col Record By Id
+     * @throws Exception 
      */
     @Override
     public BankEntity getBank(int id) {

@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,6 +30,7 @@ import com.BaoPT.api.dao.TransDao;
 import com.BaoPT.api.service.TransService;
 import com.BaoPT.api.utils.ApiValidateExeption;
 import com.BaoPT.api.utils.Constant;
+import com.BaoPT.api.utils.ReadProperties;
 import com.opencsv.CSVWriter;
 
 /**
@@ -132,12 +134,14 @@ public class TransServiceImpl implements TransService {
                 e.printStackTrace();
             }
             transList = transDao.filter(id, fromDate, toDate);
+            if (fromDate.compareTo(toDate) > 0) {
+                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Date From Must Be Before Date To");
+            }
             if (transList.size() == 0) {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "There Is No Data");
-            } else {
-                log.debug("### Get Transaction List By Id and date End ###");
-                return transList;
             }
+            log.debug("### Get Transaction List By Id and date End ###");
+            return transList;
         }
     }
 
@@ -155,7 +159,9 @@ public class TransServiceImpl implements TransService {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         String timeCreate = formatter.format(new Date());
-        String csv = "src/output/transactions_" + timeCreate + ".csv";
+        Properties pro = ReadProperties.readProperties("project.properties");
+        String path = pro.getProperty("pathCsv");
+        String csv = path + timeCreate + ".csv";
 
         transEntity = transDao.getAllById(id);
 

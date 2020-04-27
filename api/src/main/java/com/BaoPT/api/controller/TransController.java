@@ -37,7 +37,7 @@ import com.BaoPT.api.utils.Constant;
  * 001       1.0       2020/04/18      (VNEXT) BaoPT       Create new
 */
 
-@RequestMapping("/transaction")
+@RequestMapping("/transaction/trans")
 @RestController
 public class TransController {
 
@@ -52,7 +52,7 @@ public class TransController {
      * @return Create New Transaction
      */
 
-    @RequestMapping(value = "/trans", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody ResultBean create(@RequestBody String json) {
         log.debug("### Create Transaction Start ###");
         List<TransEntity> transEntity = null;
@@ -76,7 +76,7 @@ public class TransController {
      * @param req.header token
      * @return Get History Trans
      */
-    @RequestMapping(value = "/trans", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResultBean getAll(@RequestParam Integer id) {
         log.debug("### Get Transaction Start ###");
         List<TransEntity> transEntity = null;
@@ -102,7 +102,7 @@ public class TransController {
      * @param "to"
      * @return Filter History Trans By Date and Id
      */
-    @RequestMapping(value = "/trans/filter", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+    @RequestMapping(value = "/filter", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResultBean filter(@RequestParam Integer id, @RequestBody String json) {
         log.debug("### Get Transaction by date Start ###");
         List<TransEntity> transEntity = null;
@@ -125,7 +125,7 @@ public class TransController {
      * @param req.header token
      * @return Export to csv file
      */
-    @RequestMapping(value = "/trans/get", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
+    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResultBean exportCsv(@RequestParam Integer id) {
         log.debug("### Export Transaction Start ###");
         List<TransEntity> transEntity = null;
