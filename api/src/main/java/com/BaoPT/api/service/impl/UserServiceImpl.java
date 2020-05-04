@@ -218,6 +218,9 @@ public class UserServiceImpl implements UserService {
         }
         int id = jsonObject.getInt("id");
         UserEntity userLogin = this.userDao.getUserById(id);
+        if (userLogin == null) {
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exits");
+        }
         String username = userLogin.getUsername();
         String password = this.encodeDecode.encode(jsonObject.getString("password"));
         //        authenticate(username, password);
