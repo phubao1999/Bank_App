@@ -7,11 +7,16 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+
 import { AppComponent } from './app.component';
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
 import { UserComponent } from './user/user.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthComponent } from './auth/auth.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatInputModule} from '@angular/material/input';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +32,10 @@ import { AuthComponent } from './auth/auth.component';
     SharedModule,
     SharedServicesModule,
     UserModule,
-    AdminModule
+    AdminModule,
+    BrowserAnimationsModule,
+    MatCheckboxModule,
+    MatInputModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
