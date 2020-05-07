@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { UserDefineService } from './../user-define.service';
 import { UserService } from './../user.service';
 import { Component, OnInit } from '@angular/core';
@@ -8,14 +9,37 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  id;
+
   constructor(
     private userSerive: UserService,
     private userDefineService: UserDefineService
   ) { }
 
   ngOnInit(): void {
-    this.getUserInfo();
+    // this.getUserInfo();
+    const observable = new Observable<any>(ob => {
+      ob.next(this.getId());
+      ob.complete();
+    });
+    observable.subscribe(val => {
+      this.getUser(val).subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.log(err);
+      })
+    }, err => {
+      console.log(err);
+    }, () => {
+      console.log('Observable Subscribe Done => Call Api Get User Infomation');
+    });
+  }
+
+  getId() {
+    return this.userDefineService.getIdUser();
+  }
+
+  getUser(id) {
+    return this.userSerive.getInfoUser(id);
   }
 
   getIdUser() {
