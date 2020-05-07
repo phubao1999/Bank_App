@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ValidateService } from './../shared/services/helpers/validate.service';
 import { Router } from '@angular/router';
@@ -52,11 +53,12 @@ export class AuthComponent implements OnInit, OnDestroy {
   };
   isLogin = true;
   loginData;
+  subcription: Subscription[] = []
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private validateService: ValidateService,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +68,9 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // this.loginData.unSubcribe();
+    this.subcription.forEach(sub => {
+      sub.unsubscribe();
+    })
   }
 
   initForm() {
@@ -105,17 +110,19 @@ export class AuthComponent implements OnInit, OnDestroy {
       id: this.formLogin.value.idUser,
       password: this.formLogin.value.password
     };
-    this.authService.login(body).subscribe(res => {
-      const token = res['data']['token'];
-      const data = JSON.stringify(res['data']['user']);
-      const message = res['meta']['message'];
-      localStorage.setItem('token', token);
-      localStorage.setItem('user-info', data);
-      this.router.navigate(['/']);
-      alert(message);
-    }, err => {
-      alert(err['error']['meta']['message']);
-    });
+    this.subcription.push(
+      this.authService.login(body).subscribe(res => {
+        const token = res['data']['token'];
+        const data = JSON.stringify(res['data']['user']);
+        const message = res['meta']['message'];
+        localStorage.setItem('token', token);
+        localStorage.setItem('user-info', data);
+        this.router.navigate(['/']);
+        alert(message);
+      }, err => {
+        alert(err['error']['meta']['message']);
+      })
+    )
   }
 
   register() {
