@@ -52,7 +52,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getInfoUser(id) {
-    console.log(id);
     return this.userSerive.getInfoUser(id);
   }
 

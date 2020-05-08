@@ -10,6 +10,6 @@ export class UserDefineService {
   getIdUser() {
     const infoUser = localStorage.getItem('user-info');
     const infoUserObj = JSON.parse(infoUser);
-    return infoUserObj['idUser'];
+    return infoUserObj['id_user'];
   }
 }
