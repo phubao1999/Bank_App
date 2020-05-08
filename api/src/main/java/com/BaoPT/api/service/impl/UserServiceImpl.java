@@ -196,7 +196,7 @@ public class UserServiceImpl implements UserService {
      * @return UserEntity
      */
     @Override
-    public UserEntity getByUsername(String username) {
+    public UserEntity  getByUsername(String username) {
         log.debug("### getByUsername Start ###");
         Optional<UserEntity> userOptional = userRepository.findByUsername(username);
         log.debug("### getByUsername End ###");
@@ -230,7 +230,8 @@ public class UserServiceImpl implements UserService {
         } else {
             String token = jwtTokenUtil.generateToken(userDetails);
             UserEntity user = this.getByUsername(username);
-            JwtResponse jwtResponse = new JwtResponse(token, user);
+            UserInfo userRes = this.userDao.getInforUser(user.getIdUser());
+            JwtResponse jwtResponse = new JwtResponse(token, userRes);
             log.debug("### login END ###");
             return jwtResponse;
         }

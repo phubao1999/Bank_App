@@ -30,9 +30,6 @@ public class UserInfo {
     @JsonProperty("sdt")
     private String sdt;
 
-    @JsonProperty("password")
-    private String password;
-
     @JsonProperty("id_bank")
     private Integer idBank;
 
@@ -60,14 +57,6 @@ public class UserInfo {
         this.sdt = sdt;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getDob() {
         return dob;
     }
@@ -86,12 +75,11 @@ public class UserInfo {
      * @param bankName
      * @param dob
      */
-    public UserInfo(Integer idUser, String name, String sdt, String password, Integer idBank, Integer monney, String bankName, String dob) {
+    public UserInfo(Integer idUser, String name, String sdt, Integer idBank, Integer monney, String bankName, String dob) {
         super();
         this.idUser = idUser;
         this.name = name;
         this.sdt = sdt;
-        this.password = password;
         this.idBank = idBank;
         this.monney = monney;
         this.bankName = bankName;
@@ -127,7 +115,7 @@ public class UserInfo {
 
     @JsonProperty("bank_name")
     private String bankName;
-    
+
     @JsonProperty("day_of_birth")
     private String dob;
 
