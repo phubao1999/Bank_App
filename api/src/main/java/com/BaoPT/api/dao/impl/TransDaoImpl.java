@@ -109,4 +109,51 @@ public class TransDaoImpl implements TransDao {
         return entity;
     }
 
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Get Pagination Of Trasaction
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<TransEntity> paginationTranstion(int index, int limit) {
+        log.debug("### Pagination record of transtion start ###");
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT t ");
+        sql.append(" FROM ");
+        sql.append("    TransEntity t ");
+        Query query = this.entityManager.createQuery(sql.toString());
+        query.setFirstResult(index);
+        query.setMaxResults(limit);
+        List<TransEntity> entity = null;
+        try {
+            entity = (List<TransEntity>) query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        log.debug("### Pagination record of transtion end ###");
+        return entity;
+    }
+
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Counting Total Record
+     */
+    @Override
+    public String countRecord() {
+        log.debug("### Count Record Start ###");
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT COUNT(t) ");
+        sql.append(" FROM ");
+        sql.append("   TransEntity t ");
+        Query query = this.entityManager.createQuery(sql.toString());
+        String result = null;
+        try {
+            result = query.getSingleResult().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        log.debug("### Count Record End ###");
+        return result;
+    }
+
 }

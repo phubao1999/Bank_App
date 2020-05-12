@@ -27,6 +27,8 @@ import org.springframework.stereotype.Service;
 import com.BaoPT.api.bean.TransEntity;
 import com.BaoPT.api.common.Define;
 import com.BaoPT.api.dao.TransDao;
+import com.BaoPT.api.model.PageInfo;
+import com.BaoPT.api.model.PaginationResponse;
 import com.BaoPT.api.service.TransService;
 import com.BaoPT.api.utils.ApiValidateExeption;
 import com.BaoPT.api.utils.Constant;
@@ -186,6 +188,34 @@ public class TransServiceImpl implements TransService {
         log.debug("### Export Transaction List By Id End ###");
         return transEntity;
 
+    }
+
+    /**
+     * @author (VNEXT) BaoPT
+     * @return PaginationResponse
+     */
+    @Override
+    public PaginationResponse<TransEntity> paginationTransaction(int page, int limit) throws ApiValidateExeption {
+        int totalRecords = Integer.parseInt(this.transDao.countRecord());
+        int index = (page - 1) * limit;
+        int totalPages = (int) Math.ceil((float) totalRecords / limit);
+        boolean isNoRecords = false;
+        List<TransEntity> listTrans = null;
+        if (page > totalPages) {
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Page Request Must Be Not More Than Total Pages");
+        } else if (totalRecords == 0) {
+            isNoRecords = true;
+        } else if (page < 1 || limit < 1) {
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Page or limit request must more than 0");
+        }
+        try {
+            listTrans = this.transDao.paginationTranstion(index, limit);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        PageInfo pageInfo = new PageInfo(totalPages, page, totalRecords, limit, isNoRecords);
+        PaginationResponse<TransEntity> response = new PaginationResponse<TransEntity>(pageInfo, listTrans);
+        return response;
     }
 
 }

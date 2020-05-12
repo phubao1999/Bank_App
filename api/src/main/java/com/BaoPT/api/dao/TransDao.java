@@ -48,5 +48,21 @@ public interface TransDao {
      * @return List TransEntity
      */
     public List<TransEntity> filter(int id, Date fromDate, Date toDate);
+    
+    /**
+     * 
+     * @author: (VNEXT) BaoPT
+     * @param index
+     * @param limit
+     * @return Pagination Of List Transaction
+     */
+    public List<TransEntity> paginationTranstion(int index, int limit);
+
+    /**
+     * 
+     * @author: (VNEXT) BaoPT
+     * @return Get TotalCount
+     */
+    public String countRecord();
 
 }

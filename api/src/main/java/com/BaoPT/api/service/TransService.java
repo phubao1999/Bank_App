@@ -9,6 +9,7 @@ package com.BaoPT.api.service;
 import java.util.List;
 
 import com.BaoPT.api.bean.TransEntity;
+import com.BaoPT.api.model.PaginationResponse;
 import com.BaoPT.api.utils.ApiValidateExeption;
 
 /**
@@ -60,4 +61,14 @@ public interface TransService {
      * @throws ApiValidateExeption
      */
     public List<TransEntity> csvWriterByUserId(int id) throws ApiValidateExeption;
+    
+    /**
+     * 
+     * @author: (VNEXT) BaoPT
+     * @param page
+     * @param limit
+     * @return PaginationResponse
+     * @throws ApiValidateExeption
+     */
+    public PaginationResponse<TransEntity> paginationTransaction(int page, int limit) throws ApiValidateExeption;
 }

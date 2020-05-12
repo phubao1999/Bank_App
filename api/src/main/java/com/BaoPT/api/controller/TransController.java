@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.BaoPT.api.bean.ResultBean;
 import com.BaoPT.api.bean.TransEntity;
+import com.BaoPT.api.model.PaginationResponse;
 import com.BaoPT.api.service.TransService;
 import com.BaoPT.api.service.impl.UserServiceImpl;
 import com.BaoPT.api.utils.ApiValidateExeption;
@@ -139,6 +140,29 @@ public class TransController {
         }
         resultBean = new ResultBean(transEntity, Constant.OK, "Done");
         log.debug("### Export Transaction End ###");
+        return resultBean;
+    }
+
+    /**
+     * 
+     * @author: (VNEXT) BaoPT
+     * @param page
+     * @param limit
+     * @return Pagination Of Transaction List
+     */
+    @RequestMapping(value = "pagination", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ResultBean paginationTransRecord(@RequestParam Integer page, @RequestParam Integer limit) {
+        ResultBean resultBean = null;
+        PaginationResponse<TransEntity> resultList = null;
+        try {
+            resultList = this.transService.paginationTransaction(page, limit);
+        } catch (ApiValidateExeption e) {
+            return resultBean = new ResultBean(e.getCode(), null, e.getMessage());
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(resultList, Constant.OK, "Get Data Successfully");
         return resultBean;
     }
 
