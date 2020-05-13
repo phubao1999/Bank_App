@@ -213,6 +213,9 @@ public class TransServiceImpl implements TransService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (listTrans.size() == 0) {
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "There Is Not Data");
+        }
         PageInfo pageInfo = new PageInfo(totalPages, page, totalRecords, limit, isNoRecords);
         PaginationResponse<TransEntity> response = new PaginationResponse<TransEntity>(pageInfo, listTrans);
         return response;
