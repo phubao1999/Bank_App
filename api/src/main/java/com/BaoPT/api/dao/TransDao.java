@@ -56,13 +56,13 @@ public interface TransDao {
      * @param limit
      * @return Pagination Of List Transaction
      */
-    public List<TransEntity> paginationTranstion(int index, int limit);
+    public List<TransEntity> paginationTranstion(int id, int index, int limit);
 
     /**
      * 
      * @author: (VNEXT) BaoPT
      * @return Get TotalCount
      */
-    public String countRecord();
+    public String countRecord(int id);
 
 }

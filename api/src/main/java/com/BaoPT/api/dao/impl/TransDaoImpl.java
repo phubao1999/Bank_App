@@ -115,15 +115,19 @@ public class TransDaoImpl implements TransDao {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<TransEntity> paginationTranstion(int index, int limit) {
+    public List<TransEntity> paginationTranstion(int id, int index, int limit) {
         log.debug("### Pagination record of transtion start ###");
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT t ");
         sql.append(" FROM ");
         sql.append("    TransEntity t ");
+        sql.append(" WHERE ");
+        sql.append(" t.idUser = :id ");
         Query query = this.entityManager.createQuery(sql.toString());
+        query.setParameter("id", id);
         query.setFirstResult(index);
         query.setMaxResults(limit);
+        System.out.println(query.toString());
         List<TransEntity> entity = null;
         try {
             entity = (List<TransEntity>) query.getResultList();
@@ -139,13 +143,16 @@ public class TransDaoImpl implements TransDao {
      * @return Counting Total Record
      */
     @Override
-    public String countRecord() {
+    public String countRecord(int id) {
         log.debug("### Count Record Start ###");
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT COUNT(t) ");
         sql.append(" FROM ");
         sql.append("   TransEntity t ");
+        sql.append(" WHERE ");
+        sql.append(" t.idUser = :id ");
         Query query = this.entityManager.createQuery(sql.toString());
+        query.setParameter("id", id);
         String result = null;
         try {
             result = query.getSingleResult().toString();

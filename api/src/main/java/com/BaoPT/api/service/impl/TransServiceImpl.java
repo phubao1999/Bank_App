@@ -195,8 +195,8 @@ public class TransServiceImpl implements TransService {
      * @return PaginationResponse
      */
     @Override
-    public PaginationResponse<TransEntity> paginationTransaction(int page, int limit) throws ApiValidateExeption {
-        int totalRecords = Integer.parseInt(this.transDao.countRecord());
+    public PaginationResponse<TransEntity> paginationTransaction(int id, int page, int limit) throws ApiValidateExeption {
+        int totalRecords = Integer.parseInt(this.transDao.countRecord(id));
         int index = (page - 1) * limit;
         int totalPages = (int) Math.ceil((float) totalRecords / limit);
         boolean isNoRecords = false;
@@ -209,7 +209,7 @@ public class TransServiceImpl implements TransService {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Page or limit request must more than 0");
         }
         try {
-            listTrans = this.transDao.paginationTranstion(index, limit);
+            listTrans = this.transDao.paginationTranstion(id, index, limit);
         } catch (Exception e) {
             e.printStackTrace();
         }
