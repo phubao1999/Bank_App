@@ -9,14 +9,14 @@ import { Component, OnInit, DoCheck } from '@angular/core';
 export class UserLayoutComponent implements OnInit, DoCheck {
   listitems = [
     {
-      icon: 'fas fa-tachometer-alt',
-      title: 'Dash Board',
-      link: '/dash-board'
-    },
-    {
       icon: 'fas fa-comments',
       title: 'Chat',
       link: '/chat'
+    },
+    {
+      icon: 'fas fa-tachometer-alt',
+      title: 'Dash Board',
+      link: '/dash-board'
     },
     {
       icon: 'fas fa-money-check',
