@@ -151,15 +151,15 @@ public class TransController {
      * @return Pagination Of Transaction List
      */
     @RequestMapping(value = "pagination", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResultBean paginationTransRecord(@RequestParam Integer id, @RequestParam Integer page, @RequestParam Integer limit) {
+    public ResultBean paginationTransRecord(@RequestParam Integer id, @RequestParam Integer page, @RequestParam Integer limit,
+            @RequestParam(required = false) String fromDate, @RequestParam(required = false) String toDate) {
         ResultBean resultBean = null;
         PaginationResponse<TransEntity> resultList = null;
         try {
-            resultList = this.transService.paginationTransaction(id, page, limit);
+            resultList = this.transService.paginationTransaction(id, page, limit, fromDate, toDate);
         } catch (ApiValidateExeption e) {
             return resultBean = new ResultBean(e.getCode(), null, e.getMessage());
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         resultBean = new ResultBean(resultList, Constant.OK, "Get Data Successfully");

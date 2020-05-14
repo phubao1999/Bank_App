@@ -70,5 +70,5 @@ public interface TransService {
      * @return PaginationResponse
      * @throws ApiValidateExeption
      */
-    public PaginationResponse<TransEntity> paginationTransaction(int id, int page, int limit) throws ApiValidateExeption;
+    public PaginationResponse<TransEntity> paginationTransaction(int id, int page, int limit, String fromDate, String toDate) throws ApiValidateExeption;
 }

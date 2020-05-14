@@ -195,12 +195,23 @@ public class TransServiceImpl implements TransService {
      * @return PaginationResponse
      */
     @Override
-    public PaginationResponse<TransEntity> paginationTransaction(int id, int page, int limit) throws ApiValidateExeption {
+    public PaginationResponse<TransEntity> paginationTransaction(int id, int page, int limit, String fromDate, String toDate) throws ApiValidateExeption {
         int totalRecords = Integer.parseInt(this.transDao.countRecord(id));
         int index = (page - 1) * limit;
         int totalPages = (int) Math.ceil((float) totalRecords / limit);
         boolean isNoRecords = false;
         List<TransEntity> listTrans = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        Date from = null;
+        Date to = null;
+        if (fromDate != null && toDate != null) {
+            try {
+                from = formatter.parse(fromDate + " 00:00");
+                to = formatter.parse(toDate + " 23:59");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         if (page > totalPages) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Page Request Must Be Not More Than Total Pages");
         } else if (totalRecords == 0) {
@@ -209,7 +220,7 @@ public class TransServiceImpl implements TransService {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Page or limit request must more than 0");
         }
         try {
-            listTrans = this.transDao.paginationTranstion(id, index, limit);
+            listTrans = this.transDao.paginationTranstion(id, index, limit, from, to);
         } catch (Exception e) {
             e.printStackTrace();
         }

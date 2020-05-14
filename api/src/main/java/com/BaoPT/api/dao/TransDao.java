@@ -56,7 +56,7 @@ public interface TransDao {
      * @param limit
      * @return Pagination Of List Transaction
      */
-    public List<TransEntity> paginationTranstion(int id, int index, int limit);
+    public List<TransEntity> paginationTranstion(int id, int index, int limit, Date from, Date to);
 
     /**
      * 

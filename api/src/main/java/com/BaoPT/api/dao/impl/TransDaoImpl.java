@@ -115,7 +115,7 @@ public class TransDaoImpl implements TransDao {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<TransEntity> paginationTranstion(int id, int index, int limit) {
+    public List<TransEntity> paginationTranstion(int id, int index, int limit, Date from, Date to) {
         log.debug("### Pagination record of transtion start ###");
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT t ");
@@ -123,11 +123,20 @@ public class TransDaoImpl implements TransDao {
         sql.append("    TransEntity t ");
         sql.append(" WHERE ");
         sql.append(" t.idUser = :id ");
+        if (from != null && to != null) {
+            sql.append(" AND ");
+            sql.append("    t.tranfferDay > :from ");
+            sql.append(" AND ");
+            sql.append("    t.tranfferDay < :to ");
+        }
         Query query = this.entityManager.createQuery(sql.toString());
         query.setParameter("id", id);
         query.setFirstResult(index);
         query.setMaxResults(limit);
-        System.out.println(query.toString());
+        if (from != null && to != null) {
+            query.setParameter("from", from);
+            query.setParameter("to", to);
+        }
         List<TransEntity> entity = null;
         try {
             entity = (List<TransEntity>) query.getResultList();
