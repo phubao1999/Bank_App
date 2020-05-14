@@ -18,6 +18,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'chat',
+    component: UserLayoutComponent,
+    loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'tranffer-money',
     component: UserLayoutComponent,
     loadChildren: () => import('./tranffer-monney/tranffer-money.module').then(m => m.TranfferMoneyModule),

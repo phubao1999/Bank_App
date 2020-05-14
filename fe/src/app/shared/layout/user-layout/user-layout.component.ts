@@ -14,6 +14,11 @@ export class UserLayoutComponent implements OnInit, DoCheck {
       link: '/dash-board'
     },
     {
+      icon: 'fas fa-comments',
+      title: 'Chat',
+      link: '/chat'
+    },
+    {
       icon: 'fas fa-money-check',
       title: 'Tranffer Money',
       link: 'tranffer-money'

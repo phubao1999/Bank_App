@@ -5,13 +5,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { TranfferMonneyComponent } from './tranffer-monney/tranffer-monney.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     UpdateProfileComponent,
     TransactionHistoryComponent,
-    TranfferMonneyComponent
+    TranfferMonneyComponent,
+    ChatComponent
   ],
   imports: [
     CommonModule,
