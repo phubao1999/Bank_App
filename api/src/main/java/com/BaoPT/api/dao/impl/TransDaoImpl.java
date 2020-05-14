@@ -152,7 +152,7 @@ public class TransDaoImpl implements TransDao {
      * @return Counting Total Record
      */
     @Override
-    public String countRecord(int id) {
+    public String countRecord(int id, Date from, Date to) {
         log.debug("### Count Record Start ###");
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT COUNT(t) ");
@@ -160,8 +160,18 @@ public class TransDaoImpl implements TransDao {
         sql.append("   TransEntity t ");
         sql.append(" WHERE ");
         sql.append(" t.idUser = :id ");
+        if (from != null && to != null) {
+            sql.append(" AND ");
+            sql.append("    t.tranfferDay > :from ");
+            sql.append(" AND ");
+            sql.append("    t.tranfferDay < :to ");
+        }
         Query query = this.entityManager.createQuery(sql.toString());
         query.setParameter("id", id);
+        if (from != null && to != null) {
+            query.setParameter("from", from);
+            query.setParameter("to", to);
+        }
         String result = null;
         try {
             result = query.getSingleResult().toString();

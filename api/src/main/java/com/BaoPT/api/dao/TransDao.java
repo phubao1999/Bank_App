@@ -63,6 +63,6 @@ public interface TransDao {
      * @author: (VNEXT) BaoPT
      * @return Get TotalCount
      */
-    public String countRecord(int id);
+    public String countRecord(int id, Date from, Date to);
 
 }
