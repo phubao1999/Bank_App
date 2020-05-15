@@ -1,14 +1,19 @@
-import { ChatRoutingModule } from './chat-routing.module';
-import { NgModule } from '@angular/core';
+import { ChatService } from './chat.service';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ChatRoutingModule } from './chat-routing.module';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
-    ChatRoutingModule
-  ]
+    ChatRoutingModule,
+    FormsModule
+  ],
+  providers: [ChatService]
 })
 export class ChatModule { }
