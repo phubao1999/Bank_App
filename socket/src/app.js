@@ -1,36 +1,24 @@
-const app = require('express');
-const http = require('http').Server(app);
+const express = require('express');
+const app = express();
+const http = require('http').createServer(express);
 const io = require('socket.io')(http);
+const port = 3000;
 
-const document = {};
-
-io.on('connection', socket => {
-    let previousId;
-    const safeJoin = currentId => {
-        socket.leave(previousId);
-        socket.join(currentId);
-        previousId = currentId;
-    };
-
-    socket.on("getDoc", docId => {
-        safeJoin(docId);
-        socket.emit("document", documents[docId]);
-    });
-
-    socket.on("addDoc", doc => {
-        documents[doc.id] = doc;
-        safeJoin(doc.id);
-        io.emit("documents", Object.keys(documents));
-        socket.emit("document", doc);
-    });
-
-    socket.on("editDoc", doc => {
-        documents[doc.id] = doc;
-        socket.to(doc.id).emit("document", doc);
-    });
-
-    io.emit("documents", Object.keys(documents));
+app.get('/', (req, res) => {
+    res.render('Hello World!');
 });
 
-http.listen(3000);
+io.on('connection', socket => {
+    console.log('User Is Connected');
+    socket.on('disconnect', () => {
+        console.log('User Is Disconnect');
+    })
+    socket.on('emit message', msg => {
+        console.log(`Message: ${msg}`);
+        io.emit('my broadcast', `Server: ${msg}`);
+    });
+});
 
+http.listen(port, () => {
+    console.log(`Server Is Listening On Port ${port}`);
+})
