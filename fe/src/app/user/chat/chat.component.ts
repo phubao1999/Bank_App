@@ -9,14 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
   text;
-  chatArr: [] = [];
+  chatArr: string[] = [];
   value;
+  binding;
   constructor(
     private chatService: ChatService
   ) { }
 
   ngOnInit(): void {
-    this.chatService.setupSocketConnection();
   }
 
   inputValue(e) {
@@ -29,12 +29,12 @@ export class ChatComponent implements OnInit {
   sendValue() {
     this.createObservale().subscribe({
       next: () => {
-        console.log('Step 2');
         this.getMess();
       }, error: err => {
         console.log(err);
       }, complete: () => {
         this.resetTextArea();
+        console.log(this.chatArr);
       }
     });
   }
@@ -51,7 +51,9 @@ export class ChatComponent implements OnInit {
   }
 
   getMess() {
-    console.log(this.chatService.getMess());
+    this.chatService.getMess().subscribe(res => {
+      this.chatArr.push(res);
+    });
   }
 
   resetTextArea() {

@@ -6,10 +6,14 @@
             <img src="../../../assets/image/man-face-illustration-avatar-user-computer-icons-software-developer-avatar-png-clip-art.png" /></figure>
     </div>
     <div class="messages">
-        <div class="messages-content"></div>
+        <div class="messages-content">
+            <p *ngFor="let item of chatArr">
+                <span>{{ item }}</span>
+            </p>
+        </div>
     </div>
     <div class="message-box">
-        <textarea id="area" type="text" class="message-input" placeholder="Type message..." (keyup)="inputValue($event)"></textarea>
+        <textarea id="area" type="text" class="message-input" placeholder="Type message..." (keyup)="inputValue($event)" [(ngModel)]="binding"></textarea>
         <button type="submit" class="message-submit" (click)="sendValue()">Send</button>
     </div>
 

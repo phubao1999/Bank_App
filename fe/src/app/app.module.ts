@@ -1,3 +1,5 @@
+import { RouterModule } from '@angular/router';
+import { environment as config } from './../environments/environment';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { Routing } from './app-routing.routing';
 import { AdminModule } from './admin/admin.module';
@@ -16,7 +18,9 @@ import { AuthComponent } from './auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
+const configSocket: SocketIoConfig = { url: config.socketServer, options: {} };
 
 @NgModule({
   declarations: [
@@ -35,7 +39,9 @@ import {MatInputModule} from '@angular/material/input';
     AdminModule,
     BrowserAnimationsModule,
     MatCheckboxModule,
-    MatInputModule
+    MatInputModule,
+    SocketIoModule.forRoot(configSocket),
+    RouterModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
