@@ -5,7 +5,7 @@
         <figure class="avatar">
             <img src="../../../assets/image/man-face-illustration-avatar-user-computer-icons-software-developer-avatar-png-clip-art.png" /></figure>
     </div>
-    <div class="messages">
+    <div class="messages" *ngIf="chatArr">
         <div class="messages-content">
             <p *ngFor="let item of chatArr">
                 <span>{{ item }}</span>
@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="message-box">
-        <textarea id="area" type="text" class="message-input" placeholder="Type message..." (keyup)="inputValue($event)" [(ngModel)]="binding"></textarea>
+        <textarea id="area" type="text" class="message-input" placeholder="Type message..." (keyup)="inputValue($event)"></textarea>
         <button type="submit" class="message-submit" (click)="sendValue()">Send</button>
     </div>
 

@@ -1,12 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response, RequestOptions } from '@angular/http';
-
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { environment as config } from '../../../../environments/environment';
-import * as _ from 'lodash';
-import { Observable } from 'rxjs';
-import { tap, map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+
 @Injectable()
 export class BaseService {
 

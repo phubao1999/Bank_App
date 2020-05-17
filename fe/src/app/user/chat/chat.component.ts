@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs';
-import { ChatService } from './chat.service';
 import { Component, OnInit } from '@angular/core';
+import { ChatService } from './chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -17,6 +16,7 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getMess();
   }
 
   inputValue(e) {
@@ -27,23 +27,7 @@ export class ChatComponent implements OnInit {
   }
 
   sendValue() {
-    this.createObservale().subscribe({
-      next: () => {
-        this.getMess();
-      }, error: err => {
-        console.log(err);
-      }, complete: () => {
-        this.resetTextArea();
-        console.log(this.chatArr);
-      }
-    });
-  }
-
-  createObservale() {
-    return new Observable<any>(ob => {
-      ob.next(this.emitValue());
-      ob.complete();
-    });
+    this.emitValue();
   }
 
   emitValue() {
@@ -53,6 +37,8 @@ export class ChatComponent implements OnInit {
   getMess() {
     this.chatService.getMess().subscribe(res => {
       this.chatArr.push(res);
+      console.log(this.chatArr);
+      this.resetTextArea();
     });
   }
 

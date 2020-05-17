@@ -1,7 +1,7 @@
 import { RouterModule } from '@angular/router';
 import { environment as config } from './../environments/environment';
 import { AuthGuard } from './shared/guard/auth.guard';
-import { Routing } from './app-routing.routing';
+import { AppRoutingModule } from './app-routing.routing';
 import { AdminModule } from './admin/admin.module';
 import { UserModule } from './user/user.module';
 import { SharedServicesModule } from './shared/shared-service.module';
@@ -12,7 +12,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { PageErrorComponent } from './page-error/page-error/page-error.component';
-import { UserComponent } from './user/user.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthComponent } from './auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,13 +25,12 @@ const configSocket: SocketIoConfig = { url: config.socketServer, options: {} };
   declarations: [
     AppComponent,
     PageErrorComponent,
-    UserComponent,
     AdminComponent,
     AuthComponent
   ],
   imports: [
     BrowserModule,
-    Routing,
+    AppRoutingModule,
     SharedModule,
     SharedServicesModule,
     UserModule,
