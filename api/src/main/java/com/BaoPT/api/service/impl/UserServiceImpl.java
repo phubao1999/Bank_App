@@ -13,6 +13,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import com.BaoPT.api.model.UserInfo;
 import com.BaoPT.api.service.UserService;
 import com.BaoPT.api.utils.ApiValidateExeption;
 import com.BaoPT.api.utils.Constant;
+import com.BaoPT.api.utils.GenerateOtp;
 import com.BaoPT.api.utils.JwtTokenUtil;
 import com.BaoPT.api.utils.Validate;
 
@@ -59,6 +62,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired(required = true)
     private JwtTokenUtil jwtTokenUtil;
+    
+    @Autowired
+    public JavaMailSender emailSender;
 
     @Override
     public List<UserEntity> getAll() {
@@ -236,4 +242,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public String otpNumber(String json) throws ApiValidateExeption, Exception {
+        SimpleMailMessage message = new SimpleMailMessage();
+        JSONObject userJson = new JSONObject(json);
+        String email = userJson.getString("email");
+        char[] otp = GenerateOtp.generateOtpNumber(6);
+        int otpSender = Integer.parseInt(String.valueOf(otp));
+        message.setTo(email);
+        message.setSubject("Your OTP From Our Website");
+        message.setText("Hello, " + email + ", Your OTP Is: " + otpSender);
+        this.emailSender.send(message);
+        return "Send Otp Success. Please Check Your Email";
+    }
 }

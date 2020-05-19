@@ -198,5 +198,18 @@ public class UserController {
         log.debug("### loginToken END ###");
         return new ResponseEntity<ResultBean>(resultBean, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/send-otp", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody ResultBean sendOtp(@RequestBody String json) {
+        ResultBean resultBean = null;
+        String mess = null;
+        try {
+            mess = this.userService.otpNumber(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(Constant.OK, mess);
+        return resultBean;
+    }
 
 }
