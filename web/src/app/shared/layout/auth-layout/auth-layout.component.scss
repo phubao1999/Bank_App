@@ -1,6 +1,8 @@
 @import "../../../../assets/scss/responsive.scss";
+@import "../../../../assets/scss/variable.scss";
 
 .all {
+    background-color: $bg-auth;
     width: 100%;
     height: 100vh;
     display: flex;

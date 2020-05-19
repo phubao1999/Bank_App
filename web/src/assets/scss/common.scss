@@ -1,2 +1,28 @@
 @import "./responsive.scss";
 @import "./variable.scss";
+
+.space-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.button-auth {
+    padding: .8rem 0px;
+    width: 100%;
+    background-color: #404d4e;
+    border: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: $smooth-white;
+    transition: all .3s ease;
+    &:hover {
+        background-color: #536a6b;
+    }
+}
+
+.message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 14px;
+}

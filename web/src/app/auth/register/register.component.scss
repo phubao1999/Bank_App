@@ -1,0 +1,11 @@
+@import "../../../assets/scss/common.scss";
+
+.out-side {
+    background-color: $smooth-white;
+    box-shadow: 14px 14px 13px 5px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    .in-side {
+        margin: 3rem;
+    }
+}
