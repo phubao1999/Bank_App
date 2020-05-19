@@ -37,6 +37,14 @@ public interface UserDao {
      * @param id
      * @return UserEntity
      */
+    public UserEntity getUserByEmail(String email);
+
+    /**
+     * getUserById
+     * @author: (VNEXT) BaoPT
+     * @param id
+     * @return UserEntity
+     */
     public UserEntity getUserById(int id);
 
     /**

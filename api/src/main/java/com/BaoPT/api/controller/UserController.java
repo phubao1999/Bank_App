@@ -194,7 +194,7 @@ public class UserController {
             resultBean = new ResultBean("401", e.getMessage());
             return new ResponseEntity<ResultBean>(resultBean, HttpStatus.UNAUTHORIZED);
         }
-        resultBean = new ResultBean(jwtResponse, "200", "OK");
+        resultBean = new ResultBean(jwtResponse, "200", "Login Successfully");
         log.debug("### loginToken END ###");
         return new ResponseEntity<ResultBean>(resultBean, HttpStatus.OK);
     }

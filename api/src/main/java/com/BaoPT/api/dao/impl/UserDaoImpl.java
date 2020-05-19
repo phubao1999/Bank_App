@@ -56,8 +56,22 @@ public class UserDaoImpl implements UserDao {
      * @return Get Cols By Id
      */
     @Override
-    public UserEntity getUserById(int id) {
-        return entityManager.find(UserEntity.class, id);
+    public UserEntity getUserByEmail(String email) {
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT u ");
+        sql.append(" FROM ");
+        sql.append("    UserEntity u ");
+        sql.append(" WHERE ");
+        sql.append("    u.email = :email ");
+        Query query = this.entityManager.createQuery(sql.toString());
+        query.setParameter("email", email);
+        UserEntity user = null;
+        try {
+            user = (UserEntity) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     /**
@@ -88,7 +102,7 @@ public class UserDaoImpl implements UserDao {
         // TODO Auto-generated method stub
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT new com.BaoPT.api.model.UserInfo ( ");
-        sql.append("  u.idUser, u.username, u.sdt, u.idBank, u.monney, b.bankName, u.dayOfBirth) ");
+        sql.append("  u.idUser, u.username, u.sdt, u.idBank, u.monney, b.bankName, u.dayOfBirth, u.statusUser, u.email) ");
         sql.append(" FROM ");
         sql.append("    UserEntity u ");
         sql.append(" JOIN ");
@@ -107,6 +121,15 @@ public class UserDaoImpl implements UserDao {
         }
         log.debug("### Get User Info End ###");
         return entity;
+    }
+
+    /**
+     * @author (VNEXT) BaoPT
+     * @return Get Cols By Id
+     */
+    @Override
+    public UserEntity getUserById(int id) {
+        return entityManager.find(UserEntity.class, id);
     }
 
 }

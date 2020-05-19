@@ -69,13 +69,14 @@ public class UserInfo {
      * @param idUser
      * @param name
      * @param sdt
-     * @param password
      * @param idBank
      * @param monney
      * @param bankName
      * @param dob
+     * @param statusUser
+     * @param email
      */
-    public UserInfo(Integer idUser, String name, String sdt, Integer idBank, Integer monney, String bankName, String dob) {
+    public UserInfo(Integer idUser, String name, String sdt, Integer idBank, Integer monney, String bankName, String dob, Integer statusUser, String email) {
         super();
         this.idUser = idUser;
         this.name = name;
@@ -84,6 +85,8 @@ public class UserInfo {
         this.monney = monney;
         this.bankName = bankName;
         this.dob = dob;
+        this.statusUser = statusUser;
+        this.email = email;
     }
 
     public Integer getIdBank() {
@@ -110,6 +113,22 @@ public class UserInfo {
         this.bankName = bankName;
     }
 
+    public Integer getStatusUser() {
+        return statusUser;
+    }
+
+    public void setStatusUser(Integer statusUser) {
+        this.statusUser = statusUser;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @JsonProperty("monney")
     private Integer monney;
 
@@ -118,5 +137,10 @@ public class UserInfo {
 
     @JsonProperty("day_of_birth")
     private String dob;
-
+    
+    @JsonProperty("status_user")
+    private Integer statusUser;
+    
+    @JsonProperty("email")
+    private String email;
 }

@@ -97,6 +97,23 @@ public class UserEntity {
         return monney;
     }
 
+    public Integer getStatusUser() {
+        return statusUser;
+    }
+
+    public void setStatusUser(Integer statusUser) {
+        this.statusUser = statusUser;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setMonney(Integer monney) {
         this.monney = monney;
     }
@@ -106,5 +123,11 @@ public class UserEntity {
 
     @Column(name = "monney")
     private Integer monney;
+
+    @Column(name = "status_user")
+    private Integer statusUser;
+
+    @Column(name = "email")
+    private String email;
 
 }

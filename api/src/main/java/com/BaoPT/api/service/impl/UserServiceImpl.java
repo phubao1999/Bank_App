@@ -80,9 +80,6 @@ public class UserServiceImpl implements UserService {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else {
             UserEntity userEntity = new UserEntity();
-            if (!userJson.getString("name").trim().matches(Validate.USER_NAME)) {
-                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Name Have To Be Less Than 10 Character");
-            }
             if (userJson.getString("sdt").length() < 10 || userJson.getString("sdt").length() > 11
                     || !userJson.getString("sdt").matches(Validate.PHONE_NUMBER)) {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST, "Phone Number Is Between 10 and 11 Number And Must Be A Number");
@@ -216,8 +213,10 @@ public class UserServiceImpl implements UserService {
         if (jsonObject.isEmpty()) {
             throw new ApiValidateExeption(Constant.NOT_FOUND, "faild", "not found");
         }
-        int id = jsonObject.getInt("id");
-        UserEntity userLogin = this.userDao.getUserById(id);
+        String email = jsonObject.getString("email");
+//        System.out.println(email);
+//        int id = jsonObject.getInt("id");
+        UserEntity userLogin = this.userDao.getUserByEmail(email);
         if (userLogin == null) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exits");
         }
