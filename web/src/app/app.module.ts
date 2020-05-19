@@ -1,8 +1,10 @@
+import { SharedModule } from './shared/shared.module';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.routing';
 import { AppComponent } from './app.component';
+import { SharedServiceModule } from './shared/shared-service.module';
 
 
 @NgModule({
@@ -12,7 +14,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule,
+    SharedServiceModule
   ],
   providers: [],
   bootstrap: [AppComponent]
