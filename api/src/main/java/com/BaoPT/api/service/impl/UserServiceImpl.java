@@ -232,8 +232,7 @@ public class UserServiceImpl implements UserService {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Your Account Is Not Active");
         } else {
             String token = jwtTokenUtil.generateToken(userDetails);
-            UserEntity user = this.getByUsername(username);
-            UserInfo userRes = this.userDao.getInforUser(user.getIdUser());
+            UserInfo userRes = this.userDao.getInforUser(userLogin.getIdUser());
             JwtResponse jwtResponse = new JwtResponse(token, userRes);
             log.debug("### login END ###");
             return jwtResponse;
