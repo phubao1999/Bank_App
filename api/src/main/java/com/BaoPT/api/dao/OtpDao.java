@@ -27,4 +27,12 @@ public interface OtpDao {
      */
     public void createOtp(OtpEntity otpEntity);
 
+    /**
+     * 
+     * @author: (VNEXT) BaoPT
+     * @param idUser
+     * @return OtpEntity
+     */
+    public OtpEntity getOtpCode(int idUser);
+
 }

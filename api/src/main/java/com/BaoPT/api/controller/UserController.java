@@ -198,7 +198,7 @@ public class UserController {
         log.debug("### loginToken END ###");
         return new ResponseEntity<ResultBean>(resultBean, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/send-otp", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody ResultBean sendOtp(@RequestBody String json) {
         ResultBean resultBean = null;
@@ -209,6 +209,21 @@ public class UserController {
             e.printStackTrace();
         }
         resultBean = new ResultBean(Constant.OK, mess);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/active-user", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody ResultBean activeUser(@RequestBody String json) {
+        UserEntity userEntity = null;
+        ResultBean resultBean = null;
+        try {
+            userEntity = this.userService.activeUser(json);
+        } catch (ApiValidateExeption e) {
+            return resultBean = new ResultBean(e.getCode(), e.getField(), e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultBean = new ResultBean(userEntity, Constant.OK, "Active Account Successfully");
         return resultBean;
     }
 

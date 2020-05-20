@@ -88,7 +88,7 @@ public interface UserService {
      * @throws Exception
      */
     public JwtResponse login(String json) throws ApiValidateExeption, Exception;
-    
+
     /**
      * 
      * @author: (VNEXT) BaoPT
@@ -98,5 +98,15 @@ public interface UserService {
      * @throws Exception
      */
     public String otpNumber(String json) throws ApiValidateExeption, Exception;
+
+    /**
+     * 
+     * @author: (VNEXT) BaoPT
+     * @param json
+     * @return UserEntity
+     * @throws ApiValidateExeption
+     * @throws Exception
+     */
+    public UserEntity activeUser(String json) throws ApiValidateExeption, Exception;
 
 }

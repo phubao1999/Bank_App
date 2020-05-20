@@ -96,8 +96,8 @@ public class UserServiceImpl implements UserService {
                         "Password Must Have Less Then 8 Character, Must Have Character, Number And Special Character. Ex: Bao@123");
             }
             userEntity.setUsername(userJson.getString("name"));
-            userEntity.setSdt("");
-            userEntity.setDayOfBirth("");
+            userEntity.setSdt(null);
+            userEntity.setDayOfBirth(null);
             userEntity.setPassword(this.encodeDecode.encode(userJson.getString("password")));
             userEntity.setMonney(0);
             userEntity.setIdBank(0);
@@ -254,5 +254,24 @@ public class UserServiceImpl implements UserService {
         otpEntity.setOtpNumber(otpSender);
         this.otpDao.createOtp(otpEntity);
         return "Send Otp Success. Please Check Your Email";
+    }
+
+    @Override
+    public UserEntity activeUser(String json) throws ApiValidateExeption, Exception {
+        JSONObject otpJson = new JSONObject(json);
+        int id = otpJson.getInt("id_user");
+        UserEntity activeUser = userDao.getUserById(id);
+        OtpEntity otpEntity = this.otpDao.getOtpCode(id);
+        int otpCode = otpEntity.getOtpNumber();
+        if (activeUser == null) {
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "User Is Not Exist");
+        } else if (otpJson.isEmpty()) {
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
+        } else if (otpJson.getInt("otp") != otpCode) {
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Otp Code Is Not Right");
+        }
+        activeUser.setStatusUser(1);
+        userDao.update(activeUser);
+        return activeUser;
     }
 }

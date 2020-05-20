@@ -7,6 +7,7 @@
 package com.BaoPT.api.dao.impl;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,25 @@ public class OtpDaoImpl implements OtpDao {
     @Override
     public void createOtp(OtpEntity otpEntity) {
         this.entityManager.persist(otpEntity);
+    }
+
+    @Override
+    public OtpEntity getOtpCode(int idUser) {
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT o ");
+        sql.append(" FROM ");
+        sql.append("    OtpEntity o ");
+        sql.append(" WHERE ");
+        sql.append("    o.idUser = : id ");
+        Query query = this.entityManager.createQuery(sql.toString());
+        query.setParameter("id", idUser);
+        OtpEntity otp = null;
+        try {
+            otp = (OtpEntity) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return otp;
     }
 
 }

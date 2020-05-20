@@ -56,8 +56,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().and().authorizeRequests()
                 // User controller
-                .antMatchers("/user/register").permitAll().antMatchers("/user/login").permitAll().antMatchers("/user/send-otp").permitAll().antMatchers(HttpMethod.POST, "/transaction/trans").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/user/register").permitAll().antMatchers("/user/login").permitAll().antMatchers("/user/send-otp").permitAll()
+                .antMatchers("/user/active-user").permitAll().antMatchers(HttpMethod.POST, "/transaction/trans").permitAll().anyRequest().authenticated()
 
                 // Disable form login
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
