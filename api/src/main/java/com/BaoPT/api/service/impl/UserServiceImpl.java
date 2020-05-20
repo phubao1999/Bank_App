@@ -86,27 +86,18 @@ public class UserServiceImpl implements UserService {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Please Enter All Field");
         } else {
             UserEntity userEntity = new UserEntity();
-            if (userJson.getString("sdt").length() < 10 || userJson.getString("sdt").length() > 11
-                    || !userJson.getString("sdt").matches(Validate.PHONE_NUMBER)) {
-                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Phone Number Is Between 10 and 11 Number And Must Be A Number");
-            }
-            if (!userJson.getString("day_of_birth").trim().matches(Validate.DATE)) {
-                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Day of birth must like ex: 1999/08/27");
-            }
             if (!userJson.getString("password").matches(Validate.PASSWORD)) {
                 throw new ApiValidateExeption(Constant.BAD_REQUEST,
                         "Password Must Have Less Then 8 Character, Must Have Character, Number And Special Character. Ex: Bao@123");
             }
-            if (userJson.getInt("id_bank") > 3 || userJson.getInt("id_bank") < 0) {
-                throw new ApiValidateExeption(Constant.BAD_REQUEST, "Id Bank Must Be Between 1 and 3");
-            }
             userEntity.setUsername(userJson.getString("name"));
-            userEntity.setSdt(userJson.getString("sdt"));
-            userEntity.setDayOfBirth(userJson.getString("day_of_birth"));
+            userEntity.setSdt("");
+            userEntity.setDayOfBirth("");
             userEntity.setPassword(this.encodeDecode.encode(userJson.getString("password")));
-            userEntity.setMonney(userJson.getInt("monney"));
-            userEntity.setIdBank(userJson.getInt("id_bank"));
-
+            userEntity.setMonney(0);
+            userEntity.setIdBank(0);
+            userEntity.setEmail(userJson.getString("email"));
+            userEntity.setStatusUser(0);
             userDao.register(userEntity);
             log.debug("### Register End ###");
             return userEntity;
