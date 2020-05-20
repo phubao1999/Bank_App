@@ -228,6 +228,8 @@ public class UserServiceImpl implements UserService {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         if (!password.equals(userDetails.getPassword())) {
             throw new ApiValidateExeption(Constant.BAD_REQUEST, "Password Is Not Right");
+        } else if (userLogin.getStatusUser() == 0) {
+            throw new ApiValidateExeption(Constant.BAD_REQUEST, "Your Account Is Not Active");
         } else {
             String token = jwtTokenUtil.generateToken(userDetails);
             UserEntity user = this.getByUsername(username);
