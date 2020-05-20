@@ -9,6 +9,7 @@ import { AuthService } from './../auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  idUser: number;
   formRegister: FormGroup;
   formOtp: FormGroup;
   formStep = 1;
@@ -86,7 +87,7 @@ export class RegisterComponent implements OnInit {
   }
 
   genOtp(res) {
-    console.log(res);
+    this.idUser = res.data.idUser;
     const body = {
       email: res.data.email,
       id_user: res.data.idUser
@@ -117,7 +118,15 @@ export class RegisterComponent implements OnInit {
   }
 
   checkOtp() {
-    console.log('Checking Otp');
+    const body = {
+      id_user: this.idUser,
+      otp: this.formOtp.value.otp
+    };
+    this.authService.activeUser(body).subscribe(res => {
+      console.log(res);
+    }, err => {
+      console.log(err);
+    });
   }
 
 }

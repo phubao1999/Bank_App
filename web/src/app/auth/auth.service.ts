@@ -16,4 +16,8 @@ export class AuthService {
   createOtp(body) {
     return this.http.post(`${config.API_SERVER}/user/send-otp`, body);
   }
+
+  activeUser(body) {
+    return this.http.post(`${config.API_SERVER}/user/active-user`, body);
+  }
 }
