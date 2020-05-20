@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.routing';
 import { AppComponent } from './app.component';
 import { SharedServiceModule } from './shared/shared-service.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SharedServiceModule } from './shared/shared-service.module';
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    SharedServiceModule
+    SharedServiceModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

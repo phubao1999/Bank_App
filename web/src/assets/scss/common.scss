@@ -19,10 +19,19 @@
     &:hover {
         background-color: #536a6b;
     }
+    &:disabled {
+        background-color: #908a90;
+        cursor: not-allowed;
+    }
 }
 
 .message {
     margin: 15px 0 0;
     color: #b3b3b3;
     font-size: 14px;
+}
+
+.err {
+    font-size: 13px;
+    color: red;
 }
