@@ -1,3 +1,4 @@
+import { ComponentSharedModule } from './../shared/component/component-shared.module';
 import { AuthService } from './auth.service';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
@@ -18,7 +19,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ComponentSharedModule
   ],
   exports: [RouterModule],
   providers: [AuthService]
