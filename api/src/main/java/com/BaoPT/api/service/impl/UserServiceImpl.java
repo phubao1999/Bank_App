@@ -19,8 +19,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import com.BaoPT.api.bean.OtpEntity;
 import com.BaoPT.api.bean.UserEntity;
 import com.BaoPT.api.common.EncodeDecode;
+import com.BaoPT.api.dao.OtpDao;
 import com.BaoPT.api.dao.UserDao;
 import com.BaoPT.api.dao.UserRepository;
 import com.BaoPT.api.model.JwtResponse;
@@ -65,6 +67,9 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
     public JavaMailSender emailSender;
+    
+    @Autowired
+    public OtpDao otpDao;
 
     @Override
     public List<UserEntity> getAll() {
@@ -244,6 +249,10 @@ public class UserServiceImpl implements UserService {
         message.setSubject("Your OTP From Our Website");
         message.setText("Hello, " + email + ", Your OTP Is: " + otpSender);
         this.emailSender.send(message);
+        OtpEntity otpEntity = new OtpEntity();
+        otpEntity.setIdUser(userJson.getInt("id_user"));
+        otpEntity.setOtpNumber(otpSender);
+        this.otpDao.createOtp(otpEntity);
         return "Send Otp Success. Please Check Your Email";
     }
 }
