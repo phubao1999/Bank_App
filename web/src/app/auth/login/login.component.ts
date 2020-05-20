@@ -1,3 +1,4 @@
+import { ComponentActions } from './../../shared/component/component-actions';
 import { Router } from '@angular/router';
 import { AuthService } from './../auth.service';
 import { ValidateService } from './../../shared/service/validate.service';
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private validateService: ValidateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private componentActions: ComponentActions
   ) { }
 
   ngOnInit(): void {
@@ -48,17 +50,24 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.componentActions.showLoading();
     const body = {
       email: this.formLogin.value.email,
       password: this.formLogin.value.password
     };
     this.authService.login(body).subscribe(res => {
+      const token = res['data']['token'];
+      const info = res['data']['user'];
+      localStorage.setItem('token', token);
+      sessionStorage.setItem('user-info', JSON.stringify(info));
       const message = res['meta']['message'];
       alert(message);
       this.router.navigate(['dashboard']);
+      this.componentActions.hideLoading();
     }, err => {
       const message = err['error']['meta']['message'];
       alert(message);
+      this.componentActions.hideLoading();
     });
   }
 

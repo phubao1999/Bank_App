@@ -1,3 +1,4 @@
+import { ComponentActions } from './../../shared/component/component-actions';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidateService } from './../../shared/service/validate.service';
@@ -45,7 +46,8 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private validateService: ValidateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private componentActions: ComponentActions
   ) { }
 
   ngOnInit(): void {
@@ -79,6 +81,7 @@ export class RegisterComponent implements OnInit {
   }
 
   async registerNGenOtp() {
+    this.componentActions.showLoading();
     await this.createUser()
     .then(val => {
       this.genOtp(val);
@@ -89,6 +92,7 @@ export class RegisterComponent implements OnInit {
   }
 
   genOtp(res) {
+    this.componentActions.showLoading();
     this.idUser = res.data.idUser;
     const body = {
       email: res.data.email,
@@ -99,12 +103,15 @@ export class RegisterComponent implements OnInit {
       const mess = val['meta']['message'];
       alert(mess);
       this.formStep = 2;
+      this.componentActions.hideLoading();
     }, err => {
       console.log(err);
+      this.componentActions.hideLoading();
     });
   }
 
   createUser() {
+    this.componentActions.showLoading();
     return new Promise((resolve, rejects) => {
       const body = {
         name: this.formRegister.value.name,
@@ -113,8 +120,10 @@ export class RegisterComponent implements OnInit {
       };
       this.authService.register(body).subscribe(res => {
         resolve(res);
+        this.componentActions.hideLoading();
       }, err => {
         rejects(err);
+        this.componentActions.hideLoading();
       });
     });
   }
