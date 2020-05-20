@@ -1,18 +1,22 @@
 <div class="out-side">
     <div class="in-side">
-        <form action="">
+        <form action="" [formGroup]="formLogin">
             <img src="../../../assets/image/logo.png" alt="">
             <div class="form-group row space-between">
                 <div class="w-100">
-                    <input type="text" class="form-control" id="staticEmail" placeholder="Email">
+                    <input type="text" class="form-control" id="staticEmail" placeholder="Email" formControlName="email">
                 </div>
+                <p class="err" *ngIf="formLoginError.email && formLogin.controls.email.touched">*
+                    {{ formLoginError.email }}</p>
             </div>
             <div class="form-group row space-between">
                 <div class="w-100">
-                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
                 </div>
+                <p class="err" *ngIf="formLoginError.password && formLogin.controls.password.touched">*
+                    {{ formLoginError.password }}</p>
             </div>
-            <button class="button-auth mt-2">LOGIN</button>
+            <button class="button-auth mt-2" [disabled]="formLogin.invalid" (click)="login()">LOGIN</button>
             <p class="message mt-2 text-center">Not registered? <a [routerLink]="['/auth/register']" routerLinkActive="router-link-active" >Create an account</a></p>
         </form>
     </div>

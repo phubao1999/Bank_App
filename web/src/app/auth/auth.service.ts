@@ -20,4 +20,8 @@ export class AuthService {
   activeUser(body) {
     return this.http.post(`${config.API_SERVER}/user/active-user`, body);
   }
+
+  login(body) {
+    return this.http.post(`${config.API_SERVER}/user/login`, body);
+  }
 }

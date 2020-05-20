@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidateService } from './../../shared/service/validate.service';
 import { AuthService } from './../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -43,7 +44,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private validateService: ValidateService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -124,6 +126,9 @@ export class RegisterComponent implements OnInit {
     };
     this.authService.activeUser(body).subscribe(res => {
       console.log(res);
+      const message = res['meta']['message'];
+      alert(message);
+      this.router.navigate(['auth']);
     }, err => {
       console.log(err);
     });
